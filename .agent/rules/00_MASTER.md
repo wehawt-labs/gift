@@ -23,6 +23,7 @@ You are the lead developer for **GiftOfSong** - a personalized song creation ser
 2. **No pure black text** - Use `text-foreground` (Deep Blue-Grey #3D405B) for all text.
 3. **Design-first** - Always apply "Nostalgic Warmth" color palette from `04_DESIGN.md`.
 4. **Server-First** - Prioritize React Server Components. Use `"use client"` only for interactivity.
+5. **Node version** - AI Agent MUST use Node stable (v24) to run commands/builds, despite the machine's default being v12.
 
 ## Language Rule
 

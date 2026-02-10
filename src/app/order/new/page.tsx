@@ -5,7 +5,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { OccasionForm, StepIndicator, TrustBadges } from '@/components/forms'
+import {
+  OccasionForm,
+  StepIndicator,
+  StoryForm,
+  TrustBadges,
+  VibeForm
+} from '@/components/forms'
 import { Button } from '@/components/ui/button'
 
 const steps = [{ label: 'Occasion' }, { label: 'Vibe' }, { label: 'Story' }]
@@ -17,6 +23,10 @@ export default function OrderNewPage() {
   const handleNext = () => {
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1)
+    } else {
+      // Final submission logic
+      console.log('Submitting order...')
+      router.push('/')
     }
   }
 
@@ -49,9 +59,11 @@ export default function OrderNewPage() {
             >
               How it works
             </Link>
-            <Button href='/login' variant='outline' className='rounded-full'>
-              Sign In
-            </Button>
+            <Button
+              variant='outline'
+              className='rounded-full'
+              render={<Link href='/login'>Sign In</Link>}
+            />
           </div>
         </nav>
       </header>
@@ -79,42 +91,10 @@ export default function OrderNewPage() {
             <OccasionForm onNext={handleNext} onBack={handleBack} />
           )}
           {currentStep === 2 && (
-            <div className='rounded-3xl bg-card p-8 text-center shadow-sm'>
-              <h2 className='font-semibold text-2xl'>Step 2: The Vibe</h2>
-              <p className='mt-2 text-muted-foreground'>
-                Coming soon - genre and mood selection
-              </p>
-              <div className='mt-8 flex justify-between'>
-                <Button
-                  variant='outline'
-                  className='rounded-full'
-                  onClick={handleBack}
-                >
-                  Back
-                </Button>
-                <Button className='rounded-full' onClick={handleNext}>
-                  Next: Story
-                </Button>
-              </div>
-            </div>
+            <VibeForm onNext={handleNext} onBack={handleBack} />
           )}
           {currentStep === 3 && (
-            <div className='rounded-3xl bg-card p-8 text-center shadow-sm'>
-              <h2 className='font-semibold text-2xl'>Step 3: Your Story</h2>
-              <p className='mt-2 text-muted-foreground'>
-                Coming soon - story and memories input
-              </p>
-              <div className='mt-8 flex justify-between'>
-                <Button
-                  variant='outline'
-                  className='rounded-full'
-                  onClick={handleBack}
-                >
-                  Back
-                </Button>
-                <Button className='rounded-full'>Submit Order</Button>
-              </div>
-            </div>
+            <StoryForm onNext={handleNext} onBack={handleBack} />
           )}
         </div>
       </main>
