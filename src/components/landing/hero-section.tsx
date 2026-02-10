@@ -1,13 +1,41 @@
 'use client'
 
+import { useWavesurfer } from '@wavesurfer/react'
 import { ArrowRight, Headphones, Pause, Play } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
+import Link from 'next/link'
+import { useCallback, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 
 export function HeroSection() {
-  const [isPlaying, setIsPlaying] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [url] = useState(
+    'https://www.sandvik.com/globalassets/media/sample-audio.mp3'
+  )
+
+  const { wavesurfer, isPlaying, currentTime } = useWavesurfer({
+    container: containerRef,
+    height: 32,
+    waveColor: '#E07A5F4D',
+    progressColor: '#E07A5F',
+    url,
+    barWidth: 2,
+    barGap: 3,
+    barRadius: 2,
+    cursorWidth: 0
+  })
+
+  const onPlayPause = useCallback(() => {
+    wavesurfer?.playPause()
+  }, [wavesurfer])
+
+  // Format time (MM:SS)
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60)
+    const secondsLeft = Math.floor(seconds % 60)
+    return `${minutes}:${secondsLeft.toString().padStart(2, '0')}`
+  }
 
   return (
     <section className='relative overflow-hidden bg-background pt-32 pb-20 lg:pt-40 lg:pb-32'>
@@ -16,13 +44,13 @@ export function HeroSection() {
           {/* Left content */}
           <div className='flex flex-col items-center text-center lg:items-start lg:text-left'>
             {/* Badge */}
-            <div className='mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary'>
+            <div className='mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 font-medium text-primary text-sm'>
               🎁 THE MOST PERSONAL GIFT
             </div>
 
             {/* Title */}
-            <h1 className='font-heading text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl'>
-              Turn your <span className='italic text-primary'>memories</span>
+            <h1 className='font-bold font-heading text-4xl text-foreground leading-tight tracking-tight md:text-5xl lg:text-6xl'>
+              Turn your <span className='text-primary italic'>memories</span>
               <br />
               into a melody.
             </h1>
@@ -36,18 +64,21 @@ export function HeroSection() {
             {/* CTAs */}
             <div className='mt-8 flex flex-col gap-4 sm:flex-row'>
               <Button
-                href='/order/new'
                 size='lg'
                 className='rounded-full px-8 shadow-lg shadow-primary/20'
-              >
-                Start Your Song
-                <ArrowRight className='ml-2 h-4 w-4' />
-              </Button>
+                nativeButton={false}
+                render={
+                  <Link href='/order/new'>
+                    Start Your Song
+                    <ArrowRight className='ml-2 h-4 w-4' />
+                  </Link>
+                }
+              />
               <Button
                 variant='outline'
                 size='lg'
                 className='rounded-full px-8'
-                onClick={() => setIsPlaying(!isPlaying)}
+                onClick={onPlayPause}
               >
                 <Headphones className='mr-2 h-4 w-4' />
                 Listen to Samples
@@ -69,11 +100,11 @@ export function HeroSection() {
             </div>
 
             {/* Floating audio player card */}
-            <div className='absolute -bottom-6 left-4 right-4 rounded-2xl bg-card p-4 shadow-xl sm:left-8 sm:right-8'>
+            <div className='absolute right-4 -bottom-6 left-4 rounded-2xl bg-card p-4 shadow-xl sm:right-8 sm:left-8'>
               <div className='flex items-center gap-4'>
                 <button
                   type='button'
-                  onClick={() => setIsPlaying(!isPlaying)}
+                  onClick={onPlayPause}
                   className='flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30'
                 >
                   {isPlaying ? (
@@ -83,25 +114,15 @@ export function HeroSection() {
                   )}
                 </button>
                 <div className='min-w-0 flex-1'>
-                  <p className='truncate text-sm font-medium text-foreground'>
+                  <p className='truncate font-medium text-foreground text-sm'>
                     Our First Anniversary
                   </p>
-                  {/* Waveform placeholder */}
-                  <div className='mt-2 flex h-8 items-center gap-0.5'>
-                    {Array.from({ length: 40 }).map((_, i) => (
-                      <div
-                        // biome-ignore lint/suspicious/noArrayIndexKey: pure visual elements
-                        key={`waveform-bar-${i}`}
-                        className='w-1 rounded-full bg-primary/30'
-                        style={{
-                          height: `${Math.random() * 100}%`,
-                          minHeight: '4px'
-                        }}
-                      />
-                    ))}
-                  </div>
+                  {/* Waveform container */}
+                  <div className='mt-2 h-8' ref={containerRef} />
                 </div>
-                <span className='text-sm text-muted-foreground'>2:45</span>
+                <span className='text-muted-foreground text-sm'>
+                  {formatTime(currentTime)}
+                </span>
               </div>
             </div>
           </div>
