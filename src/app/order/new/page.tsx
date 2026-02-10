@@ -31,13 +31,13 @@ export default function OrderNewPage() {
   return (
     <div className='min-h-screen bg-background'>
       {/* Header */}
-      <header className='border-b border-border bg-card/50 backdrop-blur-sm'>
+      <header className='border-border border-b bg-card/50 backdrop-blur-sm'>
         <nav className='mx-auto flex max-w-7xl items-center justify-between px-6 py-4'>
           <Link href='/' className='flex items-center gap-2'>
             <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-primary'>
               <Music className='h-4 w-4 text-primary-foreground' />
             </div>
-            <span className='text-xl font-semibold text-foreground'>
+            <span className='font-semibold text-foreground text-xl'>
               GiftOfSong
             </span>
           </Link>
@@ -45,7 +45,7 @@ export default function OrderNewPage() {
           <div className='flex items-center gap-4'>
             <Link
               href='#how-it-works'
-              className='hidden text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block'
+              className='hidden font-medium text-muted-foreground text-sm transition-colors hover:text-foreground sm:block'
             >
               How it works
             </Link>
@@ -60,10 +60,10 @@ export default function OrderNewPage() {
       <main className='mx-auto max-w-3xl px-6 py-12 lg:py-16'>
         {/* Title */}
         <div className='text-center'>
-          <h1 className='font-heading text-4xl font-bold text-foreground md:text-5xl'>
+          <h1 className='font-bold font-heading text-4xl text-foreground md:text-5xl'>
             Craft Your Song
           </h1>
-          <p className='mt-4 text-lg italic text-muted-foreground'>
+          <p className='mt-4 text-lg text-muted-foreground italic'>
             Share your story, and we'll turn it into a timeless melody.
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function OrderNewPage() {
           )}
           {currentStep === 2 && (
             <div className='rounded-3xl bg-card p-8 text-center shadow-sm'>
-              <h2 className='text-2xl font-semibold'>Step 2: The Vibe</h2>
+              <h2 className='font-semibold text-2xl'>Step 2: The Vibe</h2>
               <p className='mt-2 text-muted-foreground'>
                 Coming soon - genre and mood selection
               </p>
@@ -100,7 +100,7 @@ export default function OrderNewPage() {
           )}
           {currentStep === 3 && (
             <div className='rounded-3xl bg-card p-8 text-center shadow-sm'>
-              <h2 className='text-2xl font-semibold'>Step 3: Your Story</h2>
+              <h2 className='font-semibold text-2xl'>Step 3: Your Story</h2>
               <p className='mt-2 text-muted-foreground'>
                 Coming soon - story and memories input
               </p>
@@ -120,7 +120,7 @@ export default function OrderNewPage() {
       </main>
 
       {/* Trust badges footer */}
-      <footer className='border-t border-border bg-card py-8'>
+      <footer className='border-border border-t bg-card py-8'>
         <div className='mx-auto max-w-7xl px-6'>
           <TrustBadges />
         </div>

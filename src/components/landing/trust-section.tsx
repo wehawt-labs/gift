@@ -9,9 +9,9 @@ const trustLogos = [
 
 export function TrustSection() {
   return (
-    <section className='border-y border-border bg-card py-12'>
+    <section className='border-border border-y bg-card py-12'>
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
-        <p className='text-center text-sm font-medium tracking-widest text-muted-foreground'>
+        <p className='text-center font-medium text-muted-foreground text-sm tracking-widest'>
           TRUSTED BY 10,000+ HAPPY GIFTERS
         </p>
         <div className='mt-8 flex flex-wrap items-center justify-center gap-8 md:gap-16'>

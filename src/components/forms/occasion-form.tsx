@@ -50,9 +50,9 @@ export function OccasionForm({ onNext, onBack }: OccasionFormProps) {
   return (
     <div className='rounded-3xl bg-card p-8 shadow-sm'>
       {/* Header */}
-      <div className='flex items-center gap-3 border-b border-border pb-6'>
+      <div className='flex items-center gap-3 border-border border-b pb-6'>
         <PartyPopper className='h-6 w-6 text-primary' />
-        <h2 className='text-2xl font-semibold text-foreground'>The Occasion</h2>
+        <h2 className='font-semibold text-2xl text-foreground'>The Occasion</h2>
       </div>
 
       {/* Form */}
@@ -86,7 +86,7 @@ export function OccasionForm({ onNext, onBack }: OccasionFormProps) {
 
         {/* Common occasions */}
         <div className='space-y-2'>
-          <Label className='text-xs tracking-widest text-muted-foreground uppercase'>
+          <Label className='text-muted-foreground text-xs uppercase tracking-widest'>
             COMMON OCCASIONS
           </Label>
           <div className='flex flex-wrap gap-2'>
@@ -95,7 +95,7 @@ export function OccasionForm({ onNext, onBack }: OccasionFormProps) {
                 key={occasion}
                 type='button'
                 onClick={() => setSelectedOccasion(occasion)}
-                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-full border px-4 py-2 font-medium text-sm transition-colors ${
                   selectedOccasion === occasion
                     ? 'border-primary bg-primary text-primary-foreground'
                     : 'border-border bg-background text-foreground hover:bg-muted'
@@ -139,7 +139,7 @@ export function OccasionForm({ onNext, onBack }: OccasionFormProps) {
           <Textarea
             id='details'
             placeholder='Briefly describe the sentiment (e.g., funny, heartfelt, nostalgic)...'
-            className='min-h-[100px] rounded-xl resize-none'
+            className='min-h-[100px] resize-none rounded-xl'
           />
         </div>
       </div>

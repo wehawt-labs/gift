@@ -21,7 +21,7 @@ export function StepIndicator({ currentStep, steps }: StepIndicatorProps) {
               {/* Step circle and label */}
               <div className='flex flex-col items-center'>
                 <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors ${
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 font-semibold text-sm transition-colors ${
                     isCompleted
                       ? 'border-primary bg-primary text-primary-foreground'
                       : isCurrent
@@ -32,7 +32,7 @@ export function StepIndicator({ currentStep, steps }: StepIndicatorProps) {
                   {isCompleted ? <Check className='h-5 w-5' /> : stepNumber}
                 </div>
                 <span
-                  className={`mt-2 text-xs font-medium uppercase tracking-wider ${
+                  className={`mt-2 font-medium text-xs uppercase tracking-wider ${
                     isCurrent ? 'text-primary' : 'text-muted-foreground'
                   }`}
                 >

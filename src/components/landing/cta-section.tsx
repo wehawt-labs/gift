@@ -8,10 +8,10 @@ export function CtaSection() {
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
         <div className='relative overflow-hidden rounded-3xl bg-foreground px-6 py-16 text-center sm:px-16 lg:px-24'>
           {/* Content */}
-          <h2 className='font-heading text-3xl font-bold text-background md:text-4xl'>
+          <h2 className='font-bold font-heading text-3xl text-background md:text-4xl'>
             Ready to create something beautiful?
           </h2>
-          <p className='mx-auto mt-4 max-w-xl text-lg text-background/80'>
+          <p className='mx-auto mt-4 max-w-xl text-background/80 text-lg'>
             Start your song today and have the perfect gift ready in less than a
             week.
           </p>
@@ -29,7 +29,7 @@ export function CtaSection() {
           </div>
 
           {/* Note */}
-          <p className='mt-4 text-sm text-background/60'>
+          <p className='mt-4 text-background/60 text-sm'>
             100% money-back guarantee if you don't love the result.
           </p>
         </div>

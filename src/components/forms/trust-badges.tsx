@@ -15,7 +15,7 @@ export function TrustBadges() {
           className='flex items-center gap-2 text-muted-foreground'
         >
           <badge.icon className='h-5 w-5 text-accent' />
-          <span className='text-sm font-medium'>{badge.label}</span>
+          <span className='font-medium text-sm'>{badge.label}</span>
         </div>
       ))}
     </div>

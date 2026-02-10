@@ -10,14 +10,14 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className='fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border/50'>
+    <header className='fixed top-0 right-0 left-0 z-50 border-border/50 border-b bg-background/80 backdrop-blur-sm'>
       <nav className='mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8'>
         {/* Logo */}
         <Link href='/' className='flex items-center gap-2'>
           <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-primary'>
             <Music className='h-4 w-4 text-primary-foreground' />
           </div>
-          <span className='text-xl font-semibold text-foreground'>
+          <span className='font-semibold text-foreground text-xl'>
             GiftOfSong
           </span>
         </Link>
@@ -26,19 +26,19 @@ export function Header() {
         <div className='hidden items-center gap-8 lg:flex'>
           <Link
             href='#how-it-works'
-            className='text-sm font-medium text-foreground/70 transition-colors hover:text-foreground'
+            className='font-medium text-foreground/70 text-sm transition-colors hover:text-foreground'
           >
             How it Works
           </Link>
           <Link
             href='#samples'
-            className='text-sm font-medium text-foreground/70 transition-colors hover:text-foreground'
+            className='font-medium text-foreground/70 text-sm transition-colors hover:text-foreground'
           >
             Samples
           </Link>
           <Link
             href='#pricing'
-            className='text-sm font-medium text-foreground/70 transition-colors hover:text-foreground'
+            className='font-medium text-foreground/70 text-sm transition-colors hover:text-foreground'
           >
             Pricing
           </Link>
@@ -48,7 +48,7 @@ export function Header() {
         <div className='hidden items-center gap-4 lg:flex'>
           <Link
             href='/login'
-            className='text-sm font-medium text-foreground/70 transition-colors hover:text-foreground'
+            className='font-medium text-foreground/70 text-sm transition-colors hover:text-foreground'
           >
             Login
           </Link>
@@ -78,19 +78,19 @@ export function Header() {
           <div className='space-y-1 px-6 pb-4'>
             <Link
               href='#how-it-works'
-              className='block py-2 text-base font-medium text-foreground/70'
+              className='block py-2 font-medium text-base text-foreground/70'
             >
               How it Works
             </Link>
             <Link
               href='#samples'
-              className='block py-2 text-base font-medium text-foreground/70'
+              className='block py-2 font-medium text-base text-foreground/70'
             >
               Samples
             </Link>
             <Link
               href='#pricing'
-              className='block py-2 text-base font-medium text-foreground/70'
+              className='block py-2 font-medium text-base text-foreground/70'
             >
               Pricing
             </Link>

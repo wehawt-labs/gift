@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -24,6 +24,9 @@
       },
       "correctness": {
         "useExhaustiveDependencies": "warn"
+      },
+      "nursery": {
+        "useSortedClasses": "warn"
       }
     },
     "domains": {
@@ -38,6 +41,11 @@
       "semicolons": "asNeeded",
       "trailingCommas": "none",
       "quoteProperties": "preserve"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "assist": {

@@ -33,7 +33,7 @@ export function HowItWorksSection() {
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
         {/* Header */}
         <div className='text-center'>
-          <h2 className='font-heading text-3xl font-bold text-foreground md:text-4xl'>
+          <h2 className='font-bold font-heading text-3xl text-foreground md:text-4xl'>
             How it works
           </h2>
           <p className='mx-auto mt-4 max-w-2xl text-lg text-muted-foreground'>
@@ -57,7 +57,7 @@ export function HowItWorksSection() {
               </div>
 
               {/* Content */}
-              <h3 className='mt-6 text-xl font-semibold text-foreground'>
+              <h3 className='mt-6 font-semibold text-foreground text-xl'>
                 {step.number}. {step.title}
               </h3>
               <p className='mt-3 text-muted-foreground'>{step.description}</p>

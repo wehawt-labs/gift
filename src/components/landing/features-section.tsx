@@ -56,10 +56,10 @@ export function FeaturesSection() {
                     </span>
                   ))}
                 </div>
-                <p className='mt-3 text-sm italic text-muted-foreground'>
+                <p className='mt-3 text-muted-foreground text-sm italic'>
                   "My wife cried happy tears. Best anniversary gift ever."
                 </p>
-                <p className='mt-2 text-sm font-medium text-foreground'>
+                <p className='mt-2 font-medium text-foreground text-sm'>
                   — Michael
                 </p>
               </div>
@@ -68,9 +68,9 @@ export function FeaturesSection() {
 
           {/* Right - Content */}
           <div>
-            <h2 className='font-heading text-3xl font-bold text-foreground md:text-4xl'>
+            <h2 className='font-bold font-heading text-3xl text-foreground md:text-4xl'>
               More than just a song. It's a{' '}
-              <span className='italic text-primary'>moment.</span>
+              <span className='text-primary italic'>moment.</span>
             </h2>
             <p className='mt-6 text-lg text-muted-foreground'>
               Music has the power to bring back memories more vividly than any
@@ -89,7 +89,7 @@ export function FeaturesSection() {
                     <h3 className='font-semibold text-foreground'>
                       {feature.title}
                     </h3>
-                    <p className='text-sm text-muted-foreground'>
+                    <p className='text-muted-foreground text-sm'>
                       {feature.description}
                     </p>
                   </div>

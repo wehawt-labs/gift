@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export function Footer() {
   return (
-    <footer className='border-t border-border bg-card'>
+    <footer className='border-border border-t bg-card'>
       <div className='mx-auto max-w-7xl px-6 py-12 lg:px-8'>
         <div className='grid grid-cols-2 gap-8 md:grid-cols-4'>
           {/* Brand */}
@@ -12,11 +12,11 @@ export function Footer() {
               <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-primary'>
                 <Music className='h-4 w-4 text-primary-foreground' />
               </div>
-              <span className='text-xl font-semibold text-foreground'>
+              <span className='font-semibold text-foreground text-xl'>
                 GiftOfSong
               </span>
             </Link>
-            <p className='mt-4 text-sm text-muted-foreground'>
+            <p className='mt-4 text-muted-foreground text-sm'>
               Making memories last forever through the power of music.
             </p>
             <div className='mt-4 flex gap-4'>
@@ -37,12 +37,12 @@ export function Footer() {
 
           {/* Product */}
           <div>
-            <h3 className='text-sm font-semibold text-foreground'>Product</h3>
+            <h3 className='font-semibold text-foreground text-sm'>Product</h3>
             <ul className='mt-4 space-y-3'>
               <li>
                 <Link
                   href='#how-it-works'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   How it Works
                 </Link>
@@ -50,7 +50,7 @@ export function Footer() {
               <li>
                 <Link
                   href='#pricing'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   Pricing
                 </Link>
@@ -58,7 +58,7 @@ export function Footer() {
               <li>
                 <Link
                   href='#samples'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   Samples
                 </Link>
@@ -66,7 +66,7 @@ export function Footer() {
               <li>
                 <Link
                   href='#'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   Reviews
                 </Link>
@@ -76,12 +76,12 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className='text-sm font-semibold text-foreground'>Company</h3>
+            <h3 className='font-semibold text-foreground text-sm'>Company</h3>
             <ul className='mt-4 space-y-3'>
               <li>
                 <Link
                   href='#'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   About Us
                 </Link>
@@ -89,7 +89,7 @@ export function Footer() {
               <li>
                 <Link
                   href='#'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   Careers
                 </Link>
@@ -97,7 +97,7 @@ export function Footer() {
               <li>
                 <Link
                   href='#'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   Contact
                 </Link>
@@ -105,7 +105,7 @@ export function Footer() {
               <li>
                 <Link
                   href='#'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   Blog
                 </Link>
@@ -115,12 +115,12 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h3 className='text-sm font-semibold text-foreground'>Legal</h3>
+            <h3 className='font-semibold text-foreground text-sm'>Legal</h3>
             <ul className='mt-4 space-y-3'>
               <li>
                 <Link
                   href='#'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   Terms of Service
                 </Link>
@@ -128,7 +128,7 @@ export function Footer() {
               <li>
                 <Link
                   href='#'
-                  className='text-sm text-muted-foreground transition-colors hover:text-foreground'
+                  className='text-muted-foreground text-sm transition-colors hover:text-foreground'
                 >
                   Privacy Policy
                 </Link>
@@ -137,11 +137,11 @@ export function Footer() {
           </div>
         </div>
 
-        <div className='mt-12 flex flex-col items-center justify-between border-t border-border pt-8 md:flex-row'>
-          <p className='text-xs text-muted-foreground'>
+        <div className='mt-12 flex flex-col items-center justify-between border-border border-t pt-8 md:flex-row'>
+          <p className='text-muted-foreground text-xs'>
             © 2024 GiftOfSong Inc. All rights reserved.
           </p>
-          <p className='mt-4 text-xs text-muted-foreground md:mt-0'>
+          <p className='mt-4 text-muted-foreground text-xs md:mt-0'>
             Made with ❤️ in Nashville, TN
           </p>
         </div>
