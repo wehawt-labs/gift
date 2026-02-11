@@ -1,28 +1,28 @@
-import { Gift, Music, PenLine } from 'lucide-react'
+import { Music, Sparkles, Zap } from 'lucide-react'
 
 const steps = [
   {
     number: 1,
-    title: 'Tell Us Your Story',
+    title: 'Customize Your Vibe',
     description:
-      'Answer a few simple questions about who this song is for, the occasion, and the memories you want to include.',
-    icon: PenLine,
+      'Select your preferred genre, mood, and vocal style. From Acoustic Pop to Rock Ballads, pick the perfect sound for your story.',
+    icon: Music,
     color: 'bg-primary/10 text-primary'
   },
   {
     number: 2,
-    title: 'Artist Selection',
+    title: 'Share Your Story',
     description:
-      "Select your preferred genre and mood. We'll match you with a professional vocalist who fits your story perfectly.",
-    icon: Music,
+      'Tell us about your favorite memories, inside jokes, and the core message you want to send. Our AI helps refine your thoughts into lyrics.',
+    icon: Sparkles,
     color: 'bg-accent/10 text-accent'
   },
   {
     number: 3,
-    title: 'The Reveal',
+    title: '24-Hour Delivery',
     description:
-      "Within 5-7 days, you'll receive your custom song along with lyrics, ready to be shared and cherished forever.",
-    icon: Gift,
+      "For a limited time, receive your studio-quality custom song within just 24 hours. Ready to share, cherish, and gift forever.",
+    icon: Zap,
     color: 'bg-primary/10 text-primary'
   }
 ]

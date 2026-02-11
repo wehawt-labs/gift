@@ -4,18 +4,19 @@ import Image from 'next/image'
 const features = [
   {
     icon: Mic,
-    title: 'Professional Studio Quality',
-    description: 'Recorded, mixed, and mastered by real musicians.'
+    title: 'High-Fidelity Audio',
+    description:
+      'Polished, high-quality audio production ready for any speaker.'
   },
   {
     icon: Sparkles,
-    title: '100% Custom Lyrics',
-    description: 'Every lyric is written based on your unique questionnaire.'
+    title: '100% Personalization',
+    description: 'Every word is inspired by the memories you share with us.'
   },
   {
     icon: Music,
-    title: 'Any Genre or Vibe',
-    description: 'Add your song to Spotify, or Apple Music to listen anywhere.'
+    title: 'Listen Everywhere',
+    description: 'Download your song and play it on any device, anytime.'
   }
 ]
 
@@ -74,8 +75,8 @@ export function FeaturesSection() {
             </h2>
             <p className='mt-6 text-lg text-muted-foreground'>
               Music has the power to bring back memories more vividly than any
-              photo. Our artists don't just sing lyrics; they capture the
-              emotion behind your story.
+              photo. We don't just put words to music; we capture the essence of
+              your story in a unique composition.
             </p>
 
             {/* Feature list */}

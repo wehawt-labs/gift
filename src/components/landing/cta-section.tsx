@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -12,26 +13,34 @@ export function CtaSection() {
             Ready to create something beautiful?
           </h2>
           <p className='mx-auto mt-4 max-w-xl text-background/80 text-lg'>
-            Start your song today and have the perfect gift ready in less than a
-            week.
+            Start your song today and have the perfect gift ready in just 24 hours.
           </p>
 
           {/* CTA */}
           <div className='mt-8'>
             <Button
-              href='/order/new'
               size='lg'
-              className='rounded-full bg-primary px-8 text-primary-foreground shadow-lg shadow-primary/30 hover:bg-primary/90'
-            >
-              Start Your Song - $199
-              <ArrowRight className='ml-2 h-4 w-4' />
-            </Button>
+              className='rounded-full px-8 shadow-lg shadow-primary/30'
+              nativeButton={false}
+              render={
+                <Link href='/order/new'>
+                  Start Your Song - $19
+                  <ArrowRight className='ml-2 h-4 w-4' />
+                </Link>
+              }
+            />
           </div>
 
           {/* Note */}
-          <p className='mt-4 text-background/60 text-sm'>
-            100% money-back guarantee if you don't love the result.
-          </p>
+          <div className='mt-6 space-y-2'>
+            <p className='text-background font-bold text-sm'>
+              💝 14/2 Valentine's Sale: Priority Queue + 24h Delivery Included
+            </p>
+            <p className='text-background/60 text-xs'>
+              Last minute gift? Order now to get it in time for Valentine's Day.
+              100% money-back guarantee.
+            </p>
+          </div>
         </div>
       </div>
     </section>

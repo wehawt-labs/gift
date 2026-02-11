@@ -17,8 +17,8 @@ export function HeroSection() {
   const { wavesurfer, isPlaying, currentTime } = useWavesurfer({
     container: containerRef,
     height: 32,
-    waveColor: '#E07A5F4D',
-    progressColor: '#E07A5F',
+    waveColor: 'rgba(224, 122, 95, 0.3)', // primary/30
+    progressColor: '#E07A5F', // primary
     url,
     barWidth: 2,
     barGap: 3,
@@ -44,8 +44,8 @@ export function HeroSection() {
           {/* Left content */}
           <div className='flex flex-col items-center text-center lg:items-start lg:text-left'>
             {/* Badge */}
-            <div className='mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 font-medium text-primary text-sm'>
-              🎁 THE MOST PERSONAL GIFT
+            <div className='mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 font-bold text-primary text-sm animate-bounce'>
+              💝 14/2 SALE: STARTING AT $19 • 24H DELIVERY
             </div>
 
             {/* Title */}
@@ -57,8 +57,9 @@ export function HeroSection() {
 
             {/* Description */}
             <p className='mt-6 max-w-lg text-lg text-muted-foreground'>
-              The perfect gift for the people who mean the world to you. Custom
-              songs written and recorded by professional artists, just for them.
+              The perfect gift for the people who mean the world to you. We
+              create meaningful, personalized songs inspired by your unique
+              stories and memories.
             </p>
 
             {/* CTAs */}
@@ -89,7 +90,7 @@ export function HeroSection() {
           {/* Right content - Image with audio player */}
           <div className='relative'>
             {/* Main image */}
-            <div className='relative aspect-[4/3] overflow-hidden rounded-3xl bg-muted'>
+            <div className='relative aspect-4/3 overflow-hidden rounded-3xl bg-muted'>
               <Image
                 src='/hero-couple.jpg'
                 alt='Happy couple'
