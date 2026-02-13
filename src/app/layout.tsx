@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Fraunces, Inter } from 'next/font/google'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
 const heading = Fraunces({
@@ -25,9 +26,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${body.variable} ${heading.variable} font-body antialiased text-foreground`}
+        className={`${body.variable} ${heading.variable} font-body text-foreground antialiased`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   )

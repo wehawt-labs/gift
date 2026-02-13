@@ -1,138 +1,149 @@
 'use client'
 
-import React from 'react'
-import { useFormContext, useWatch } from 'react-hook-form'
 import { Check } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+import { useFormContext, useWatch } from 'react-hook-form'
 import { Card, CardContent } from '@/components/ui/card'
-import { type OrderFormData } from '../schema'
+import { FormErrorMessage } from '@/components/ui/form-error-message'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 import { PLANS } from '../constants'
+import type { OrderFormData } from '../schema'
 
-export function StepCheckout() {
-    const {
-        register,
-        setValue,
-        formState: { errors }
-    } = useFormContext<OrderFormData>()
+export function StepCheckout({
+  validationTrigger
+}: {
+  validationTrigger: number
+}) {
+  const {
+    register,
+    setValue,
+    formState: { errors }
+  } = useFormContext<OrderFormData>()
 
-    const data = useWatch()
+  const data = useWatch()
 
-    return (
-        <div className='space-y-6'>
-            <div>
-                <h2 className='font-serif text-2xl font-bold text-foreground'>
-                    Review & Checkout
-                </h2>
-                <p className='mt-1 text-foreground/60 text-base'>
-                    One last look before we start creating.
+  return (
+    <div className='space-y-6'>
+      <div>
+        <h2 className='font-bold font-serif text-2xl text-foreground'>
+          Review & Checkout
+        </h2>
+        <p className='mt-1 text-base text-foreground/60'>
+          One last look before we start creating.
+        </p>
+      </div>
+
+      <div className='space-y-6'>
+        {/* Plan Selection */}
+        <div className='space-y-3'>
+          <Label className='font-bold'>Choose your package</Label>
+          <div className='grid gap-3 sm:grid-cols-2'>
+            {PLANS.map((plan) => (
+              <button
+                key={plan.id}
+                type='button'
+                onClick={() =>
+                  setValue('plan', plan.id, {
+                    shouldValidate: true,
+                    shouldDirty: true
+                  })
+                }
+                className={cn(
+                  'group relative flex flex-col overflow-hidden rounded-xl border-2 p-4 text-left transition-all',
+                  data.plan === plan.id
+                    ? 'border-primary bg-white ring-4 ring-primary/10'
+                    : 'border-foreground/5 bg-white/50 hover:border-foreground/20'
+                )}
+              >
+                {plan.id === 'deluxe' && (
+                  <div className='absolute top-0 right-0 rounded-bl-lg bg-primary px-2.5 py-0.5 font-bold text-[9px] text-white uppercase tracking-wider'>
+                    Popular
+                  </div>
+                )}
+                <div className='mb-1 flex items-center justify-between'>
+                  <span className='font-bold text-base text-foreground'>
+                    {plan.name}
+                  </span>
+                  <span className='font-bold text-primary text-sm'>
+                    ${plan.price}
+                  </span>
+                </div>
+                <p className='mb-3 text-foreground/60 text-xs'>
+                  {plan.description}
                 </p>
-            </div>
-
-            <div className='space-y-6'>
-                {/* Plan Selection */}
-                <div className='space-y-3'>
-                    <Label className='font-bold'>Choose your package</Label>
-                    <div className='grid sm:grid-cols-2 gap-3'>
-                        {PLANS.map((plan) => (
-                            <button
-                                key={plan.id}
-                                type='button'
-                                onClick={() => setValue('plan', plan.id, { shouldValidate: true, shouldDirty: true })}
-                                className={cn(
-                                    'flex flex-col p-4 rounded-xl border-2 transition-all text-left group relative overflow-hidden',
-                                    data.plan === plan.id
-                                        ? 'bg-white border-primary ring-4 ring-primary/10'
-                                        : 'bg-white/50 border-foreground/5 hover:border-foreground/20'
-                                )}
-                            >
-                                {plan.id === 'deluxe' && (
-                                    <div className='absolute top-0 right-0 bg-primary text-white text-[9px] font-bold px-2.5 py-0.5 rounded-bl-lg uppercase tracking-wider'>
-                                        Popular
-                                    </div>
-                                )}
-                                <div className='flex items-center justify-between mb-1'>
-                                    <span className='font-bold text-base text-foreground'>
-                                        {plan.name}
-                                    </span>
-                                    <span className='font-bold text-primary text-sm'>
-                                        ${plan.price}
-                                    </span>
-                                </div>
-                                <p className='text-xs text-foreground/60 mb-3'>
-                                    {plan.description}
-                                </p>
-                                <div className='flex items-center gap-2 text-[10px] font-semibold text-foreground/80'>
-                                    <Check className='w-2.5 h-2.5 text-accent' />
-                                    {plan.revisions} Revision Rounds
-                                </div>
-                                {plan.id === 'deluxe' && (
-                                    <div className='flex items-center gap-2 text-[10px] font-semibold text-foreground/80 mt-0.5'>
-                                        <Check className='w-2.5 h-2.5 text-accent' />
-                                        Priority Delivery
-                                    </div>
-                                )}
-                            </button>
-                        ))}
-                    </div>
+                <div className='flex items-center gap-2 font-semibold text-[10px] text-foreground/80'>
+                  <Check className='h-2.5 w-2.5 text-accent' />
+                  {plan.revisions} Revision Rounds
                 </div>
-
-                <Card className='rounded-xl border-none shadow-sm bg-white overflow-hidden'>
-                    <div className='bg-foreground py-2 px-4'>
-                        <h3 className='text-white text-sm font-medium'>Order Details</h3>
-                    </div>
-                    <CardContent className='p-4 grid gap-4 sm:grid-cols-2'>
-                        <div>
-                            <p className='text-[10px] font-bold uppercase tracking-wider text-foreground/40'>
-                                For
-                            </p>
-                            <p className='text-base font-medium'>
-                                {data.recipientName} ({data.recipient})
-                            </p>
-                        </div>
-                        <div>
-                            <p className='text-[10px] font-bold uppercase tracking-wider text-foreground/40'>
-                                Occasion
-                            </p>
-                            <p className='text-base font-medium'>{data.occasion}</p>
-                        </div>
-                    </CardContent>
-                </Card>
-
-                <div className='grid sm:grid-cols-2 gap-4'>
-                    <div className='space-y-2'>
-                        <Label htmlFor='buyerName' className='font-semibold'>Your Name</Label>
-                        <Input
-                            id='buyerName'
-                            placeholder='Full name'
-                            className='rounded-xl h-10 bg-white border-foreground/10 focus-visible:ring-primary/20 focus-visible:border-primary'
-                            {...register('buyerName')}
-                        />
-                        {errors.buyerName && (
-                            <p className='text-destructive text-xs mt-1'>
-                                {errors.buyerName.message as string}
-                            </p>
-                        )}
-                    </div>
-
-                    <div className='space-y-2'>
-                        <Label htmlFor='buyerEmail' className='font-semibold'>Your Email</Label>
-                        <Input
-                            id='buyerEmail'
-                            type='email'
-                            placeholder='email@example.com'
-                            className='rounded-xl h-10 bg-white border-foreground/10 focus-visible:ring-primary/20 focus-visible:border-primary'
-                            {...register('buyerEmail')}
-                        />
-                        {errors.buyerEmail && (
-                            <p className='text-destructive text-xs mt-1'>
-                                {errors.buyerEmail.message as string}
-                            </p>
-                        )}
-                    </div>
-                </div>
-            </div>
+                {plan.id === 'deluxe' && (
+                  <div className='mt-0.5 flex items-center gap-2 font-semibold text-[10px] text-foreground/80'>
+                    <Check className='h-2.5 w-2.5 text-accent' />
+                    Priority Delivery
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
-    )
+
+        <Card className='overflow-hidden rounded-xl border-none bg-white shadow-sm'>
+          <div className='bg-foreground px-4 py-2'>
+            <h3 className='font-medium text-sm text-white'>Order Details</h3>
+          </div>
+          <CardContent className='grid gap-4 p-4 sm:grid-cols-2'>
+            <div>
+              <p className='font-bold text-[10px] text-foreground/40 uppercase tracking-wider'>
+                For
+              </p>
+              <p className='font-medium text-base'>
+                {data.recipientName} ({data.recipient})
+              </p>
+            </div>
+            <div>
+              <p className='font-bold text-[10px] text-foreground/40 uppercase tracking-wider'>
+                Occasion
+              </p>
+              <p className='font-medium text-base'>{data.occasion}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className='grid gap-4 sm:grid-cols-2'>
+          <div className='space-y-2'>
+            <Label htmlFor='buyerName' className='font-semibold'>
+              Your Name
+            </Label>
+            <Input
+              id='buyerName'
+              placeholder='Full name'
+              className='h-10 rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
+              {...register('buyerName')}
+            />
+            <FormErrorMessage
+              message={errors.buyerName?.message as string}
+              trigger={validationTrigger}
+            />
+          </div>
+
+          <div className='space-y-2'>
+            <Label htmlFor='buyerEmail' className='font-semibold'>
+              Your Email
+            </Label>
+            <Input
+              id='buyerEmail'
+              type='email'
+              placeholder='email@example.com'
+              className='h-10 rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
+              {...register('buyerEmail')}
+            />
+            <FormErrorMessage
+              message={errors.buyerEmail?.message as string}
+              trigger={validationTrigger}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }

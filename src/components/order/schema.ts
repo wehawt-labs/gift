@@ -1,10 +1,10 @@
 import { z } from 'zod'
 import {
-  RECIPIENTS,
   GENRES,
+  PLAN_IDS,
+  RECIPIENTS,
   TEMPOS,
-  VOCAL_PREFERENCES,
-  PLAN_IDS
+  VOCAL_PREFERENCES
 } from './constants'
 
 export const orderSchema = z.object({
@@ -32,11 +32,9 @@ export const orderSchema = z.object({
   }),
 
   // Step 3: Story
-  memory: z
-    .string()
-    .min(20, 'Please share a bit more about your favorite memory'),
+  memory: z.string().optional(),
   jokes: z.string().optional(),
-  coreMessage: z.string().min(10, 'What is the main thing you want to say?'),
+  coreMessage: z.string().optional(),
 
   // Step 4: Final Info
   buyerName: z.string().min(1, 'Your name is required'),
