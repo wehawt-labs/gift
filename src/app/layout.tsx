@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Fraunces, Inter } from 'next/font/google'
+import Script from 'next/script'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
@@ -30,6 +31,10 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <Script
+          src='https://app.lemonsqueezy.com/js/lemon.js'
+          strategy='beforeInteractive'
+        />
       </body>
     </html>
   )

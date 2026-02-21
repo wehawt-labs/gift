@@ -1,12 +1,14 @@
 'use client'
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
-import { Check, ChevronLeft, ChevronRight, Zap } from 'lucide-react'
+import { Check, ChevronLeft, ChevronRight, Loader2, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import React, { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { createCheckoutSession } from '@/actions/checkout'
 import { Button } from '@/components/ui/button'
+import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { cn } from '@/lib/utils'
 import { PLANS, STAGES } from './constants'
 import { OrderSummary } from './order-summary'
@@ -21,6 +23,7 @@ export function OrderWizard() {
   const [currentStep, setCurrentStep] = useState(1)
   const [direction, setDirection] = useState(0)
   const [validationTrigger, setValidationTrigger] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const methods = useForm<OrderFormData>({
     resolver: standardSchemaResolver(orderSchema),
@@ -36,7 +39,7 @@ export function OrderWizard() {
       coreMessage: '',
       buyerName: '',
       buyerEmail: '',
-      plan: 'standard'
+      plan: LemonSqueezyPlan.STANDARD
     },
     mode: 'onBlur'
   })
@@ -140,10 +143,49 @@ export function OrderWizard() {
     setCurrentStep(stepId)
   }
 
-  const onSubmit = (data: OrderFormData) => {
-    console.log('Final Order Data:', data)
-    methods.reset(data)
-    alert('Order Placed! Redirecting to payment...')
+  const onSubmit = async (data: OrderFormData) => {
+    setIsSubmitting(true)
+    try {
+      const result = await createCheckoutSession({
+        plan: data.plan as LemonSqueezyPlan,
+        recipientName: data.recipientName,
+        recipientRelationship: data.recipient,
+        occasion: data.occasion,
+        storyPrompt: [data.memory, data.jokes, data.coreMessage]
+          .filter(Boolean)
+          .join('\n\n'),
+        genre: data.genre,
+        vibe: data.tempo,
+        buyerName: data.buyerName,
+        buyerEmail: data.buyerEmail,
+      })
+
+      if (!result.success || !result.checkoutUrl) {
+        toast.error('Checkout Error', {
+          description:
+            result.error ?? 'Failed to create checkout. Please try again.',
+        })
+        return
+      }
+
+      // Open LS checkout overlay
+      if (window.LemonSqueezy) {
+        window.LemonSqueezy.Url.Open(result.checkoutUrl)
+      } else {
+        // Fallback: redirect to checkout URL
+        window.location.href = result.checkoutUrl
+      }
+
+      // Reset dirty state so navigation guard doesn't block
+      methods.reset(data)
+    } catch (error) {
+      console.error('Checkout error:', error)
+      toast.error('Something went wrong', {
+        description: 'Please try again or contact support.',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -288,13 +330,24 @@ export function OrderWizard() {
                     <Button
                       type='submit'
                       size='lg'
+                      disabled={isSubmitting}
                       className='h-11 rounded-full bg-primary px-10 font-bold text-base text-white shadow-lg shadow-primary/20 hover:bg-primary/90'
                     >
-                      Proceed to Payment ($
-                      {(
-                        PLANS.find((p) => p.id === formData.plan) || PLANS[0]
-                      ).price.toFixed(2)}
-                      )
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                          Creating Checkout...
+                        </>
+                      ) : (
+                        <>
+                          Proceed to Payment ($
+                          {(
+                            PLANS.find((p) => p.id === formData.plan) ||
+                            PLANS[0]
+                          ).price.toFixed(2)}
+                          )
+                        </>
+                      )}
                     </Button>
                   )}
                 </div>

@@ -56,7 +56,7 @@ export function StepCheckout({
                     : 'border-foreground/5 bg-white/50 hover:border-foreground/20'
                 )}
               >
-                {plan.id === 'deluxe' && (
+                {plan.id === 'premium' && (
                   <div className='absolute top-0 right-0 rounded-bl-lg bg-primary px-2.5 py-0.5 font-bold text-[9px] text-white uppercase tracking-wider'>
                     Popular
                   </div>
@@ -76,7 +76,7 @@ export function StepCheckout({
                   <Check className='h-2.5 w-2.5 text-accent' />
                   {plan.revisions} Revision Rounds
                 </div>
-                {plan.id === 'deluxe' && (
+                {plan.id === 'premium' && (
                   <div className='mt-0.5 flex items-center gap-2 font-semibold text-[10px] text-foreground/80'>
                     <Check className='h-2.5 w-2.5 text-accent' />
                     Priority Delivery

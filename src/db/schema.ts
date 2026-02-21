@@ -119,3 +119,25 @@ export const orderMessages = pgTable('order_message', {
   isRead: boolean('isRead').notNull().default(false),
   createdAt: timestamp('createdAt').defaultNow().notNull()
 })
+
+// ─── Purchase (Lemon Squeezy payment tracking) ──────────────
+
+export const purchaseStatusEnum = pgEnum('purchase_status', [
+  'pending',
+  'paid',
+  'refunded',
+  'failed'
+])
+
+export const purchases = pgTable('purchase', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id),
+  orderId: uuid('orderId').references(() => orders.id),
+  lsOrderId: varchar('lsOrderId', { length: 255 }).unique(),
+  variantId: varchar('variantId', { length: 255 }).notNull(),
+  status: purchaseStatusEnum('status').notNull().default('pending'),
+  createdAt: timestamp('createdAt').defaultNow().notNull(),
+  updatedAt: timestamp('updatedAt').defaultNow().notNull()
+})
