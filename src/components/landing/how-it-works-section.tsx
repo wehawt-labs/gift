@@ -21,7 +21,7 @@ const steps = [
     number: 3,
     title: '24-Hour Delivery',
     description:
-      "For a limited time, receive your studio-quality custom song within just 24 hours. Ready to share, cherish, and gift forever.",
+      'For a limited time, receive your studio-quality custom song within just 24 hours. Ready to share, cherish, and gift forever.',
     icon: Zap,
     color: 'bg-primary/10 text-primary'
   }
@@ -33,12 +33,10 @@ export function HowItWorksSection() {
       <div className='mx-auto max-w-7xl px-6 lg:px-8'>
         {/* Header */}
         <div className='text-center'>
-          <h2 className='font-bold font-heading text-3xl text-foreground md:text-4xl'>
-            How it works
-          </h2>
+          <h2 className='font-bold font-heading text-3xl text-foreground md:text-4xl'>How it works</h2>
           <p className='mx-auto mt-4 max-w-2xl text-lg text-muted-foreground'>
-            We make it incredibly easy to create a studio-quality song that
-            captures your unique story in three simple steps.
+            We make it incredibly easy to create a studio-quality song that captures your unique story in three simple
+            steps.
           </p>
         </div>
 
@@ -50,9 +48,7 @@ export function HowItWorksSection() {
               className='relative rounded-3xl bg-card p-8 shadow-sm transition-shadow hover:shadow-md'
             >
               {/* Icon */}
-              <div
-                className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${step.color}`}
-              >
+              <div className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${step.color}`}>
                 <step.icon className='h-6 w-6' />
               </div>
 

@@ -4,22 +4,12 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { OCCASIONS, RECIPIENT_OPTIONS } from '../constants'
 import type { OrderFormData } from '../schema'
 
-export function StepBasics({
-  validationTrigger
-}: {
-  validationTrigger: number
-}) {
+export function StepBasics({ validationTrigger }: { validationTrigger: number }) {
   const {
     register,
     setValue,
@@ -32,12 +22,8 @@ export function StepBasics({
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-serif text-2xl text-foreground leading-tight'>
-          Let's start with the basics
-        </h2>
-        <p className='mt-1 text-base text-foreground/60'>
-          Who is this masterpiece for?
-        </p>
+        <h2 className='font-bold font-serif text-2xl text-foreground leading-tight'>Let's start with the basics</h2>
+        <p className='mt-1 text-base text-foreground/60'>Who is this masterpiece for?</p>
       </div>
 
       <div className='space-y-4'>
@@ -64,17 +50,13 @@ export function StepBasics({
                 <opt.icon
                   className={cn(
                     'mb-2 h-6 w-6 transition-colors',
-                    recipient === opt.value
-                      ? 'text-primary'
-                      : 'text-foreground/40 group-hover:text-foreground/60'
+                    recipient === opt.value ? 'text-primary' : 'text-foreground/40 group-hover:text-foreground/60'
                   )}
                 />
                 <span
                   className={cn(
                     'font-medium text-xs',
-                    recipient === opt.value
-                      ? 'text-foreground'
-                      : 'text-foreground/60'
+                    recipient === opt.value ? 'text-foreground' : 'text-foreground/60'
                   )}
                 >
                   {opt.label}
@@ -82,10 +64,7 @@ export function StepBasics({
               </button>
             ))}
           </div>
-          <FormErrorMessage
-            message={errors.recipient?.message}
-            trigger={validationTrigger}
-          />
+          <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
         </div>
 
         <div className='grid gap-4 sm:grid-cols-2'>
@@ -99,20 +78,12 @@ export function StepBasics({
               className='h-10 rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('recipientName')}
             />
-            <FormErrorMessage
-              message={errors.recipientName?.message}
-              trigger={validationTrigger}
-            />
+            <FormErrorMessage message={errors.recipientName?.message} trigger={validationTrigger} />
           </div>
 
           <div className='space-y-2'>
             <Label className='font-semibold'>What's the occasion?</Label>
-            <Select
-              onValueChange={(v) =>
-                setValue('occasion', v, { shouldValidate: true })
-              }
-              value={occasion}
-            >
+            <Select onValueChange={(v) => setValue('occasion', v, { shouldValidate: true })} value={occasion}>
               <SelectTrigger className='h-10 w-full rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'>
                 <SelectValue placeholder='Select an occasion' />
               </SelectTrigger>
@@ -124,10 +95,7 @@ export function StepBasics({
                 ))}
               </SelectContent>
             </Select>
-            <FormErrorMessage
-              message={errors.occasion?.message}
-              trigger={validationTrigger}
-            />
+            <FormErrorMessage message={errors.occasion?.message} trigger={validationTrigger} />
           </div>
         </div>
       </div>

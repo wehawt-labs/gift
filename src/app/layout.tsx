@@ -26,15 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body
-        className={`${body.variable} ${heading.variable} font-body text-foreground antialiased`}
-      >
+      <body className={`${body.variable} ${heading.variable} font-body text-foreground antialiased`}>
         {children}
         <Toaster />
-        <Script
-          src='https://app.lemonsqueezy.com/js/lemon.js'
-          strategy='beforeInteractive'
-        />
+        <Script src='https://app.lemonsqueezy.com/js/lemon.js' strategy='beforeInteractive' />
       </body>
     </html>
   )

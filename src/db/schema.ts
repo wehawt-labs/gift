@@ -1,13 +1,4 @@
-import {
-  boolean,
-  integer,
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  uuid,
-  varchar
-} from 'drizzle-orm/pg-core'
+import { boolean, integer, pgEnum, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 // BetterAuth tables
 export const users = pgTable('user', {
@@ -122,12 +113,7 @@ export const orderMessages = pgTable('order_message', {
 
 // ─── Purchase (Lemon Squeezy payment tracking) ──────────────
 
-export const purchaseStatusEnum = pgEnum('purchase_status', [
-  'pending',
-  'paid',
-  'refunded',
-  'failed'
-])
+export const purchaseStatusEnum = pgEnum('purchase_status', ['pending', 'paid', 'refunded', 'failed'])
 
 export const purchases = pgTable('purchase', {
   id: uuid('id').primaryKey().defaultRandom(),

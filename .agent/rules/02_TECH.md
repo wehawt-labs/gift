@@ -32,7 +32,7 @@ trigger: manual
 |---------|----------|---------|
 | Payments | Lemon Squeezy | Merchant of Record, Webhooks |
 | Storage | Cloudflare R2 | MP3s, Cover Art (Presigned URLs) |
-| Email | Resend | React Email templates |
+| Email | AWS SES + React Email | Transactional emails (order created, thank you) |
 
 ## 4. Required Dependencies
 
@@ -43,7 +43,7 @@ pnpm add better-auth
 pnpm add zod react-hook-form @hookform/resolvers
 pnpm add framer-motion
 pnpm add @aws-sdk/client-s3 @aws-sdk/s3-request-presigner
-pnpm add resend @react-email/components
+pnpm add @aws-sdk/client-ses @react-email/components @react-email/render
 pnpm add wavesurfer.js
 
 # Dev

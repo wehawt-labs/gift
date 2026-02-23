@@ -1,11 +1,5 @@
 import { z } from 'zod'
-import {
-  GENRES,
-  PLAN_IDS,
-  RECIPIENTS,
-  TEMPOS,
-  VOCAL_PREFERENCES
-} from './constants'
+import { GENRES, PLAN_IDS, RECIPIENTS, TEMPOS, VOCAL_PREFERENCES } from './constants'
 
 export const orderSchema = z.object({
   // Plan Selection (often chosen first or at checkout)

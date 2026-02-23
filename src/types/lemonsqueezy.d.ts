@@ -7,32 +7,22 @@ interface LemonSqueezyUrlMethods {
   /**
    * Opens a checkout URL in the Lemon Squeezy overlay.
    */
-  Open: (url: string) => void;
+  Open: (url: string) => void
   /**
    * Closes the currently open checkout overlay.
    */
-  Close: () => void;
-}
-
-interface LemonSqueezyEventHandler {
-  Setup: (options: {
-    eventHandler: (event: { event: string; data?: unknown }) => void;
-  }) => void;
+  Close: () => void
 }
 
 interface LemonSqueezyInstance {
-  Url: LemonSqueezyUrlMethods;
+  Url: LemonSqueezyUrlMethods
   /**
    * Refreshes lemon.js listeners (useful after dynamic DOM updates).
    */
-  Refresh: () => void;
+  Refresh: () => void
 }
 
-declare global {
-  interface Window {
-    LemonSqueezy?: LemonSqueezyInstance;
-    createLemonSqueezy?: () => void;
-  }
+interface Window {
+  LemonSqueezy?: LemonSqueezyInstance
+  createLemonSqueezy?: () => void
 }
-
-export {};

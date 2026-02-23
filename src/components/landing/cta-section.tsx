@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 
@@ -33,12 +33,11 @@ export function CtaSection() {
 
           {/* Note */}
           <div className='mt-6 space-y-2'>
-            <p className='text-background font-bold text-sm'>
+            <p className='font-bold text-background text-sm'>
               💝 14/2 Valentine's Sale: Priority Queue + 24h Delivery Included
             </p>
             <p className='text-background/60 text-xs'>
-              Last minute gift? Order now to get it in time for Valentine's Day.
-              100% money-back guarantee.
+              Last minute gift? Order now to get it in time for Valentine's Day. 100% money-back guarantee.
             </p>
           </div>
         </div>

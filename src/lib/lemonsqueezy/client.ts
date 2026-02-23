@@ -1,27 +1,26 @@
 /**
  * Server-side Lemon Squeezy API client.
- * Creates checkout sessions via the LS API.
+ * Creates checkout sessions via the official LS SDK.
  */
 
-import { getLemonSqueezyConfig } from './constants';
-
-const LEMON_SQUEEZY_API_BASE = 'https://api.lemonsqueezy.com/v1';
+import { createCheckout as createLSCheckout } from '@lemonsqueezy/lemonsqueezy.js'
+import { getLemonSqueezyConfig } from './constants'
 
 interface CreateCheckoutParams {
-  variantId: string;
-  userId: string;
-  orderId: string;
-  buyerName: string;
-  buyerEmail: string;
-  redirectUrl?: string;
+  variantId: string
+  userId: string
+  orderId: string
+  buyerName: string
+  buyerEmail: string
+  redirectUrl?: string
 }
 
 interface CheckoutResponse {
-  url: string;
+  url: string
 }
 
 /**
- * Creates a Lemon Squeezy checkout session.
+ * Creates a Lemon Squeezy checkout session using the official SDK.
  *
  * - Pre-fills customer name & email
  * - Passes userId + orderId as custom data for webhook correlation
@@ -33,72 +32,37 @@ export async function createCheckout({
   orderId,
   buyerName,
   buyerEmail,
-  redirectUrl,
+  redirectUrl
 }: CreateCheckoutParams): Promise<CheckoutResponse> {
-  const config = getLemonSqueezyConfig();
+  const config = getLemonSqueezyConfig()
 
-  const payload = {
-    data: {
-      type: 'checkouts',
-      attributes: {
-        checkout_options: {
-          embed: true,
-        },
-        checkout_data: {
-          email: buyerEmail,
-          name: buyerName,
-          custom: {
-            user_id: userId,
-            order_id: orderId,
-          },
-        },
-        product_options: {
-          redirect_url:
-            redirectUrl ??
-            `${process.env.BETTER_AUTH_URL ?? 'http://localhost:3000'}/order/success`,
-        },
-      },
-      relationships: {
-        store: {
-          data: {
-            type: 'stores',
-            id: config.storeId,
-          },
-        },
-        variant: {
-          data: {
-            type: 'variants',
-            id: variantId,
-          },
-        },
-      },
+  const { data, error } = await createLSCheckout(config.storeId, variantId, {
+    checkoutOptions: {
+      embed: true
     },
-  };
-
-  const response = await fetch(`${LEMON_SQUEEZY_API_BASE}/checkouts`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${config.apiKey}`,
+    checkoutData: {
+      email: buyerEmail,
+      name: buyerName,
+      custom: {
+        user_id: userId,
+        order_id: orderId
+      }
     },
-    body: JSON.stringify(payload),
-  });
+    productOptions: {
+      redirectUrl: redirectUrl ?? `${process.env.BETTER_AUTH_URL ?? 'http://localhost:3000'}/order/success`
+    }
+  })
 
-  if (!response.ok) {
-    const errorBody = await response.text();
-    console.error('Lemon Squeezy checkout error:', errorBody);
-    throw new Error(
-      `Failed to create Lemon Squeezy checkout: ${response.status}`,
-    );
+  if (error) {
+    console.error('Lemon Squeezy SDK error:', error)
+    throw new Error(`Failed to create Lemon Squeezy checkout: ${error.message}`)
   }
 
-  const result = await response.json();
-  const checkoutUrl = result.data?.attributes?.url;
+  const checkoutUrl = data?.data.attributes.url
 
   if (!checkoutUrl) {
-    throw new Error('No checkout URL returned from Lemon Squeezy');
+    throw new Error('No checkout URL returned from Lemon Squeezy')
   }
 
-  return { url: checkoutUrl };
+  return { url: checkoutUrl }
 }

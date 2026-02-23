@@ -10,9 +10,7 @@ import { Button } from '@/components/ui/button'
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [url] = useState(
-    'https://www.sandvik.com/globalassets/media/sample-audio.mp3'
-  )
+  const [url] = useState('https://www.sandvik.com/globalassets/media/sample-audio.mp3')
 
   const { wavesurfer, isPlaying, currentTime } = useWavesurfer({
     container: containerRef,
@@ -44,7 +42,7 @@ export function HeroSection() {
           {/* Left content */}
           <div className='flex flex-col items-center text-center lg:items-start lg:text-left'>
             {/* Badge */}
-            <div className='mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 font-bold text-primary text-sm animate-bounce'>
+            <div className='mb-6 inline-flex animate-bounce items-center rounded-full bg-primary/10 px-4 py-1.5 font-bold text-primary text-sm'>
               💝 14/2 SALE: STARTING AT $19 • 24H DELIVERY
             </div>
 
@@ -57,9 +55,8 @@ export function HeroSection() {
 
             {/* Description */}
             <p className='mt-6 max-w-lg text-lg text-muted-foreground'>
-              The perfect gift for the people who mean the world to you. We
-              create meaningful, personalized songs inspired by your unique
-              stories and memories.
+              The perfect gift for the people who mean the world to you. We create meaningful, personalized songs
+              inspired by your unique stories and memories.
             </p>
 
             {/* CTAs */}
@@ -75,12 +72,7 @@ export function HeroSection() {
                   </Link>
                 }
               />
-              <Button
-                variant='outline'
-                size='lg'
-                className='rounded-full px-8'
-                onClick={onPlayPause}
-              >
+              <Button variant='outline' size='lg' className='rounded-full px-8' onClick={onPlayPause}>
                 <Headphones className='mr-2 h-4 w-4' />
                 Listen to Samples
               </Button>
@@ -91,13 +83,7 @@ export function HeroSection() {
           <div className='relative'>
             {/* Main image */}
             <div className='relative aspect-4/3 overflow-hidden rounded-3xl bg-muted'>
-              <Image
-                src='/hero-couple.jpg'
-                alt='Happy couple'
-                fill
-                className='object-cover'
-                priority
-              />
+              <Image src='/hero-couple.jpg' alt='Happy couple' fill className='object-cover' priority />
             </div>
 
             {/* Floating audio player card */}
@@ -108,22 +94,14 @@ export function HeroSection() {
                   onClick={onPlayPause}
                   className='flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30'
                 >
-                  {isPlaying ? (
-                    <Pause className='h-5 w-5' />
-                  ) : (
-                    <Play className='ml-1 h-5 w-5' />
-                  )}
+                  {isPlaying ? <Pause className='h-5 w-5' /> : <Play className='ml-1 h-5 w-5' />}
                 </button>
                 <div className='min-w-0 flex-1'>
-                  <p className='truncate font-medium text-foreground text-sm'>
-                    Our First Anniversary
-                  </p>
+                  <p className='truncate font-medium text-foreground text-sm'>Our First Anniversary</p>
                   {/* Waveform container */}
                   <div className='mt-2 h-8' ref={containerRef} />
                 </div>
-                <span className='text-muted-foreground text-sm'>
-                  {formatTime(currentTime)}
-                </span>
+                <span className='text-muted-foreground text-sm'>{formatTime(currentTime)}</span>
               </div>
             </div>
           </div>

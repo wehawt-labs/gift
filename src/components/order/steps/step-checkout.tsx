@@ -10,11 +10,7 @@ import { cn } from '@/lib/utils'
 import { PLANS } from '../constants'
 import type { OrderFormData } from '../schema'
 
-export function StepCheckout({
-  validationTrigger
-}: {
-  validationTrigger: number
-}) {
+export function StepCheckout({ validationTrigger }: { validationTrigger: number }) {
   const {
     register,
     setValue,
@@ -26,12 +22,8 @@ export function StepCheckout({
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-serif text-2xl text-foreground'>
-          Review & Checkout
-        </h2>
-        <p className='mt-1 text-base text-foreground/60'>
-          One last look before we start creating.
-        </p>
+        <h2 className='font-bold font-serif text-2xl text-foreground'>Review & Checkout</h2>
+        <p className='mt-1 text-base text-foreground/60'>One last look before we start creating.</p>
       </div>
 
       <div className='space-y-6'>
@@ -62,16 +54,10 @@ export function StepCheckout({
                   </div>
                 )}
                 <div className='mb-1 flex items-center justify-between'>
-                  <span className='font-bold text-base text-foreground'>
-                    {plan.name}
-                  </span>
-                  <span className='font-bold text-primary text-sm'>
-                    ${plan.price}
-                  </span>
+                  <span className='font-bold text-base text-foreground'>{plan.name}</span>
+                  <span className='font-bold text-primary text-sm'>${plan.price}</span>
                 </div>
-                <p className='mb-3 text-foreground/60 text-xs'>
-                  {plan.description}
-                </p>
+                <p className='mb-3 text-foreground/60 text-xs'>{plan.description}</p>
                 <div className='flex items-center gap-2 font-semibold text-[10px] text-foreground/80'>
                   <Check className='h-2.5 w-2.5 text-accent' />
                   {plan.revisions} Revision Rounds
@@ -93,17 +79,13 @@ export function StepCheckout({
           </div>
           <CardContent className='grid gap-4 p-4 sm:grid-cols-2'>
             <div>
-              <p className='font-bold text-[10px] text-foreground/40 uppercase tracking-wider'>
-                For
-              </p>
+              <p className='font-bold text-[10px] text-foreground/40 uppercase tracking-wider'>For</p>
               <p className='font-medium text-base'>
                 {data.recipientName} ({data.recipient})
               </p>
             </div>
             <div>
-              <p className='font-bold text-[10px] text-foreground/40 uppercase tracking-wider'>
-                Occasion
-              </p>
+              <p className='font-bold text-[10px] text-foreground/40 uppercase tracking-wider'>Occasion</p>
               <p className='font-medium text-base'>{data.occasion}</p>
             </div>
           </CardContent>
@@ -120,10 +102,7 @@ export function StepCheckout({
               className='h-10 rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('buyerName')}
             />
-            <FormErrorMessage
-              message={errors.buyerName?.message as string}
-              trigger={validationTrigger}
-            />
+            <FormErrorMessage message={errors.buyerName?.message as string} trigger={validationTrigger} />
           </div>
 
           <div className='space-y-2'>
@@ -137,10 +116,7 @@ export function StepCheckout({
               className='h-10 rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('buyerEmail')}
             />
-            <FormErrorMessage
-              message={errors.buyerEmail?.message as string}
-              trigger={validationTrigger}
-            />
+            <FormErrorMessage message={errors.buyerEmail?.message as string} trigger={validationTrigger} />
           </div>
         </div>
       </div>

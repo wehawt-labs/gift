@@ -7,11 +7,7 @@ import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
-export function StepStory({
-  validationTrigger
-}: {
-  validationTrigger: number
-}) {
+export function StepStory({ validationTrigger }: { validationTrigger: number }) {
   const {
     register,
     formState: { errors }
@@ -20,12 +16,8 @@ export function StepStory({
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-serif text-2xl text-foreground'>
-          Tell their story
-        </h2>
-        <p className='mt-1 text-base text-foreground/60'>
-          Give us the details, our AI will handle the rhymes.
-        </p>
+        <h2 className='font-bold font-serif text-2xl text-foreground'>Tell their story</h2>
+        <p className='mt-1 text-base text-foreground/60'>Give us the details, our AI will handle the rhymes.</p>
       </div>
 
       <div className='space-y-4'>
@@ -39,10 +31,7 @@ export function StepStory({
             className='min-h-[80px] rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
             {...register('memory')}
           />
-          <FormErrorMessage
-            message={errors.memory?.message as string}
-            trigger={validationTrigger}
-          />
+          <FormErrorMessage message={errors.memory?.message as string} trigger={validationTrigger} />
         </div>
 
         <div className='space-y-2'>
@@ -67,10 +56,7 @@ export function StepStory({
             className='min-h-[80px] rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
             {...register('coreMessage')}
           />
-          <FormErrorMessage
-            message={errors.coreMessage?.message as string}
-            trigger={validationTrigger}
-          />
+          <FormErrorMessage message={errors.coreMessage?.message as string} trigger={validationTrigger} />
         </div>
 
         <Button

@@ -16,10 +16,7 @@ export function TrustSection() {
         </p>
         <div className='mt-8 flex flex-wrap items-center justify-center gap-8 md:gap-16'>
           {trustLogos.map((logo) => (
-            <div
-              key={logo.name}
-              className='flex items-center gap-2 text-muted-foreground'
-            >
+            <div key={logo.name} className='flex items-center gap-2 text-muted-foreground'>
               <logo.icon className='h-5 w-5' />
               <span className='font-medium'>{logo.name}</span>
             </div>

@@ -5,8 +5,7 @@ const features = [
   {
     icon: Mic,
     title: 'High-Fidelity Audio',
-    description:
-      'Polished, high-quality audio production ready for any speaker.'
+    description: 'Polished, high-quality audio production ready for any speaker.'
   },
   {
     icon: Sparkles,
@@ -60,9 +59,7 @@ export function FeaturesSection() {
                 <p className='mt-3 text-muted-foreground text-sm italic'>
                   "My wife cried happy tears. Best anniversary gift ever."
                 </p>
-                <p className='mt-2 font-medium text-foreground text-sm'>
-                  — Michael
-                </p>
+                <p className='mt-2 font-medium text-foreground text-sm'>— Michael</p>
               </div>
             </div>
           </div>
@@ -70,13 +67,11 @@ export function FeaturesSection() {
           {/* Right - Content */}
           <div>
             <h2 className='font-bold font-heading text-3xl text-foreground md:text-4xl'>
-              More than just a song. It's a{' '}
-              <span className='text-primary italic'>moment.</span>
+              More than just a song. It's a <span className='text-primary italic'>moment.</span>
             </h2>
             <p className='mt-6 text-lg text-muted-foreground'>
-              Music has the power to bring back memories more vividly than any
-              photo. We don't just put words to music; we capture the essence of
-              your story in a unique composition.
+              Music has the power to bring back memories more vividly than any photo. We don't just put words to music;
+              we capture the essence of your story in a unique composition.
             </p>
 
             {/* Feature list */}
@@ -87,12 +82,8 @@ export function FeaturesSection() {
                     <Check className='h-5 w-5 text-accent' />
                   </div>
                   <div>
-                    <h3 className='font-semibold text-foreground'>
-                      {feature.title}
-                    </h3>
-                    <p className='text-muted-foreground text-sm'>
-                      {feature.description}
-                    </p>
+                    <h3 className='font-semibold text-foreground'>{feature.title}</h3>
+                    <p className='text-muted-foreground text-sm'>{feature.description}</p>
                   </div>
                 </div>
               ))}

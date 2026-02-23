@@ -22,9 +22,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-serif text-2xl text-foreground'>
-          Set the mood
-        </h2>
+        <h2 className='font-bold font-serif text-2xl text-foreground'>Set the mood</h2>
       </div>
 
       <div className='space-y-6'>
@@ -55,10 +53,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               </button>
             ))}
           </div>
-          <FormErrorMessage
-            message={errors.genre?.message}
-            trigger={validationTrigger}
-          />
+          <FormErrorMessage message={errors.genre?.message} trigger={validationTrigger} />
         </div>
 
         <div className='grid gap-8 sm:grid-cols-2'>
@@ -66,9 +61,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             <Label className='font-semibold'>Tempo/Mood</Label>
             <RadioGroup
               value={tempo}
-              onValueChange={(v) =>
-                setValue('tempo', v as any, { shouldValidate: true })
-              }
+              onValueChange={(v) => setValue('tempo', v as any, { shouldValidate: true })}
               className='flex flex-col gap-1.5'
             >
               {TEMPOS.map((mood) => (
@@ -77,28 +70,20 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                   className='flex items-center space-x-3 rounded-xl border border-foreground/5 bg-white p-2.5 shadow-sm'
                 >
                   <RadioGroupItem value={mood} id={`mood-${mood}`} />
-                  <Label
-                    htmlFor={`mood-${mood}`}
-                    className='flex-1 cursor-pointer font-medium text-sm'
-                  >
+                  <Label htmlFor={`mood-${mood}`} className='flex-1 cursor-pointer font-medium text-sm'>
                     {mood}
                   </Label>
                 </div>
               ))}
             </RadioGroup>
-            <FormErrorMessage
-              message={errors.tempo?.message}
-              trigger={validationTrigger}
-            />
+            <FormErrorMessage message={errors.tempo?.message} trigger={validationTrigger} />
           </div>
 
           <div className='space-y-4'>
             <Label className='font-semibold'>Vocal preference</Label>
             <RadioGroup
               value={vocalPreference}
-              onValueChange={(v) =>
-                setValue('vocalPreference', v as any, { shouldValidate: true })
-              }
+              onValueChange={(v) => setValue('vocalPreference', v as any, { shouldValidate: true })}
               className='flex flex-col gap-1.5'
             >
               {VOCAL_PREFERENCES.map((vocal) => (
@@ -107,19 +92,13 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                   className='flex items-center space-x-3 rounded-xl border border-foreground/5 bg-white p-2.5 shadow-sm'
                 >
                   <RadioGroupItem value={vocal} id={`vocal-${vocal}`} />
-                  <Label
-                    htmlFor={`vocal-${vocal}`}
-                    className='flex-1 cursor-pointer font-medium text-sm'
-                  >
+                  <Label htmlFor={`vocal-${vocal}`} className='flex-1 cursor-pointer font-medium text-sm'>
                     {vocal}
                   </Label>
                 </div>
               ))}
             </RadioGroup>
-            <FormErrorMessage
-              message={errors.vocalPreference?.message}
-              trigger={validationTrigger}
-            />
+            <FormErrorMessage message={errors.vocalPreference?.message} trigger={validationTrigger} />
           </div>
         </div>
       </div>

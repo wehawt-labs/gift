@@ -1,3 +1,4 @@
+/// <reference path="../../types/lemonsqueezy.d.ts" />
 'use client'
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
@@ -99,10 +100,8 @@ export function OrderWizard() {
 
   const nextStep = async () => {
     let fieldsToValidate: (keyof OrderFormData)[] = []
-    if (currentStep === 1)
-      fieldsToValidate = ['recipient', 'recipientName', 'occasion']
-    if (currentStep === 2)
-      fieldsToValidate = ['genre', 'tempo', 'vocalPreference']
+    if (currentStep === 1) fieldsToValidate = ['recipient', 'recipientName', 'occasion']
+    if (currentStep === 2) fieldsToValidate = ['genre', 'tempo', 'vocalPreference']
     if (currentStep === 3) fieldsToValidate = ['memory', 'coreMessage']
 
     const isValid = await trigger(fieldsToValidate)
@@ -126,10 +125,8 @@ export function OrderWizard() {
     // If jumping forward, validate current step fields
     if (stepId > currentStep) {
       let fieldsToValidate: (keyof OrderFormData)[] = []
-      if (currentStep === 1)
-        fieldsToValidate = ['recipient', 'recipientName', 'occasion']
-      if (currentStep === 2)
-        fieldsToValidate = ['genre', 'tempo', 'vocalPreference']
+      if (currentStep === 1) fieldsToValidate = ['recipient', 'recipientName', 'occasion']
+      if (currentStep === 2) fieldsToValidate = ['genre', 'tempo', 'vocalPreference']
       if (currentStep === 3) fieldsToValidate = ['memory', 'coreMessage']
 
       const isValid = await trigger(fieldsToValidate)
@@ -151,37 +148,47 @@ export function OrderWizard() {
         recipientName: data.recipientName,
         recipientRelationship: data.recipient,
         occasion: data.occasion,
-        storyPrompt: [data.memory, data.jokes, data.coreMessage]
-          .filter(Boolean)
-          .join('\n\n'),
+        storyPrompt: [data.memory, data.jokes, data.coreMessage].filter(Boolean).join('\n\n'),
         genre: data.genre,
         vibe: data.tempo,
         buyerName: data.buyerName,
-        buyerEmail: data.buyerEmail,
+        buyerEmail: data.buyerEmail
       })
 
       if (!result.success || !result.checkoutUrl) {
         toast.error('Checkout Error', {
-          description:
-            result.error ?? 'Failed to create checkout. Please try again.',
+          description: result.error ?? 'Failed to create checkout. Please try again.'
         })
         return
       }
 
+      // Reset dirty state so navigation guard doesn't block
+      methods.reset(data)
+
       // Open LS checkout overlay
       if (window.LemonSqueezy) {
         window.LemonSqueezy.Url.Open(result.checkoutUrl)
+
+        // Listen for checkout close/complete — redirect to confirmation page
+        window.addEventListener(
+          'message',
+          (event: MessageEvent) => {
+            if (typeof event.data === 'string' && event.data === 'close') {
+              // Overlay closed — redirect to confirmation with orderId for polling
+              const successUrl = `/order/success${result.orderId ? `?orderId=${result.orderId}` : ''}`
+              window.location.href = successUrl
+            }
+          },
+          { once: true }
+        )
       } else {
-        // Fallback: redirect to checkout URL
+        // Fallback: redirect to checkout URL directly
         window.location.href = result.checkoutUrl
       }
-
-      // Reset dirty state so navigation guard doesn't block
-      methods.reset(data)
     } catch (error) {
       console.error('Checkout error:', error)
       toast.error('Something went wrong', {
-        description: 'Please try again or contact support.',
+        description: 'Please try again or contact support.'
       })
     } finally {
       setIsSubmitting(false)
@@ -237,9 +244,7 @@ export function OrderWizard() {
                   <span
                     className={cn(
                       'absolute -bottom-6 whitespace-nowrap font-semibold text-xs transition-colors',
-                      currentStep >= stage.id
-                        ? 'text-foreground'
-                        : 'text-muted-foreground group-hover:text-primary'
+                      currentStep >= stage.id ? 'text-foreground' : 'text-muted-foreground group-hover:text-primary'
                     )}
                   >
                     {stage.name}
@@ -288,18 +293,10 @@ export function OrderWizard() {
                     exit='exit'
                     transition={{ duration: 0.4, ease: 'easeOut' }}
                   >
-                    {currentStep === 1 && (
-                      <StepBasics validationTrigger={validationTrigger} />
-                    )}
-                    {currentStep === 2 && (
-                      <StepVibe validationTrigger={validationTrigger} />
-                    )}
-                    {currentStep === 3 && (
-                      <StepStory validationTrigger={validationTrigger} />
-                    )}
-                    {currentStep === 4 && (
-                      <StepCheckout validationTrigger={validationTrigger} />
-                    )}
+                    {currentStep === 1 && <StepBasics validationTrigger={validationTrigger} />}
+                    {currentStep === 2 && <StepVibe validationTrigger={validationTrigger} />}
+                    {currentStep === 3 && <StepStory validationTrigger={validationTrigger} />}
+                    {currentStep === 4 && <StepCheckout validationTrigger={validationTrigger} />}
                   </motion.div>
                 </AnimatePresence>
 
@@ -341,11 +338,7 @@ export function OrderWizard() {
                       ) : (
                         <>
                           Proceed to Payment ($
-                          {(
-                            PLANS.find((p) => p.id === formData.plan) ||
-                            PLANS[0]
-                          ).price.toFixed(2)}
-                          )
+                          {(PLANS.find((p) => p.id === formData.plan) || PLANS[0]).price.toFixed(2)})
                         </>
                       )}
                     </Button>

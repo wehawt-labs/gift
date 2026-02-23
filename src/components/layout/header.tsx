@@ -21,9 +21,7 @@ export function Header() {
             <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-primary'>
               <Music className='h-4 w-4 text-primary-foreground' />
             </div>
-            <span className='font-semibold text-foreground text-xl'>
-              GiftOfSong
-            </span>
+            <span className='font-semibold text-foreground text-xl'>GiftOfSong</span>
           </Link>
         </div>
 
@@ -68,16 +66,8 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <button
-            type='button'
-            className='lg:hidden'
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? (
-              <X className='h-6 w-6' />
-            ) : (
-              <Menu className='h-6 w-6' />
-            )}
+          <button type='button' className='lg:hidden' onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X className='h-6 w-6' /> : <Menu className='h-6 w-6' />}
           </button>
         </div>
       </nav>
@@ -86,22 +76,13 @@ export function Header() {
       {mobileMenuOpen && (
         <div className='lg:hidden'>
           <div className='space-y-1 px-6 pb-4'>
-            <Link
-              href='#how-it-works'
-              className='block py-2 font-medium text-base text-foreground/70'
-            >
+            <Link href='#how-it-works' className='block py-2 font-medium text-base text-foreground/70'>
               How it Works
             </Link>
-            <Link
-              href='#samples'
-              className='block py-2 font-medium text-base text-foreground/70'
-            >
+            <Link href='#samples' className='block py-2 font-medium text-base text-foreground/70'>
               Samples
             </Link>
-            <Link
-              href='#pricing'
-              className='block py-2 font-medium text-base text-foreground/70'
-            >
+            <Link href='#pricing' className='block py-2 font-medium text-base text-foreground/70'>
               Pricing
             </Link>
             {!isOrderPage && (

@@ -23,6 +23,9 @@ src/
 │   ├── order/               # Public order wizard
 │   │   └── new/
 │   ├── api/
+│   │   ├── orders/
+│   │   │   └── [orderId]/
+│   │   │       └── status/  # Order status polling
 │   │   └── webhooks/
 │   │       └── lemonsqueezy/
 │   ├── layout.tsx
@@ -39,10 +42,17 @@ src/
 │   │   ├── index.ts         # DB connection
 │   │   └── queries.ts       # Reusable queries
 │   ├── auth.ts              # BetterAuth config
+│   ├── email.ts             # AWS SES send utility
+│   ├── email/
+│   │   └── templates/       # React Email templates
+│   │       ├── order-created.tsx   # Pre-payment email
+│   │       └── order-thankyou.tsx  # Post-payment email
+│   ├── lemonsqueezy/        # LS client, config, user resolution
 │   ├── r2.ts                # Cloudflare R2 helpers
-│   ├── email.ts             # Resend helpers
 │   └── utils.ts             # cn(), helpers
 ├── actions/                 # Server Actions
+│   ├── checkout.ts          # Create checkout session
+│   ├── retry-checkout.ts    # Retry payment for pending orders
 │   ├── order.ts
 │   ├── song.ts
 │   └── message.ts

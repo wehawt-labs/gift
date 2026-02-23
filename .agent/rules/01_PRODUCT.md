@@ -21,14 +21,28 @@ GiftOfSong is a personalized song creation service where users purchase custom s
    - Occasion: Birthday, Anniversary, etc.
    - Story/Details: The memories/prompt input
    - Vibe/Genre: User selects style
-   - Payment: User pays via Lemon Squeezy (One-time payment)
+   - Checkout: User confirms order details
 
-3. **Order Dashboard:**
+3. **Order Created:**
+   - Order saved to DB (`pending_payment`)
+   - "Your Song is Being Crafted" email sent with order summary + retry payment link
+   - Lemon Squeezy payment popup opens
+
+4. **Payment Confirmed:**
+   - LS webhook updates order to `paid`
+   - "Thank You" email sent with order details + refinement info
+   - User can reply to email or contact support to adjust song details before production
+
+5. **Payment Recovery:**
+   - If user closes tab mid-payment, they can use the email link to return and retry
+   - Success page shows "Complete Your Order" button after polling timeout
+
+6. **Order Dashboard:**
    - User lands on a "Track Order" page
    - Status: `Pending Payment` → `Song Chef Cooking` (Processing) → `Ready for Review`
    - Chat Interface: A comment section allows users to refine requests before creation or give feedback after delivery
 
-4. **Delivery:** User listens to the song via a custom web player and can download the MP3.
+7. **Delivery:** User listens to the song via a custom web player and can download the MP3.
 
 ### B. Admin (Fulfillment) Flow
 
@@ -43,7 +57,7 @@ GiftOfSong is a personalized song creation service where users purchase custom s
    - Upload the MP3 + Lyrics + Cover Art to the Admin Panel
    - System uploads assets to Cloudflare R2
    - Order status updates to "Completed/Review"
-   - Resend triggers an email notification to the user
+   - AWS SES triggers an email notification to the user
 
 ## 3. Monetization Strategy (MVP)
 
