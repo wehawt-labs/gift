@@ -9,6 +9,14 @@ import { cn } from '@/lib/utils'
 import { OCCASIONS, RECIPIENT_OPTIONS } from '../constants'
 import type { OrderFormData } from '../schema'
 
+function RequiredBadge() {
+  return (
+    <span className='ml-1.5 inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-2 py-0.5 font-heading text-[10px] font-bold text-primary tracking-wide shadow-2xs'>
+      <span>❤️</span> required
+    </span>
+  )
+}
+
 export function StepBasics({ validationTrigger }: { validationTrigger: number }) {
   const {
     register,
@@ -29,6 +37,13 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
       <div className='space-y-6'>
         {/* Relationship Bento Grid */}
         <div className='space-y-3'>
+          <div className='flex items-center justify-between'>
+            <Label className='font-semibold font-heading text-sm text-foreground flex items-center'>
+              Who is this song for?
+              <RequiredBadge />
+            </Label>
+          </div>
+
           <div className='grid grid-cols-2 sm:grid-cols-4 gap-3'>
             {RECIPIENT_OPTIONS.map((opt) => (
               <button
@@ -74,23 +89,28 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
               className='h-10 rounded-xl border-border bg-card px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground'
             />
           </div>
-          <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
+          <div className='min-h-[20px]'>
+            <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
+          </div>
         </div>
 
-        {/* Symmetrical 2-Column Inputs Grid */}
-        <div className='grid gap-4 sm:grid-cols-2 pt-2'>
+        {/* Symmetrical 2-Column Inputs Grid (Zero-Jump Error Containers) */}
+        <div className='grid gap-4 sm:grid-cols-2 pt-1'>
           {/* Left Column: Recipient Name & Nickname/Alias */}
           <div className='space-y-2'>
-            <Label htmlFor='recipientName' className='font-semibold font-heading text-sm text-foreground'>
+            <Label htmlFor='recipientName' className='font-semibold font-heading text-sm text-foreground flex items-center'>
               What is their name?
+              <RequiredBadge />
             </Label>
             <Input
               id='recipientName'
               placeholder='Full name, e.g. Sarah Jenkins'
-              className='h-11 rounded-xl border-border/80 bg-card px-4 font-sans text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20'
+              className={cn(
+                'h-11 rounded-xl border-border/80 bg-card px-4 font-sans text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20',
+                errors.recipientName && 'border-destructive focus-visible:ring-destructive/20'
+              )}
               {...register('recipientName')}
             />
-            <FormErrorMessage message={errors.recipientName?.message} trigger={validationTrigger} />
 
             <Input
               id='recipientNickname'
@@ -98,11 +118,19 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
               className='h-10 rounded-xl border-border bg-card px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground mt-2'
               {...register('recipientNickname')}
             />
+
+            {/* Reserved Error Slot (Prevents Layout Jump for Input 2) */}
+            <div className='min-h-[20px] pt-0.5'>
+              <FormErrorMessage message={errors.recipientName?.message} trigger={validationTrigger} />
+            </div>
           </div>
 
           {/* Right Column: Occasion Select & Custom Occasion */}
           <div className='space-y-2'>
-            <Label className='font-semibold font-heading text-sm text-foreground'>What's the occasion?</Label>
+            <Label className='font-semibold font-heading text-sm text-foreground flex items-center'>
+              What's the occasion?
+              <RequiredBadge />
+            </Label>
             <Select onValueChange={(v) => setValue('occasion', v, { shouldValidate: true, shouldDirty: true })} value={OCCASIONS.includes(occasion as any) ? occasion : 'Other'}>
               <SelectTrigger className='h-11 w-full rounded-xl border-border/80 bg-card px-4 font-sans text-sm text-foreground focus-visible:border-primary focus-visible:ring-primary/20'>
                 <SelectValue placeholder='Select an occasion' />
@@ -122,7 +150,11 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
               onChange={(e) => setValue('occasion', e.target.value, { shouldValidate: true, shouldDirty: true })}
               className='h-10 rounded-xl border-border bg-card px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground mt-2'
             />
-            <FormErrorMessage message={errors.occasion?.message} trigger={validationTrigger} />
+
+            {/* Reserved Error Slot (Prevents Layout Jump) */}
+            <div className='min-h-[20px] pt-0.5'>
+              <FormErrorMessage message={errors.occasion?.message} trigger={validationTrigger} />
+            </div>
           </div>
         </div>
       </div>
