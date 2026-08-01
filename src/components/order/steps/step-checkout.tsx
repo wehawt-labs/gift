@@ -66,12 +66,14 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
                 <button
                   key={plan.id}
                   type='button'
-                  onClick={() =>
-                    setValue('plan', plan.id as any, {
-                      shouldValidate: true,
-                      shouldDirty: true
-                    })
-                  }
+                  onClick={() => {
+                    setValue('plan', plan.id as any, { shouldValidate: true, shouldDirty: true })
+                    if (plan.id === 'memory_maker') {
+                      setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
+                      setValue('hasPhotoSlideshow', true, { shouldValidate: true, shouldDirty: true })
+                      setValue('hasCustomWebsite', true, { shouldValidate: true, shouldDirty: true })
+                    }
+                  }}
                   className={cn(
                     'group relative flex flex-col justify-between rounded-2xl border-2 p-5 text-left transition-all active:scale-[0.98]',
                     isSelected
@@ -97,6 +99,7 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
                     <p className='mb-4 text-muted-foreground text-xs font-sans leading-relaxed'>{plan.description}</p>
                   </div>
 
+                  {/* Add-ons and Features List */}
                   <div className='space-y-2 border-t border-border/40 pt-3 text-xs font-sans text-foreground/90'>
                     <div className='flex items-center gap-2 font-medium'>
                       <Check className='h-3.5 w-3.5 text-emerald-600 stroke-[3]' />
@@ -110,10 +113,25 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
                       <Check className='h-3.5 w-3.5 text-emerald-600 stroke-[3]' />
                       {plan.storage}
                     </div>
-                    {plan.allAddonsIncluded && (
-                      <div className='flex items-center gap-2 font-bold text-amber-700 pt-1'>
-                        <Sparkles className='h-3.5 w-3.5 text-amber-600' />
-                        ALL Add-ons Included ($15+ Value)
+
+                    {plan.allAddonsIncluded ? (
+                      <div className='space-y-1 pt-2 border-t border-amber-500/20 text-[11px] font-semibold text-amber-900'>
+                        <div className='flex items-center gap-1.5'>
+                          <Check className='h-3 w-3 text-amber-700 stroke-[3]' />
+                          <span>FREE Real Voice Persona ($5 value)</span>
+                        </div>
+                        <div className='flex items-center gap-1.5'>
+                          <Check className='h-3 w-3 text-amber-700 stroke-[3]' />
+                          <span>FREE Photo Video Slideshow ($5 value)</span>
+                        </div>
+                        <div className='flex items-center gap-1.5'>
+                          <Check className='h-3 w-3 text-amber-700 stroke-[3]' />
+                          <span>FREE Custom Song Website ($5 value)</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className='pt-1 text-[11px] text-muted-foreground font-medium'>
+                        • Add-ons available for $5 each
                       </div>
                     )}
                   </div>
@@ -124,7 +142,7 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
           <FormErrorMessage message={errors.plan?.message as string} trigger={validationTrigger} />
         </div>
 
-        {/* 2. A-La-Carte Add-ons ($5 Flat Rate per Add-on) */}
+        {/* 2. A-La-Carte Add-ons Grid ($5 Flat Rate per Add-on) */}
         <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
           <div className='flex items-center justify-between'>
             <Label className='font-semibold font-heading text-base text-foreground'>A-La-Carte Add-ons ($5 Each)</Label>
@@ -135,44 +153,44 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
             )}
           </div>
 
-          <div className='grid gap-3 sm:grid-cols-3'>
-            {/* Add-on 1: Real Voice Cloning Persona */}
+          <div className='grid gap-4 sm:grid-cols-2'>
+            {/* Add-on 1: Custom Song Website & Digital Keepsake Page */}
             <button
               type='button'
               onClick={() => {
                 if (!isMemoryMaker) {
-                  setValue('hasVoiceCloning', !data.hasVoiceCloning, { shouldValidate: true, shouldDirty: true })
+                  setValue('hasCustomWebsite', !data.hasCustomWebsite, { shouldValidate: true, shouldDirty: true })
                 }
               }}
               className={cn(
                 'group relative flex flex-col justify-between rounded-xl border-2 p-4 text-left transition-all active:scale-[0.98]',
-                isMemoryMaker || data.hasVoiceCloning
+                isMemoryMaker || data.hasCustomWebsite
                   ? 'border-primary bg-background shadow-sm ring-1 ring-primary/20'
                   : 'border-border/60 bg-background/60 hover:bg-background'
               )}
             >
               <div>
                 <div className='flex items-center justify-between mb-2'>
-                  <Mic className='h-5 w-5 text-primary' />
+                  <Globe className='h-5 w-5 text-primary' />
                   <span className='font-bold font-heading text-xs text-primary'>
-                    {isMemoryMaker ? 'FREE' : '$5 / Slot'}
+                    {isMemoryMaker ? 'FREE' : '$5 / Custom Link'}
                   </span>
                 </div>
-                <h4 className='font-bold font-heading text-sm text-foreground mb-1'>Real Voice Persona</h4>
+                <h4 className='font-bold font-heading text-sm text-foreground mb-1'>Custom Website & Digital Keepsake Page</h4>
                 <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
-                  Spoken intro injection + singing voice cloning persona slot.
+                  Hosted custom share link with interactive waveform player, personalized themes & written letter.
                 </p>
               </div>
 
               <div className='mt-3 pt-2 border-t border-border/40 flex items-center justify-between text-xs font-semibold text-foreground font-sans'>
-                <span>{isMemoryMaker ? 'Included Free' : data.hasVoiceCloning ? 'Selected ✓' : 'Add +$5'}</span>
-                <div className={cn('h-4 w-4 rounded border flex items-center justify-center', (isMemoryMaker || data.hasVoiceCloning) ? 'bg-primary text-white border-primary' : 'border-muted-foreground')}>
-                  {(isMemoryMaker || data.hasVoiceCloning) && <Check className='h-3 w-3 stroke-[3]' />}
+                <span>{isMemoryMaker ? 'Included Free' : data.hasCustomWebsite ? 'Selected ✓' : 'Add +$5'}</span>
+                <div className={cn('h-4 w-4 rounded border flex items-center justify-center', (isMemoryMaker || data.hasCustomWebsite) ? 'bg-primary text-white border-primary' : 'border-muted-foreground')}>
+                  {(isMemoryMaker || data.hasCustomWebsite) && <Check className='h-3 w-3 stroke-[3]' />}
                 </div>
               </div>
             </button>
 
-            {/* Add-on 2: Photo Video Slideshow */}
+            {/* Add-on 2: Photo Video Slideshow & Spoken Voice Intro */}
             <button
               type='button'
               onClick={() => {
@@ -194,9 +212,9 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
                     {isMemoryMaker ? 'FREE' : '$5 / Video'}
                   </span>
                 </div>
-                <h4 className='font-bold font-heading text-sm text-foreground mb-1'>Photo Video Slideshow</h4>
+                <h4 className='font-bold font-heading text-sm text-foreground mb-1'>Photo Video Slideshow & Voice Intro</h4>
                 <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
-                  Aesthetic photo slideshow video with lyrics background synced to song.
+                  Aesthetic photo slideshow video with lyrics background + spoken voice intro message.
                 </p>
               </div>
 
@@ -204,42 +222,6 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
                 <span>{isMemoryMaker ? 'Included Free' : data.hasPhotoSlideshow ? 'Selected ✓' : 'Add +$5'}</span>
                 <div className={cn('h-4 w-4 rounded border flex items-center justify-center', (isMemoryMaker || data.hasPhotoSlideshow) ? 'bg-primary text-white border-primary' : 'border-muted-foreground')}>
                   {(isMemoryMaker || data.hasPhotoSlideshow) && <Check className='h-3 w-3 stroke-[3]' />}
-                </div>
-              </div>
-            </button>
-
-            {/* Add-on 3: Custom Song Website */}
-            <button
-              type='button'
-              onClick={() => {
-                if (!isMemoryMaker) {
-                  setValue('hasCustomWebsite', !data.hasCustomWebsite, { shouldValidate: true, shouldDirty: true })
-                }
-              }}
-              className={cn(
-                'group relative flex flex-col justify-between rounded-xl border-2 p-4 text-left transition-all active:scale-[0.98]',
-                isMemoryMaker || data.hasCustomWebsite
-                  ? 'border-primary bg-background shadow-sm ring-1 ring-primary/20'
-                  : 'border-border/60 bg-background/60 hover:bg-background'
-              )}
-            >
-              <div>
-                <div className='flex items-center justify-between mb-2'>
-                  <Globe className='h-5 w-5 text-primary' />
-                  <span className='font-bold font-heading text-xs text-primary'>
-                    {isMemoryMaker ? 'FREE' : '$5 / Page'}
-                  </span>
-                </div>
-                <h4 className='font-bold font-heading text-sm text-foreground mb-1'>Custom Song Website</h4>
-                <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
-                  Custom web link/domain, themes, cover photos & personal letters.
-                </p>
-              </div>
-
-              <div className='mt-3 pt-2 border-t border-border/40 flex items-center justify-between text-xs font-semibold text-foreground font-sans'>
-                <span>{isMemoryMaker ? 'Included Free' : data.hasCustomWebsite ? 'Selected ✓' : 'Add +$5'}</span>
-                <div className={cn('h-4 w-4 rounded border flex items-center justify-center', (isMemoryMaker || data.hasCustomWebsite) ? 'bg-primary text-white border-primary' : 'border-muted-foreground')}>
-                  {(isMemoryMaker || data.hasCustomWebsite) && <Check className='h-3 w-3 stroke-[3]' />}
                 </div>
               </div>
             </button>

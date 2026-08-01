@@ -262,7 +262,37 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             Hum a melody, upload an audio clip, or paste a reference song link. Our Song Chef will use your custom melody for the composition!
           </p>
 
-          <div className='pt-1'>
+          {/* File Input Upload + URL Input */}
+          <div className='space-y-2 pt-1'>
+            <div className='flex items-center gap-2'>
+              <label className='cursor-pointer flex-1 flex items-center justify-center gap-2 h-10 px-4 rounded-xl border border-dashed border-primary/40 bg-background hover:bg-card transition-colors text-xs font-semibold font-heading text-primary'>
+                <Sparkles className='h-3.5 w-3.5' />
+                <span>Upload Audio File (.mp3, .wav, .m4a)</span>
+                <input
+                  type='file'
+                  accept='audio/*'
+                  className='hidden'
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      const fakeUrl = `uploaded://${file.name}`
+                      setValue('sampleMelodyUrl', fakeUrl, { shouldValidate: true, shouldDirty: true })
+                      if (plan === 'single_gift') {
+                        setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
+                      }
+                      toast.success('Audio File Selected', {
+                        description: `Uploaded: ${file.name}`
+                      })
+                    }
+                  }}
+                />
+              </label>
+            </div>
+
+            <div className='relative flex items-center justify-center my-1'>
+              <span className='bg-amber-500/5 px-2 text-[10px] uppercase font-bold text-muted-foreground font-heading'>or paste link</span>
+            </div>
+
             <Input
               placeholder='Paste reference song link or audio URL (e.g. YouTube, SoundCloud, MP3)...'
               value={useWatch({ name: 'sampleMelodyUrl' }) || ''}
