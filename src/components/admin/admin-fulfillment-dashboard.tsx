@@ -231,7 +231,7 @@ Core Message: ${order.coreMessage}`
 
             <CardContent className='p-5 space-y-4'>
               {/* Recipient & Buyer Meta */}
-              <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-sans border-b border-border/40 pb-4'>
+              <div className='grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs font-sans border-b border-border/40 pb-4'>
                 <div>
                   <span className='text-muted-foreground uppercase font-heading text-[10px] font-bold block mb-0.5'>Buyer</span>
                   <p className='font-semibold text-foreground text-sm'>{order.buyerName}</p>
@@ -246,6 +246,12 @@ Core Message: ${order.coreMessage}`
                   <span className='text-muted-foreground uppercase font-heading text-[10px] font-bold block mb-0.5'>Music Style</span>
                   <p className='font-semibold text-primary text-sm'>{order.genre} • {order.tempo}</p>
                   <p className='text-muted-foreground'>Vocal: {order.vocalPreference}</p>
+                </div>
+                <div>
+                  <span className='text-muted-foreground uppercase font-heading text-[10px] font-bold block mb-0.5'>Web Page Add-on</span>
+                  <p className='font-semibold text-emerald-700 text-xs mt-0.5'>
+                    {order.plan === 'premium' ? 'Free (Premium) ✓' : 'Added (+$5)'}
+                  </p>
                 </div>
               </div>
 

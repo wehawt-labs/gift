@@ -14,7 +14,7 @@ export const orderSchema = z.object({
   recipientName: z.string().min(1, "Recipient's name is required"),
   occasion: z.string().min(1, 'Please select an occasion'),
 
-  // Step 2: Vibe
+  // Step 2: Vibe & Melody Upload
   genre: z.enum(GENRES, {
     error: 'Please select a genre'
   }),
@@ -24,15 +24,17 @@ export const orderSchema = z.object({
   vocalPreference: z.enum(VOCAL_PREFERENCES, {
     error: 'Please select a vocal preference'
   }),
+  sampleMelodyUrl: z.string().optional(),
 
   // Step 3: Story
   memory: z.string().optional(),
   jokes: z.string().optional(),
   coreMessage: z.string().optional(),
 
-  // Step 4: Final Info
+  // Step 4: Final Info & Addons
   buyerName: z.string().min(1, 'Your name is required'),
-  buyerEmail: z.string().email('Invalid email address')
+  buyerEmail: z.string().email('Invalid email address'),
+  hasDedicatedUrlAddon: z.boolean().optional()
 })
 
 export type OrderFormData = z.infer<typeof orderSchema>

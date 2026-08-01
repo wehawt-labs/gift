@@ -122,8 +122,8 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           <FormErrorMessage message={errors.vocalPreference?.message} trigger={validationTrigger} />
         </div>
 
-        {/* Premium Voice Cloning Upsell Paywall Box */}
-        <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all'>
+        {/* Custom Sample Audio / Melody Upload Paywall Box */}
+        <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all space-y-3'>
           {plan !== LemonSqueezyPlan.PREMIUM && (
             <div className='absolute inset-0 bg-[#A89A8C]/25 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center p-4 text-center'>
               <div className='h-10 w-10 rounded-full bg-background/90 shadow-md flex items-center justify-center text-[#9A6A1E] mb-2'>
@@ -131,7 +131,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               </div>
               <p className='font-bold font-heading text-sm text-[#9A6A1E] mb-1'>Premium Feature</p>
               <p className='text-xs text-foreground/80 font-sans max-w-xs mb-3'>
-                Unlock Custom AI Voice Cloning & 24-Hour Priority Queue
+                Unlock Custom Sample Melody Uploads & 24-Hour Priority Queue
               </p>
               <button
                 type='button'
@@ -144,21 +144,29 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             </div>
           )}
 
-          <div className='flex items-start justify-between mb-2'>
+          <div className='flex items-start justify-between'>
             <div className='flex items-center gap-2'>
               <Crown className='h-4 w-4 text-[#9A6A1E]' />
-              <h3 className='font-bold font-heading text-sm text-foreground'>Custom AI Voice Clone & Pro Mastering</h3>
+              <h3 className='font-bold font-heading text-sm text-foreground'>Sample Melody / Audio Reference Upload</h3>
             </div>
             <span className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading'>
-              Premium Only
+              {plan === LemonSqueezyPlan.PREMIUM ? 'Unlocked ✓' : 'Premium Only'}
             </span>
           </div>
-          <p className='text-xs text-muted-foreground font-sans leading-relaxed mb-3'>
-            Clone your own voice or upload a custom audio reference file to sing the song! Includes 24-hour priority delivery.
+          <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
+            Hum a melody, upload an audio clip, or paste a reference song link. Our Song Chef will use your custom melody for the composition!
           </p>
-          <div className='flex items-center gap-2 text-xs font-semibold text-primary font-sans'>
+
+          <div className='pt-1'>
+            <Input
+              placeholder='Paste reference song link or audio URL (e.g. YouTube, SoundCloud, MP3)...'
+              className='h-10 rounded-xl border-border bg-background px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground'
+            />
+          </div>
+
+          <div className='flex items-center gap-2 text-xs font-semibold text-primary font-sans pt-1'>
             <Sparkles className='h-3.5 w-3.5' />
-            {plan === LemonSqueezyPlan.PREMIUM ? '✓ Premium Unlocked! Custom Voice enabled.' : 'Locked on Standard plan'}
+            {plan === LemonSqueezyPlan.PREMIUM ? '✓ Premium Unlocked! Reference melody upload enabled.' : 'Locked on Standard plan'}
           </div>
         </div>
       </div>

@@ -40,7 +40,9 @@ export function OrderWizard() {
       coreMessage: '',
       buyerName: '',
       buyerEmail: '',
-      plan: LemonSqueezyPlan.STANDARD
+      plan: LemonSqueezyPlan.STANDARD,
+      hasDedicatedUrlAddon: false,
+      sampleMelodyUrl: ''
     },
     mode: 'onBlur'
   })
