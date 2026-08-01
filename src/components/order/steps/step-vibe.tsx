@@ -3,6 +3,7 @@
 import { Crown, Lock, Play, Sparkles } from 'lucide-react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
+import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
