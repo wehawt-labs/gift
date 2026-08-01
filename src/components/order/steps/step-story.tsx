@@ -36,15 +36,19 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
             <Label htmlFor='memory' className='font-semibold font-heading text-base text-foreground'>
               What's your favorite memory together?
             </Label>
-            <Button
+            <button
               type='button'
-              variant='ghost'
-              size='sm'
-              className='rounded-full text-xs font-semibold text-primary hover:bg-primary/10 transition-colors flex items-center gap-1.5'
+              onClick={() => {
+                const mem = useWatch({ name: 'memory' })
+                if (mem) {
+                  setValue('memory', `${mem} — enhanced with vivid emotional storytelling and warmth.`, { shouldDirty: true })
+                }
+              }}
+              className='inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-primary/10 to-amber-500/10 border border-primary/30 hover:border-primary/60 text-primary font-heading font-bold text-[11px] shadow-2xs hover:shadow-sm active:scale-95 transition-all cursor-pointer group'
             >
-              <Sparkles className='h-3.5 w-3.5 text-primary' />
-              Refine with AI
-            </Button>
+              <Sparkles className='h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform' />
+              <span>Refine with AI</span>
+            </button>
           </div>
           <Textarea
             id='memory'
@@ -87,25 +91,20 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
               <Label htmlFor='customLyrics' className='font-semibold font-heading text-base text-foreground block'>
                 Sample Lyrics / Custom Lyrics (Optional)
               </Label>
-              <p className='text-xs text-muted-foreground font-sans mt-0.5'>
-                Provide your own verse/chorus or let AI generate a draft from your memories above.
-              </p>
             </div>
-            <Button
+            <button
               type='button'
-              variant='outline'
-              size='sm'
               onClick={() => {
                 const mem = useWatch({ name: 'memory' }) || 'our unforgettable memories'
                 const msg = useWatch({ name: 'coreMessage' }) || 'I love you forever'
                 const sampleLyrics = `[Verse 1]\nRemembering back to ${mem}\nEvery moment with you shines so bright\n\n[Chorus]\n${msg}\nYou are the melody in my life`
                 setValue('customLyrics', sampleLyrics, { shouldValidate: true, shouldDirty: true })
               }}
-              className='rounded-xl border-primary/40 text-primary font-heading font-semibold text-xs gap-1.5 hover:bg-primary/10 shrink-0'
+              className='inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-primary/10 to-amber-500/10 border border-primary/30 hover:border-primary/60 text-primary font-heading font-bold text-[11px] shadow-2xs hover:shadow-sm active:scale-95 transition-all cursor-pointer group shrink-0'
             >
-              <Sparkles className='h-3.5 w-3.5' />
-              Enhance with AI ✨
-            </Button>
+              <Sparkles className='h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform' />
+              <span>Enhance with AI ✨</span>
+            </button>
           </div>
 
           <Textarea
@@ -116,7 +115,7 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
             className='min-h-[120px] rounded-xl border-border bg-background p-3 font-mono text-xs text-foreground focus-visible:border-primary focus-visible:ring-primary/20 placeholder:text-muted-foreground resize-none leading-relaxed'
           />
 
-          {/* Toggle Switch: Full Lyrics vs Song Chef Finishing Lyrics */}
+          {/* Simplified Toggle Switch (Clean & Direct Without Sub-Description) */}
           {(() => {
             const isFull = Boolean(useWatch({ name: 'isFullLyrics' }))
             return (
@@ -124,18 +123,11 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
                 onClick={() => setValue('isFullLyrics', !isFull, { shouldDirty: true })}
                 className='pt-2 border-t border-border/40 flex items-center justify-between cursor-pointer select-none group'
               >
-                <div className='space-y-0.5 max-w-[80%]'>
-                  <Label className='font-semibold font-heading text-xs text-foreground block cursor-pointer group-hover:text-primary transition-colors'>
-                    {isFull
-                      ? "✨ I've written the full lyrics — use my exact words!"
-                      : "✏️ Just an idea — let our Song Chef write the full lyrics for me!"}
-                  </Label>
-                  <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
-                    {isFull
-                      ? 'Our Song Chef will compose the music around your exact written lyrics.'
-                      : 'Sit back and relax! Our professional lyricists will expand your memories into a complete, heartfelt song.'}
-                  </p>
-                </div>
+                <Label className='font-semibold font-heading text-xs text-foreground block cursor-pointer group-hover:text-primary transition-colors'>
+                  {isFull
+                    ? "✨ I've written the full lyrics — use my exact words!"
+                    : "✏️ Just an idea — let our Song Chef write the full lyrics for me!"}
+                </Label>
 
                 <div
                   className={cn(
