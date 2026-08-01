@@ -26,7 +26,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
   const plan = useWatch({ name: 'plan' })
 
   const handleSelectPremium = () => {
-    setValue('plan', LemonSqueezyPlan.PREMIUM, { shouldValidate: true, shouldDirty: true })
+    setValue('plan', 'memory_maker', { shouldValidate: true, shouldDirty: true })
     setValue('vocalPreference', 'Custom Voice (Premium)', { shouldValidate: true, shouldDirty: true })
   }
 
