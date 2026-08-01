@@ -116,16 +116,18 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
             className='min-h-[120px] rounded-xl border-border bg-background p-3 font-mono text-xs text-foreground focus-visible:border-primary focus-visible:ring-primary/20 placeholder:text-muted-foreground resize-none leading-relaxed'
           />
 
-          {/* Toggle Switch: Full Lyrics vs Draft Needs Completion */}
+          {/* Toggle Switch: Full Lyrics vs Song Chef Finishing Lyrics */}
           <div className='pt-2 border-t border-border/40 flex items-center justify-between'>
-            <div className='space-y-0.5'>
+            <div className='space-y-0.5 max-w-[80%]'>
               <Label htmlFor='isFullLyrics' className='font-semibold font-heading text-xs text-foreground block cursor-pointer'>
-                {useWatch({ name: 'isFullLyrics' }) ? '✨ Full Lyrics Provided (Ready to Compose)' : '✏️ Draft / Needs Admin Lyrics Completion'}
-              </Label>
-              <p className='text-[11px] text-muted-foreground font-sans'>
                 {useWatch({ name: 'isFullLyrics' })
-                  ? 'Our Song Chef will use your exact lyrics for composition.'
-                  : 'Our Song Chef will refine, expand, and polish the lyrics for you.'}
+                  ? "✨ I've written the full lyrics — use my exact words!"
+                  : "✏️ Just an idea — let our Song Chef write the full lyrics for me!"}
+              </Label>
+              <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
+                {useWatch({ name: 'isFullLyrics' })
+                  ? 'Our Song Chef will compose the music around your exact written lyrics.'
+                  : 'Sit back and relax! Our professional lyricists will expand your memories into a complete, heartfelt song.'}
               </p>
             </div>
 
