@@ -10,7 +10,7 @@ import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { cn } from '@/lib/utils'
 import type { OrderFormData } from '../schema'
 
-function AiEnhanceButton({ label, onClick }: { label: string; onClick: () => void }) {
+function AiEnhanceButton({ label = 'Magic Touch ✨', onClick }: { label?: string; onClick: () => void }) {
   return (
     <button
       type='button'
@@ -50,7 +50,6 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
               What's your favorite memory together?
             </Label>
             <AiEnhanceButton
-              label='Refine with AI ✨'
               onClick={() => {
                 const mem = useWatch({ name: 'memory' })
                 if (mem) {
@@ -102,7 +101,6 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
               </Label>
             </div>
             <AiEnhanceButton
-              label='Enhance with AI ✨'
               onClick={() => {
                 const mem = useWatch({ name: 'memory' }) || 'our unforgettable memories'
                 const msg = useWatch({ name: 'coreMessage' }) || 'I love you forever'
