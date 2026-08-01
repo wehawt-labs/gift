@@ -81,11 +81,11 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
         <div className='grid gap-4 sm:grid-cols-2 pt-2'>
           <div className='space-y-2'>
             <Label htmlFor='recipientName' className='font-semibold font-heading text-sm text-foreground'>
-              What is their name?
+              What is their name / nickname / title?
             </Label>
             <Input
               id='recipientName'
-              placeholder='e.g. Sarah'
+              placeholder='e.g. Sarah, Honey, Boss, Big Bro...'
               className='h-11 rounded-xl border-border/80 bg-card px-4 font-sans text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('recipientName')}
             />
