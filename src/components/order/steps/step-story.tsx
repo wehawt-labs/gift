@@ -10,6 +10,19 @@ import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { cn } from '@/lib/utils'
 import type { OrderFormData } from '../schema'
 
+function AiEnhanceButton({ label, onClick }: { label: string; onClick: () => void }) {
+  return (
+    <button
+      type='button'
+      onClick={onClick}
+      className='inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-primary/10 to-amber-500/10 border border-primary/30 hover:border-primary/60 text-primary font-heading font-bold text-[11px] shadow-2xs hover:shadow-sm active:scale-95 transition-all cursor-pointer group shrink-0'
+    >
+      <Sparkles className='h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform' />
+      <span>{label}</span>
+    </button>
+  )
+}
+
 export function StepStory({ validationTrigger }: { validationTrigger: number }) {
   const {
     register,
@@ -36,19 +49,15 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
             <Label htmlFor='memory' className='font-semibold font-heading text-base text-foreground'>
               What's your favorite memory together?
             </Label>
-            <button
-              type='button'
+            <AiEnhanceButton
+              label='Refine with AI ✨'
               onClick={() => {
                 const mem = useWatch({ name: 'memory' })
                 if (mem) {
                   setValue('memory', `${mem} — enhanced with vivid emotional storytelling and warmth.`, { shouldDirty: true })
                 }
               }}
-              className='inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-primary/10 to-amber-500/10 border border-primary/30 hover:border-primary/60 text-primary font-heading font-bold text-[11px] shadow-2xs hover:shadow-sm active:scale-95 transition-all cursor-pointer group'
-            >
-              <Sparkles className='h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform' />
-              <span>Refine with AI</span>
-            </button>
+            />
           </div>
           <Textarea
             id='memory'
@@ -92,19 +101,15 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
                 Sample Lyrics / Custom Lyrics (Optional)
               </Label>
             </div>
-            <button
-              type='button'
+            <AiEnhanceButton
+              label='Enhance with AI ✨'
               onClick={() => {
                 const mem = useWatch({ name: 'memory' }) || 'our unforgettable memories'
                 const msg = useWatch({ name: 'coreMessage' }) || 'I love you forever'
                 const sampleLyrics = `[Verse 1]\nRemembering back to ${mem}\nEvery moment with you shines so bright\n\n[Chorus]\n${msg}\nYou are the melody in my life`
                 setValue('customLyrics', sampleLyrics, { shouldValidate: true, shouldDirty: true })
               }}
-              className='inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-primary/10 to-amber-500/10 border border-primary/30 hover:border-primary/60 text-primary font-heading font-bold text-[11px] shadow-2xs hover:shadow-sm active:scale-95 transition-all cursor-pointer group shrink-0'
-            >
-              <Sparkles className='h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform' />
-              <span>Enhance with AI ✨</span>
-            </button>
+            />
           </div>
 
           <Textarea
