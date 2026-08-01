@@ -31,6 +31,7 @@ export function OrderWizard() {
     defaultValues: {
       recipient: 'Partner',
       recipientName: '',
+      recipientNickname: '',
       occasion: 'Birthday',
       genre: 'Acoustic Pop',
       tempo: 'Warm & Cozy',

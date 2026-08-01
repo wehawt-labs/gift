@@ -77,21 +77,30 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
           <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
         </div>
 
-        {/* Inputs */}
+        {/* Symmetrical 2-Column Inputs Grid */}
         <div className='grid gap-4 sm:grid-cols-2 pt-2'>
+          {/* Left Column: Recipient Name & Nickname/Alias */}
           <div className='space-y-2'>
             <Label htmlFor='recipientName' className='font-semibold font-heading text-sm text-foreground'>
-              What is their name / nickname / title?
+              What is their name?
             </Label>
             <Input
               id='recipientName'
-              placeholder='e.g. Sarah, Honey, Boss, Big Bro...'
+              placeholder='Full name, e.g. Sarah Jenkins'
               className='h-11 rounded-xl border-border/80 bg-card px-4 font-sans text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('recipientName')}
             />
             <FormErrorMessage message={errors.recipientName?.message} trigger={validationTrigger} />
+
+            <Input
+              id='recipientNickname'
+              placeholder='Nickname, title or alias (e.g. Honey, Boss, Big Bro...)'
+              className='h-10 rounded-xl border-border bg-card px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground mt-2'
+              {...register('recipientNickname')}
+            />
           </div>
 
+          {/* Right Column: Occasion Select & Custom Occasion */}
           <div className='space-y-2'>
             <Label className='font-semibold font-heading text-sm text-foreground'>What's the occasion?</Label>
             <Select onValueChange={(v) => setValue('occasion', v, { shouldValidate: true, shouldDirty: true })} value={OCCASIONS.includes(occasion as any) ? occasion : 'Other'}>
@@ -107,7 +116,6 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
               </SelectContent>
             </Select>
 
-            {/* Custom Occasion Text Input */}
             <Input
               placeholder='Or type custom occasion (e.g. Graduation, Promotion...)'
               value={occasion && !['Birthday', 'Anniversary', 'Romance', 'Just Because'].includes(occasion) ? occasion : ''}

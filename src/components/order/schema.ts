@@ -10,6 +10,7 @@ export const orderSchema = z.object({
   // Step 1: Basics
   recipient: z.string().min(1, 'Please select or type who this song is for'),
   recipientName: z.string().min(1, "Recipient's name is required"),
+  recipientNickname: z.string().optional(),
   occasion: z.string().min(1, 'Please select or type an occasion'),
 
   // Step 2: Vibe & Voice Persona
