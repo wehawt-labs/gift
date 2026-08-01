@@ -248,52 +248,98 @@ export function OrderWizard() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Bottom Fixed Action Bar */}
-            <div className='fixed bottom-0 left-0 right-0 z-40 bg-background/90 backdrop-blur-md border-t border-border/40 py-4 px-4 sm:px-6'>
-              <div className='mx-auto max-w-xl flex items-center justify-between'>
+            {/* Option 2: Desktop Inline Form Footer (Natural Scroll) */}
+            <div className='hidden md:flex items-center justify-between border-t border-border/40 pt-6 mt-8'>
+              <Button
+                type='button'
+                variant='ghost'
+                size='default'
+                onClick={prevStep}
+                disabled={currentStep === 1}
+                className='rounded-xl font-heading font-semibold text-foreground hover:bg-card px-5'
+              >
+                <ChevronLeft className='mr-1.5 h-4 w-4' />
+                Back
+              </Button>
+
+              <div className='text-xs font-semibold font-heading text-muted-foreground'>
+                Step {currentStep} of {STAGES.length}
+              </div>
+
+              {currentStep < 4 ? (
                 <Button
                   type='button'
-                  variant='ghost'
                   size='default'
-                  onClick={prevStep}
-                  disabled={currentStep === 1}
-                  className='rounded-xl font-heading font-semibold text-foreground hover:bg-card px-4'
+                  onClick={nextStep}
+                  className='h-11 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-8 shadow-[0_2px_0_0_#842504] hover:bg-primary/90 active:translate-y-[1px] transition-all flex items-center gap-2'
                 >
-                  <ChevronLeft className='mr-1 h-4 w-4' />
-                  Back
+                  Next Step
+                  <ChevronRight className='h-4 w-4' />
                 </Button>
+              ) : (
+                <Button
+                  type='submit'
+                  size='default'
+                  disabled={isSubmitting}
+                  className='h-11 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-8 shadow-[0_2px_0_0_#842504] hover:bg-primary/90 active:translate-y-[1px] transition-all'
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      Complete & Pay ($
+                      {(PLANS.find((p) => p.id === formData.plan) || PLANS[0]).price.toFixed(2)})
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
 
-                {currentStep < 4 ? (
-                  <Button
-                    type='button'
-                    size='default'
-                    onClick={nextStep}
-                    className='h-11 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-7 shadow-[0_2px_0_0_#842504] hover:bg-primary/90 active:translate-y-[1px] transition-all flex items-center gap-1.5'
-                  >
-                    Next Step
-                    <ChevronRight className='h-4 w-4' />
-                  </Button>
-                ) : (
-                  <Button
-                    type='submit'
-                    size='default'
-                    disabled={isSubmitting}
-                    className='h-11 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-8 shadow-[0_2px_0_0_#842504] hover:bg-primary/90 active:translate-y-[1px] transition-all'
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        Complete & Pay ($
-                        {(PLANS.find((p) => p.id === formData.plan) || PLANS[0]).price.toFixed(2)})
-                      </>
-                    )}
-                  </Button>
-                )}
-              </div>
+            {/* Option 1: Mobile Floating Card Dock (Thumb-friendly floating pill) */}
+            <div className='md:hidden fixed bottom-4 left-4 right-4 z-40 max-w-xl mx-auto bg-card/95 backdrop-blur-md rounded-2xl shadow-xl border border-border/80 p-2.5 flex items-center justify-between'>
+              <Button
+                type='button'
+                variant='ghost'
+                size='sm'
+                onClick={prevStep}
+                disabled={currentStep === 1}
+                className='rounded-xl font-heading font-semibold text-foreground px-3'
+              >
+                <ChevronLeft className='h-4 w-4 mr-1' />
+                Back
+              </Button>
+
+              <span className='font-heading text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full'>
+                {currentStep}/{STAGES.length}
+              </span>
+
+              {currentStep < 4 ? (
+                <Button
+                  type='button'
+                  size='sm'
+                  onClick={nextStep}
+                  className='h-9 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-5 shadow-[0_2px_0_0_#842504] active:translate-y-[1px] transition-all flex items-center gap-1'
+                >
+                  Next
+                  <ChevronRight className='h-3.5 w-3.5' />
+                </Button>
+              ) : (
+                <Button
+                  type='submit'
+                  size='sm'
+                  disabled={isSubmitting}
+                  className='h-9 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-5 shadow-[0_2px_0_0_#842504] active:translate-y-[1px] transition-all'
+                >
+                  {isSubmitting ? (
+                    <Loader2 className='h-4 w-4 animate-spin' />
+                  ) : (
+                    `Pay $${(PLANS.find((p) => p.id === formData.plan) || PLANS[0]).price.toFixed(2)}`
+                  )}
+                </Button>
+              )}
             </div>
           </form>
         </FormProvider>
