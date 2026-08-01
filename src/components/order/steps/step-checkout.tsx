@@ -142,10 +142,18 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
           <FormErrorMessage message={errors.plan?.message as string} trigger={validationTrigger} />
         </div>
 
-        {/* 2. A-La-Carte Add-ons Grid ($5 Flat Rate per Add-on) */}
-        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
+        {/* Section Divider for Optional Add-ons */}
+        <div className='relative my-4 flex items-center justify-center'>
+          <div className='absolute inset-0 flex items-center'><div className='w-full border-t border-border/60' /></div>
+          <span className='relative bg-background px-4 font-heading text-[11px] font-bold text-muted-foreground uppercase tracking-widest'>
+            Optional Add-ons & Upgrades
+          </span>
+        </div>
+
+        {/* 2. A-La-Carte Add-ons List (Unified Styling matching Sample Melody Upload Card) */}
+        <div className='space-y-4'>
           <div className='flex items-center justify-between'>
-            <Label className='font-semibold font-heading text-base text-foreground'>A-La-Carte Add-ons ($5 Each)</Label>
+            <Label className='font-semibold font-heading text-base text-foreground'>A-La-Carte Add-ons & Customizations</Label>
             {isMemoryMaker && (
               <span className='rounded-full bg-emerald-500/20 px-3 py-1 font-bold text-[10px] text-emerald-800 uppercase font-heading tracking-wider flex items-center gap-1'>
                 <Crown className='h-3 w-3 fill-current' /> Memory Maker: ALL Add-ons Unlocked
@@ -153,78 +161,111 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
             )}
           </div>
 
-          <div className='grid gap-4 sm:grid-cols-2'>
+          <div className='grid gap-4 sm:grid-cols-3'>
             {/* Add-on 1: Custom Song Website & Digital Keepsake Page */}
-            <button
-              type='button'
+            <div
               onClick={() => {
                 if (!isMemoryMaker) {
                   setValue('hasCustomWebsite', !data.hasCustomWebsite, { shouldValidate: true, shouldDirty: true })
                 }
               }}
               className={cn(
-                'group relative flex flex-col justify-between rounded-xl border-2 p-4 text-left transition-all active:scale-[0.98]',
+                'relative overflow-hidden rounded-2xl border p-4 transition-all space-y-3 cursor-pointer select-none active:scale-[0.98]',
                 isMemoryMaker || data.hasCustomWebsite
-                  ? 'border-primary bg-background shadow-sm ring-1 ring-primary/20'
-                  : 'border-border/60 bg-background/60 hover:bg-background'
+                  ? 'border-amber-500/40 bg-amber-500/10 shadow-sm ring-1 ring-amber-500/20'
+                  : 'border-border/60 bg-card hover:bg-card/80'
               )}
             >
-              <div>
-                <div className='flex items-center justify-between mb-2'>
-                  <Globe className='h-5 w-5 text-primary' />
-                  <span className='font-bold font-heading text-xs text-primary'>
-                    {isMemoryMaker ? 'FREE' : '$5 / Custom Link'}
-                  </span>
+              <div className='flex items-start justify-between'>
+                <div className='flex items-center gap-2'>
+                  <Globe className='h-4 w-4 text-[#9A6A1E]' />
+                  <h4 className='font-bold font-heading text-xs text-foreground'>Custom Song Website</h4>
                 </div>
-                <h4 className='font-bold font-heading text-sm text-foreground mb-1'>Custom Website & Digital Keepsake Page</h4>
-                <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
-                  Hosted custom share link with interactive waveform player, personalized themes & written letter.
-                </p>
+                <span className={cn(
+                  'rounded-full px-2.5 py-0.5 font-bold text-[10px] uppercase font-heading',
+                  isMemoryMaker || data.hasCustomWebsite ? 'bg-amber-500/20 text-[#9A6A1E]' : 'bg-muted text-muted-foreground'
+                )}>
+                  {isMemoryMaker ? 'Unlocked ✓' : data.hasCustomWebsite ? 'Selected ✓' : '+$5.00 Add-on'}
+                </span>
               </div>
-
-              <div className='mt-3 pt-2 border-t border-border/40 flex items-center justify-between text-xs font-semibold text-foreground font-sans'>
-                <span>{isMemoryMaker ? 'Included Free' : data.hasCustomWebsite ? 'Selected ✓' : 'Add +$5'}</span>
-                <div className={cn('h-4 w-4 rounded border flex items-center justify-center', (isMemoryMaker || data.hasCustomWebsite) ? 'bg-primary text-white border-primary' : 'border-muted-foreground')}>
-                  {(isMemoryMaker || data.hasCustomWebsite) && <Check className='h-3 w-3 stroke-[3]' />}
-                </div>
+              <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
+                Custom domain/link, interactive waveform player, personalized themes & written letter.
+              </p>
+              <div className='flex items-center gap-1.5 text-xs font-semibold text-primary font-sans pt-1 border-t border-border/40'>
+                <Check className={cn('h-3.5 w-3.5', (isMemoryMaker || data.hasCustomWebsite) ? 'text-emerald-600 stroke-[3]' : 'text-muted-foreground')} />
+                <span>{isMemoryMaker ? 'Included Free with Memory Maker' : data.hasCustomWebsite ? 'Added to order (+$5.00)' : 'Click to add (+$5.00)'}</span>
               </div>
-            </button>
+            </div>
 
             {/* Add-on 2: Photo Video Slideshow & Spoken Voice Intro */}
-            <button
-              type='button'
+            <div
               onClick={() => {
                 if (!isMemoryMaker) {
                   setValue('hasPhotoSlideshow', !data.hasPhotoSlideshow, { shouldValidate: true, shouldDirty: true })
                 }
               }}
               className={cn(
-                'group relative flex flex-col justify-between rounded-xl border-2 p-4 text-left transition-all active:scale-[0.98]',
+                'relative overflow-hidden rounded-2xl border p-4 transition-all space-y-3 cursor-pointer select-none active:scale-[0.98]',
                 isMemoryMaker || data.hasPhotoSlideshow
-                  ? 'border-primary bg-background shadow-sm ring-1 ring-primary/20'
-                  : 'border-border/60 bg-background/60 hover:bg-background'
+                  ? 'border-amber-500/40 bg-amber-500/10 shadow-sm ring-1 ring-amber-500/20'
+                  : 'border-border/60 bg-card hover:bg-card/80'
               )}
             >
-              <div>
-                <div className='flex items-center justify-between mb-2'>
-                  <Video className='h-5 w-5 text-primary' />
-                  <span className='font-bold font-heading text-xs text-primary'>
-                    {isMemoryMaker ? 'FREE' : '$5 / Video'}
-                  </span>
+              <div className='flex items-start justify-between'>
+                <div className='flex items-center gap-2'>
+                  <Video className='h-4 w-4 text-[#9A6A1E]' />
+                  <h4 className='font-bold font-heading text-xs text-foreground'>Video Slideshow & Intro</h4>
                 </div>
-                <h4 className='font-bold font-heading text-sm text-foreground mb-1'>Photo Video Slideshow & Voice Intro</h4>
-                <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
-                  Aesthetic photo slideshow video with lyrics background + spoken voice intro message.
-                </p>
+                <span className={cn(
+                  'rounded-full px-2.5 py-0.5 font-bold text-[10px] uppercase font-heading',
+                  isMemoryMaker || data.hasPhotoSlideshow ? 'bg-amber-500/20 text-[#9A6A1E]' : 'bg-muted text-muted-foreground'
+                )}>
+                  {isMemoryMaker ? 'Unlocked ✓' : data.hasPhotoSlideshow ? 'Selected ✓' : '+$5.00 Add-on'}
+                </span>
               </div>
+              <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
+                Aesthetic photo slideshow video with lyrics background + spoken voice intro message.
+              </p>
+              <div className='flex items-center gap-1.5 text-xs font-semibold text-primary font-sans pt-1 border-t border-border/40'>
+                <Check className={cn('h-3.5 w-3.5', (isMemoryMaker || data.hasPhotoSlideshow) ? 'text-emerald-600 stroke-[3]' : 'text-muted-foreground')} />
+                <span>{isMemoryMaker ? 'Included Free with Memory Maker' : data.hasPhotoSlideshow ? 'Added to order (+$5.00)' : 'Click to add (+$5.00)'}</span>
+              </div>
+            </div>
 
-              <div className='mt-3 pt-2 border-t border-border/40 flex items-center justify-between text-xs font-semibold text-foreground font-sans'>
-                <span>{isMemoryMaker ? 'Included Free' : data.hasPhotoSlideshow ? 'Selected ✓' : 'Add +$5'}</span>
-                <div className={cn('h-4 w-4 rounded border flex items-center justify-center', (isMemoryMaker || data.hasPhotoSlideshow) ? 'bg-primary text-white border-primary' : 'border-muted-foreground')}>
-                  {(isMemoryMaker || data.hasPhotoSlideshow) && <Check className='h-3 w-3 stroke-[3]' />}
+            {/* Add-on 3: Sample Melody / Audio Reference Upload */}
+            <div
+              onClick={() => {
+                if (data.plan === 'single_gift') {
+                  setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
+                }
+              }}
+              className={cn(
+                'relative overflow-hidden rounded-2xl border p-4 transition-all space-y-3 cursor-pointer select-none active:scale-[0.98]',
+                data.plan !== 'single_gift'
+                  ? 'border-amber-500/40 bg-amber-500/10 shadow-sm ring-1 ring-amber-500/20'
+                  : 'border-border/60 bg-card hover:bg-card/80'
+              )}
+            >
+              <div className='flex items-start justify-between'>
+                <div className='flex items-center gap-2'>
+                  <Crown className='h-4 w-4 text-[#9A6A1E]' />
+                  <h4 className='font-bold font-heading text-xs text-foreground'>Sample Melody Upload</h4>
                 </div>
+                <span className={cn(
+                  'rounded-full px-2.5 py-0.5 font-bold text-[10px] uppercase font-heading',
+                  data.plan !== 'single_gift' ? 'bg-amber-500/20 text-[#9A6A1E]' : 'bg-muted text-muted-foreground'
+                )}>
+                  {data.plan !== 'single_gift' ? 'Unlocked ✓' : 'Paid Tiers Only'}
+                </span>
               </div>
-            </button>
+              <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
+                Hum a melody or upload custom audio file reference for our Song Chef composition.
+              </p>
+              <div className='flex items-center gap-1.5 text-xs font-semibold text-primary font-sans pt-1 border-t border-border/40'>
+                <Check className={cn('h-3.5 w-3.5', data.plan !== 'single_gift' ? 'text-emerald-600 stroke-[3]' : 'text-muted-foreground')} />
+                <span>{data.plan !== 'single_gift' ? 'Unlocked on Paid Tiers' : 'Requires Family Bond ($9.99+)'}</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -250,8 +291,11 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
               </p>
             </div>
             <div className='sm:col-span-2 border-t border-border/40 pt-3'>
-              <p className='font-bold text-[10px] text-muted-foreground uppercase tracking-wider font-heading mb-1'>Add-ons Summary</p>
+              <p className='font-bold text-[10px] text-muted-foreground uppercase tracking-wider font-heading mb-1.5'>Customizations & Add-ons Summary</p>
               <div className='flex flex-wrap gap-2 text-xs'>
+                <span className={cn('px-2.5 py-1 rounded-full font-semibold', data.plan !== 'single_gift' ? 'bg-emerald-500/15 text-emerald-800' : 'bg-muted text-muted-foreground')}>
+                  🎵 Sample Melody: {data.plan !== 'single_gift' ? 'Unlocked ✓' : 'Standard AI'}
+                </span>
                 <span className={cn('px-2.5 py-1 rounded-full font-semibold', isMemoryMaker || data.hasVoiceCloning ? 'bg-emerald-500/15 text-emerald-800' : 'bg-muted text-muted-foreground')}>
                   🎙️ Voice Persona: {isMemoryMaker ? 'FREE ✓' : data.hasVoiceCloning ? '+$5' : 'None'}
                 </span>

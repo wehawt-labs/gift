@@ -142,30 +142,27 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           <FormErrorMessage message={errors.vocalPreference?.message} trigger={validationTrigger} />
         </div>
 
-        {/* Real Voice Persona Studio (Single Persona & Upload Paywall) */}
-        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
-          <div className='flex items-center justify-between'>
+        {/* Real Voice Persona Studio (Unified Styling with Sample Melody Upload Card) */}
+        <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all space-y-3 shadow-sm'>
+          <div className='flex items-start justify-between'>
             <div className='flex items-center gap-2'>
               <Crown className='h-4 w-4 text-[#9A6A1E]' />
-              <Label className='font-semibold font-heading text-sm text-foreground'>Real Voice Persona</Label>
+              <h3 className='font-bold font-heading text-sm text-foreground'>Real Voice Persona</h3>
             </div>
-            {plan === 'memory_maker' ? (
-              <span className='rounded-full bg-emerald-500/20 px-2.5 py-0.5 font-bold text-[10px] text-emerald-700 uppercase font-heading'>
-                Included Free ✓
-              </span>
-            ) : (
-              <span className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading'>
-                $5 / Persona Slot
-              </span>
-            )}
+            <span className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading'>
+              {plan === 'memory_maker' ? 'Unlocked ✓' : useWatch({ name: 'hasVoiceCloning' }) ? 'Selected ✓' : '$5 / Slot'}
+            </span>
           </div>
+          <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
+            Combine a spoken intro message and custom singing voice persona into your song.
+          </p>
 
           {/* Persona Card: Active State vs Paywall Upload State */}
           {useWatch({ name: 'hasVoiceCloning' }) ? (
             /* Active Saved Voice Persona Card */
-            <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-background border border-primary/30 shadow-sm'>
+            <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-background border border-primary/30 shadow-sm'>
               <div className='flex items-center gap-3'>
-                <div className='h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg'>
+                <div className='h-9 w-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-base'>
                   🎙️
                 </div>
                 <div>
@@ -186,7 +183,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                   }}
                   className='h-8 rounded-lg text-xs font-heading font-semibold text-muted-foreground hover:text-foreground'
                 >
-                  Manage in Settings ⚙️
+                  Settings ⚙️
                 </Button>
                 <Button
                   type='button'
@@ -201,18 +198,14 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             </div>
           ) : (
             /* Paywall & Upload Card for New Voice Sample */
-            <div className='p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 space-y-3'>
-              <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
-                Clone your voice or record a spoken intro message for your recipient. You have not uploaded a Voice Persona yet.
-              </p>
-
-              <div className='flex flex-col sm:flex-row items-center gap-2 pt-1'>
+            <div className='pt-1'>
+              <div className='flex flex-col sm:flex-row items-center gap-2'>
                 <Button
                   type='button'
                   onClick={() => {
                     setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
                     toast.success('Voice Sample Uploaded', {
-                      description: 'Voice Persona created! It will be saved to your Profile Settings.'
+                      description: 'Voice Persona created! Saved to your Profile Settings.'
                     })
                   }}
                   className='w-full sm:w-auto h-9 rounded-xl bg-primary text-primary-foreground font-heading font-bold text-xs px-4 gap-1.5 shadow-[0_2px_0_0_#842504]'
@@ -236,6 +229,11 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               </div>
             </div>
           )}
+
+          <div className='flex items-center gap-2 text-xs font-semibold text-primary font-sans pt-1 border-t border-border/40'>
+            <Sparkles className='h-3.5 w-3.5' />
+            {plan === 'memory_maker' ? '✓ Included Free with Memory Maker.' : useWatch({ name: 'hasVoiceCloning' }) ? '✓ Voice Persona added (+$5.00)' : 'Optional $5 Add-on or Free with Memory Maker'}
+          </div>
         </div>
 
         {/* Custom Sample Audio / Melody Upload */}
