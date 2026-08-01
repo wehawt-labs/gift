@@ -259,15 +259,31 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             </span>
           </div>
           <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
-            Hum a melody, upload an audio clip, or paste a reference song link. Our Song Chef will use your custom melody for the composition!
+            Hum a melody or upload an audio file (.mp3, .wav, .m4a). Our Song Chef will use your custom melody for the composition!
           </p>
 
-          {/* File Input Upload + URL Input */}
-          <div className='space-y-2 pt-1'>
-            <div className='flex items-center gap-2'>
-              <label className='cursor-pointer flex-1 flex items-center justify-center gap-2 h-10 px-4 rounded-xl border border-dashed border-primary/40 bg-background hover:bg-card transition-colors text-xs font-semibold font-heading text-primary'>
-                <Sparkles className='h-3.5 w-3.5' />
-                <span>Upload Audio File (.mp3, .wav, .m4a)</span>
+          {/* File Input Upload Only (URL input disabled per user request) */}
+          <div className='pt-1'>
+            {useWatch({ name: 'sampleMelodyUrl' }) ? (
+              <div className='flex items-center justify-between p-3 rounded-xl bg-background border border-primary/30 text-xs font-sans'>
+                <div className='flex items-center gap-2 font-medium text-foreground truncate'>
+                  <Sparkles className='h-4 w-4 text-primary shrink-0' />
+                  <span className='truncate'>Uploaded: {useWatch({ name: 'sampleMelodyUrl' })?.replace('uploaded://', '')}</span>
+                </div>
+                <Button
+                  type='button'
+                  variant='ghost'
+                  size='sm'
+                  onClick={() => setValue('sampleMelodyUrl', '', { shouldValidate: true, shouldDirty: true })}
+                  className='h-7 text-xs text-destructive hover:bg-destructive/10 px-2'
+                >
+                  Remove File
+                </Button>
+              </div>
+            ) : (
+              <label className='cursor-pointer flex items-center justify-center gap-2 h-11 px-4 rounded-xl border-2 border-dashed border-primary/40 bg-background hover:bg-card transition-colors text-xs font-semibold font-heading text-primary shadow-sm active:scale-[0.99]'>
+                <Sparkles className='h-4 w-4' />
+                <span>Choose Audio File to Upload (.mp3, .wav, .m4a)</span>
                 <input
                   type='file'
                   accept='audio/*'
@@ -287,27 +303,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                   }}
                 />
               </label>
-            </div>
-
-            <div className='relative flex items-center justify-center my-1'>
-              <span className='bg-amber-500/5 px-2 text-[10px] uppercase font-bold text-muted-foreground font-heading'>or paste link</span>
-            </div>
-
-            <Input
-              placeholder='Paste reference song link or audio URL (e.g. YouTube, SoundCloud, MP3)...'
-              value={useWatch({ name: 'sampleMelodyUrl' }) || ''}
-              onChange={(e) => {
-                const val = e.target.value
-                setValue('sampleMelodyUrl', val, { shouldValidate: true, shouldDirty: true })
-                if (val && plan === 'single_gift') {
-                  setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
-                  toast.info('Auto-selected Paid Plan', {
-                    description: 'Family Bond ($9.99/mo) selected to support custom melody uploads.'
-                  })
-                }
-              }}
-              className='h-10 rounded-xl border-border bg-background px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground'
-            />
+            )}
           </div>
 
           <div className='flex items-center gap-2 text-xs font-semibold text-primary font-sans pt-1'>
