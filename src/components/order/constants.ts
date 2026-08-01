@@ -41,19 +41,69 @@ export const GENRE_OPTIONS = [
 
 export const PLANS = [
   {
-    id: LemonSqueezyPlan.STANDARD,
-    name: 'Standard',
-    price: 19.99,
-    revisions: 3,
-    description: 'Perfect for a heartfelt gift'
+    id: 'single_gift',
+    name: 'Single Gift',
+    price: 0,
+    period: 'Free',
+    quota: '1 Song / Week',
+    turnaround: 'Standard Queue',
+    storage: '7-Day Cloud Storage',
+    rollover: 'No Rollover',
+    description: 'Try it out with a weekly free song gift',
+    allAddonsIncluded: false
   },
   {
-    id: LemonSqueezyPlan.PREMIUM,
-    name: 'Premium',
+    id: 'family_bond',
+    name: 'Family Bond',
+    price: 9.99,
+    period: '/ month',
+    quota: '3 Songs / Week (12/mo)',
+    turnaround: 'Quick Priority (1-2 Days)',
+    storage: 'Permanent Storage',
+    rollover: 'Max 2 Weeks Rollover (Cap 6)',
+    description: 'Perfect for sharing memories with family',
+    allAddonsIncluded: false
+  },
+  {
+    id: 'memory_maker',
+    name: 'Memory Maker',
     price: 29.99,
-    revisions: 7,
-    description: 'Priority queue & more revisions'
+    period: '/ month',
+    quota: '10 Songs / Week (40/mo)',
+    turnaround: 'Same-Day Priority (Fastest)',
+    storage: 'Permanent Storage',
+    rollover: 'Max 2 Weeks Rollover (Cap 20)',
+    description: 'Ultimate value: Unlimited Voice, Video & Websites',
+    allAddonsIncluded: true,
+    badge: 'ALL ADD-ONS UNLOCKED'
   }
 ] as const
 
-export const PLAN_IDS = ['standard', 'premium'] as const
+export const PLAN_IDS = ['single_gift', 'family_bond', 'memory_maker'] as const
+
+export const ADDONS = [
+  {
+    id: 'voice_cloning',
+    name: 'Real Voice Cloning Persona',
+    price: 5,
+    unit: '/ Persona Slot',
+    description: 'Spoken intro + singing voice persona. Unlimited for Memory Maker.',
+    icon: 'mic'
+  },
+  {
+    id: 'photo_slideshow',
+    name: 'Photo Video Slideshow',
+    price: 5,
+    unit: '/ Video',
+    description: 'Aesthetic photo slideshow video with lyrics background. Unlimited for Memory Maker.',
+    icon: 'video'
+  },
+  {
+    id: 'custom_website',
+    name: 'Custom Song Website',
+    price: 5,
+    unit: '/ Custom Link',
+    description: 'Custom domain/link, themes, cover photos & letters. Unlimited for Memory Maker.',
+    icon: 'globe'
+  }
+] as const

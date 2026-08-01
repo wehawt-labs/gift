@@ -40,9 +40,12 @@ export function OrderWizard() {
       coreMessage: '',
       buyerName: '',
       buyerEmail: '',
-      plan: LemonSqueezyPlan.STANDARD,
-      hasDedicatedUrlAddon: false,
-      sampleMelodyUrl: ''
+      plan: 'single_gift',
+      hasVoiceCloning: false,
+      hasPhotoSlideshow: false,
+      hasCustomWebsite: false,
+      sampleMelodyUrl: '',
+      selectedVoicePersona: 'none'
     },
     mode: 'onBlur'
   })

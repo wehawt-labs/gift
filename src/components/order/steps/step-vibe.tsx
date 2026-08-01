@@ -2,10 +2,13 @@
 
 import { Crown, Lock, Play, Sparkles } from 'lucide-react'
 import { useFormContext, useWatch } from 'react-hook-form'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { cn } from '@/lib/utils'
 import { GENRE_OPTIONS, MOOD_OPTIONS, VOCAL_PREFERENCES } from '../constants'
@@ -123,16 +126,71 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           <FormErrorMessage message={errors.vocalPreference?.message} trigger={validationTrigger} />
         </div>
 
-        {/* Custom Sample Audio / Melody Upload Paywall Box */}
+        {/* Voice Persona Studio Selector (Revised Spec) */}
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-2'>
+              <Crown className='h-4 w-4 text-[#9A6A1E]' />
+              <Label className='font-semibold font-heading text-sm text-foreground'>Real Voice Persona Studio</Label>
+            </div>
+            {plan === 'memory_maker' ? (
+              <span className='rounded-full bg-emerald-500/20 px-2.5 py-0.5 font-bold text-[10px] text-emerald-700 uppercase font-heading'>
+                Unlimited Free ✓
+              </span>
+            ) : (
+              <span className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading'>
+                $5 / Persona Slot
+              </span>
+            )}
+          </div>
+          <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
+            Combine a spoken intro message and custom singing voice persona into your song. Select an existing saved voice or record a new one.
+          </p>
+
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1'>
+            <Select
+              value={useWatch({ name: 'selectedVoicePersona' }) || 'none'}
+              onValueChange={(val) => setValue('selectedVoicePersona', val, { shouldValidate: true, shouldDirty: true })}
+            >
+              <SelectTrigger className='h-10 rounded-xl bg-background text-xs font-sans border-border'>
+                <SelectValue placeholder='Select Saved Voice Persona' />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value='none'>Default AI Vocalist</SelectItem>
+                <SelectItem value='persona_1'>🎙️ Alex (Spoken Intro + Singing)</SelectItem>
+                <SelectItem value='persona_2'>🎙️ Emily (Soft Acoustic Voice)</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button
+              type='button'
+              variant='outline'
+              onClick={() => {
+                if (plan !== 'memory_maker') {
+                  setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
+                }
+                toast.success('Voice Persona Studio Opened', {
+                  description: 'Record or upload a 15-second voice sample to clone your voice.'
+                })
+              }}
+              className='h-10 rounded-xl border-dashed border-primary/50 text-primary font-heading font-semibold text-xs gap-1.5 hover:bg-primary/10'
+            >
+              <Sparkles className='h-3.5 w-3.5' />
+              + Create New Voice Persona ({plan === 'memory_maker' ? 'FREE with Pro' : '$5'})
+            </Button>
+          </div>
+        </div>
+
+        {/* Custom Sample Audio / Melody Upload */}
         <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all space-y-3'>
-          {plan !== LemonSqueezyPlan.PREMIUM && (
+          {plan === 'single_gift' && (
             <div className='absolute inset-0 bg-[#A89A8C]/25 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center p-4 text-center'>
               <div className='h-10 w-10 rounded-full bg-background/90 shadow-md flex items-center justify-center text-[#9A6A1E] mb-2'>
                 <Lock className='h-5 w-5' />
               </div>
-              <p className='font-bold font-heading text-sm text-[#9A6A1E] mb-1'>Premium Feature</p>
+              <p className='font-bold font-heading text-sm text-[#9A6A1E] mb-1'>Paid Tier Feature</p>
               <p className='text-xs text-foreground/80 font-sans max-w-xs mb-3'>
-                Unlock Custom Sample Melody Uploads & 24-Hour Priority Queue
+                Unlock Custom Sample Melody Uploads & Quick Priority Processing
               </p>
               <button
                 type='button'
@@ -140,7 +198,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                 className='px-4 py-2 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-1.5'
               >
                 <Crown className='h-3.5 w-3.5 fill-current' />
-                Upgrade to Premium (+$10)
+                Upgrade to Memory Maker ($29.99/mo)
               </button>
             </div>
           )}
@@ -151,7 +209,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               <h3 className='font-bold font-heading text-sm text-foreground'>Sample Melody / Audio Reference Upload</h3>
             </div>
             <span className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading'>
-              {plan === LemonSqueezyPlan.PREMIUM ? 'Unlocked ✓' : 'Premium Only'}
+              {plan !== 'single_gift' ? 'Unlocked ✓' : 'Paid Tiers Only'}
             </span>
           </div>
           <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
@@ -167,7 +225,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
 
           <div className='flex items-center gap-2 text-xs font-semibold text-primary font-sans pt-1'>
             <Sparkles className='h-3.5 w-3.5' />
-            {plan === LemonSqueezyPlan.PREMIUM ? '✓ Premium Unlocked! Reference melody upload enabled.' : 'Locked on Standard plan'}
+            {plan !== 'single_gift' ? '✓ Reference melody upload enabled.' : 'Locked on Free plan'}
           </div>
         </div>
       </div>
