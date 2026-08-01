@@ -19,7 +19,7 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
   const plan = useWatch({ name: 'plan' })
 
   const handleSelectPremium = () => {
-    setValue('plan', LemonSqueezyPlan.PREMIUM, { shouldValidate: true, shouldDirty: true })
+    setValue('plan', 'memory_maker', { shouldValidate: true, shouldDirty: true })
   }
 
   return (
@@ -81,7 +81,7 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
 
         {/* Digital Keepsake Gift Wrapping & Dedicated URL Paywall Card (Stitch Screen 2cfcaa7c7974454fa1fbd852131c9663) */}
         <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-card p-5 shadow-sm transition-all'>
-          {plan !== LemonSqueezyPlan.PREMIUM && (
+          {plan !== 'memory_maker' && (
             <div className='absolute inset-0 bg-[#A89A8C]/30 backdrop-blur-[3px] z-10 flex flex-col items-center justify-center p-5 text-center'>
               <div className='h-11 w-11 rounded-full bg-background/95 shadow-md flex items-center justify-center text-[#9A6A1E] mb-2'>
                 <Lock className='h-5 w-5' />
@@ -96,7 +96,7 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
                 className='px-5 py-2.5 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-2 uppercase tracking-wider'
               >
                 <Crown className='h-4 w-4 fill-current' />
-                Upgrade to Unlock Dedicated Page
+                Upgrade to Memory Maker ($29.99/mo)
               </button>
             </div>
           )}
@@ -107,7 +107,7 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
               <h3 className='font-bold font-heading text-base text-foreground'>Digital Keepsake Gift Wrapping</h3>
             </div>
             <span className='rounded-full bg-amber-500/20 px-3 py-1 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading tracking-wider'>
-              {plan === LemonSqueezyPlan.PREMIUM ? 'Unlocked ✓' : 'Premium Feature'}
+              {plan === 'memory_maker' ? 'Unlocked ✓' : 'Memory Maker Free'}
             </span>
           </div>
 
