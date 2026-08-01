@@ -33,7 +33,7 @@ export function OrderWizard() {
       recipientName: '',
       occasion: 'Birthday',
       genre: 'Acoustic Pop',
-      tempo: 'Upbeat & Happy',
+      tempo: 'Warm & Cozy',
       vocalPreference: 'Male',
       memory: '',
       jokes: '',

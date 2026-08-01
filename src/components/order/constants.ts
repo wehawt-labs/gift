@@ -3,8 +3,18 @@ import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 
 export const RECIPIENTS = ['Partner', 'Parent', 'Friend', 'Myself'] as const
 export const GENRES = ['Acoustic Pop', 'Rock Ballad', 'EDM', 'R&B', 'Country'] as const
-export const TEMPOS = ['Upbeat & Happy', 'Slow & Emotional', 'Funny/Joke'] as const
-export const VOCAL_PREFERENCES = ['Male', 'Female', 'Surprise Me'] as const
+export const TEMPOS = ['Warm & Cozy', 'Joyful & Upbeat', 'Tear-Jerker', 'Playful', 'Romantic', 'Calming'] as const
+
+export const MOOD_OPTIONS = [
+  { value: 'Warm & Cozy', emoji: '☕', label: 'Warm & Cozy' },
+  { value: 'Joyful & Upbeat', emoji: '☀️', label: 'Joyful & Upbeat' },
+  { value: 'Tear-Jerker', emoji: '😭', label: 'Tear-Jerker' },
+  { value: 'Playful', emoji: '🤪', label: 'Playful' },
+  { value: 'Romantic', emoji: '❤️', label: 'Romantic' },
+  { value: 'Calming', emoji: '😌', label: 'Calming' }
+] as const
+
+export const VOCAL_PREFERENCES = ['Male', 'Female', 'Surprise Me', 'Custom Voice (Premium)'] as const
 export const OCCASIONS = ['Birthday', 'Anniversary', 'Romance', 'Just Because', 'Other'] as const
 
 export const STAGES = [
