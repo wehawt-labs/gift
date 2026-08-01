@@ -10,14 +10,13 @@ import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { cn } from '@/lib/utils'
 import type { OrderFormData } from '../schema'
 
-function AiEnhanceButton({ label = 'Magic Touch ✨', onClick }: { label?: string; onClick: () => void }) {
+function AiEnhanceButton({ label = 'AI Assist ✨', onClick }: { label?: string; onClick: () => void }) {
   return (
     <button
       type='button'
       onClick={onClick}
-      className='inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-primary/10 to-amber-500/10 border border-primary/30 hover:border-primary/60 text-primary font-heading font-bold text-[11px] shadow-2xs hover:shadow-sm active:scale-95 transition-all cursor-pointer group shrink-0'
+      className='inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-primary/10 to-amber-500/10 border border-primary/30 hover:border-primary/60 text-primary font-heading font-bold text-[11px] shadow-2xs hover:shadow-sm active:scale-95 transition-all cursor-pointer group shrink-0'
     >
-      <Sparkles className='h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform' />
       <span>{label}</span>
     </button>
   )
