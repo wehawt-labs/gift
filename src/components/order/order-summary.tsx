@@ -33,7 +33,7 @@ export function OrderSummary({ formData }: { formData: OrderFormData }) {
             <div className='flex h-6 w-6 items-center justify-center rounded-full bg-primary/10'>
               <Sparkles className='h-3 w-3 text-primary' />
             </div>
-            <span className='font-medium'>{selectedPlan.revisions} Revision Rounds</span>
+            <span className='font-medium'>{selectedPlan.quota}</span>
           </div>
           {formData.recipient && (
             <div className='flex items-center gap-2.5'>
