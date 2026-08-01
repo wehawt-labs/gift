@@ -117,38 +117,42 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
           />
 
           {/* Toggle Switch: Full Lyrics vs Song Chef Finishing Lyrics */}
-          <div className='pt-2 border-t border-border/40 flex items-center justify-between'>
-            <div className='space-y-0.5 max-w-[80%]'>
-              <Label htmlFor='isFullLyrics' className='font-semibold font-heading text-xs text-foreground block cursor-pointer'>
-                {useWatch({ name: 'isFullLyrics' })
-                  ? "✨ I've written the full lyrics — use my exact words!"
-                  : "✏️ Just an idea — let our Song Chef write the full lyrics for me!"}
-              </Label>
-              <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
-                {useWatch({ name: 'isFullLyrics' })
-                  ? 'Our Song Chef will compose the music around your exact written lyrics.'
-                  : 'Sit back and relax! Our professional lyricists will expand your memories into a complete, heartfelt song.'}
-              </p>
-            </div>
+          {(() => {
+            const isFull = Boolean(useWatch({ name: 'isFullLyrics' }))
+            return (
+              <div
+                onClick={() => setValue('isFullLyrics', !isFull, { shouldDirty: true })}
+                className='pt-2 border-t border-border/40 flex items-center justify-between cursor-pointer select-none group'
+              >
+                <div className='space-y-0.5 max-w-[80%]'>
+                  <Label className='font-semibold font-heading text-xs text-foreground block cursor-pointer group-hover:text-primary transition-colors'>
+                    {isFull
+                      ? "✨ I've written the full lyrics — use my exact words!"
+                      : "✏️ Just an idea — let our Song Chef write the full lyrics for me!"}
+                  </Label>
+                  <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
+                    {isFull
+                      ? 'Our Song Chef will compose the music around your exact written lyrics.'
+                      : 'Sit back and relax! Our professional lyricists will expand your memories into a complete, heartfelt song.'}
+                  </p>
+                </div>
 
-            <button
-              type='button'
-              role='switch'
-              aria-checked={Boolean(useWatch({ name: 'isFullLyrics' }))}
-              onClick={() => setValue('isFullLyrics', !useWatch({ name: 'isFullLyrics' }), { shouldValidate: true, shouldDirty: true })}
-              className={cn(
-                'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
-                useWatch({ name: 'isFullLyrics' }) ? 'bg-primary' : 'bg-muted-foreground/30'
-              )}
-            >
-              <span
-                className={cn(
-                  'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                  useWatch({ name: 'isFullLyrics' }) ? 'translate-x-5' : 'translate-x-0'
-                )}
-              />
-            </button>
-          </div>
+                <div
+                  className={cn(
+                    'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
+                    isFull ? 'bg-primary' : 'bg-muted-foreground/30'
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                      isFull ? 'translate-x-5' : 'translate-x-0'
+                    )}
+                  />
+                </div>
+              </div>
+            )
+          })()}
         </div>
 
         {/* Digital Keepsake Gift Wrapping & Dedicated URL Paywall Card (Stitch Screen 2cfcaa7c7974454fa1fbd852131c9663) */}
