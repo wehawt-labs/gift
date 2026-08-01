@@ -231,9 +231,8 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
             {/* Add-on 3: Sample Melody / Audio Reference Upload */}
             <div
               onClick={() => {
-                if (data.plan === 'single_gift') {
-                  setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
-                }
+                const newPlan = data.plan === 'single_gift' ? 'family_bond' : 'single_gift'
+                setValue('plan', newPlan, { shouldDirty: true })
               }}
               className={cn(
                 'relative overflow-hidden rounded-2xl border p-4 transition-all space-y-3 cursor-pointer select-none active:scale-[0.98]',

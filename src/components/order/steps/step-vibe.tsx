@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PaywallOverlay } from '@/components/ui/paywall-overlay'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { SectionDivider } from '@/components/ui/section-divider'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -25,6 +26,8 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
   const tempo = useWatch({ name: 'tempo' })
   const vocalPreference = useWatch({ name: 'vocalPreference' })
   const plan = useWatch({ name: 'plan' })
+  const hasVoiceCloning = Boolean(useWatch({ name: 'hasVoiceCloning' }))
+  const sampleMelodyUrl = useWatch({ name: 'sampleMelodyUrl' })
 
   const handleSelectPremium = () => {
     setValue('plan', 'memory_maker', { shouldValidate: true, shouldDirty: true })
@@ -105,23 +108,25 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             })}
           </div>
 
-          {/* Custom Mood Input */}
+          {/* Custom Tempo/Mood Input */}
           <Input
-            placeholder='Or type custom mood/style (e.g. Nostalgic & Bittersweet, Energetic...)'
-            value={tempo && !['Warm & Cozy', 'Joyful & Upbeat', 'Tear-Jerker', 'Playful', 'Romantic', 'Calming'].includes(tempo) ? tempo : ''}
+            placeholder='Or type custom mood/style (e.g. Energetic, Nostalgic, Cinematic...)'
+            value={tempo && !MOOD_OPTIONS.some((m) => m.value === tempo) ? tempo : ''}
             onChange={(e) => setValue('tempo', e.target.value, { shouldValidate: true, shouldDirty: true })}
-            className='h-10 rounded-xl border-border bg-card px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground'
+            className='h-10 rounded-xl border-border bg-card px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground mt-2'
           />
           <FormErrorMessage message={errors.tempo?.message} trigger={validationTrigger} />
         </div>
 
-        {/* Vocal Preference */}
+        {/* Vocal Preference Section */}
         <div className='space-y-3'>
-          <Label className='font-semibold font-heading text-sm text-foreground'>Vocal Preference</Label>
+          <div className='flex items-center justify-between'>
+            <Label className='font-semibold font-heading text-sm text-foreground'>Vocal Preference</Label>
+          </div>
           <RadioGroup
             value={vocalPreference}
-            onValueChange={(v) => setValue('vocalPreference', v as any, { shouldValidate: true, shouldDirty: true })}
-            className='grid grid-cols-1 sm:grid-cols-3 gap-2.5'
+            onValueChange={(val) => setValue('vocalPreference', val as any, { shouldValidate: true, shouldDirty: true })}
+            className='grid grid-cols-2 gap-3 sm:grid-cols-3'
           >
             {VOCAL_PREFERENCES.filter(v => v !== 'Custom Voice (Premium)').map((vocal) => (
               <div
@@ -149,44 +154,38 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
         {/* Real Voice Persona Studio (Unified Styling with Sample Melody Upload Card) */}
         <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all space-y-3 shadow-sm'>
           {/* Paywall Overlay for Voice Persona when on Free Plan and not added */}
-          {plan === 'single_gift' && !useWatch({ name: 'hasVoiceCloning' }) && (
-            <div className='absolute inset-0 bg-[#A89A8C]/25 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center p-4 text-center'>
-              <div className='h-10 w-10 rounded-full bg-background/90 shadow-md flex items-center justify-center text-[#9A6A1E] mb-2'>
-                <Lock className='h-5 w-5' />
-              </div>
-              <p className='font-bold font-heading text-sm text-[#9A6A1E] mb-1'>Curious How Your Voice Sounds in a Song?</p>
-              <p className='text-xs text-foreground/80 font-sans max-w-xs mb-3'>
-                Record a spoken intro or clone your singing voice for your recipient's special keepsake song.
-              </p>
-              <div className='flex flex-col sm:flex-row items-center gap-2'>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setValue('plan', 'memory_maker', { shouldValidate: true, shouldDirty: true })
-                    setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
-                    toast.success('Memory Maker Selected', {
-                      description: 'All premium add-ons including Real Voice Persona are UNLOCKED FREE!'
-                    })
-                  }}
-                  className='px-3.5 py-1.5 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-1.5'
-                >
-                  <Crown className='h-3.5 w-3.5 fill-current' />
-                  Unlock All Free with Memory Maker ($29.99/mo)
-                </button>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
-                    toast.success('Voice Persona Add-on Added', {
-                      description: 'Added Real Voice Persona slot to your order (+$5.00).'
-                    })
-                  }}
-                  className='px-3.5 py-1.5 rounded-xl bg-background border border-amber-500/40 text-primary font-heading font-bold text-xs shadow-xs hover:bg-card active:scale-95 transition-all flex items-center gap-1'
-                >
-                  <span>Add Voice Persona (+$5.00)</span>
-                </button>
-              </div>
-            </div>
+          {plan === 'single_gift' && !hasVoiceCloning && (
+            <PaywallOverlay
+              title='Curious How Your Voice Sounds in a Song?'
+              description="Record a spoken intro or clone your singing voice for your recipient's special keepsake song."
+            >
+              <button
+                type='button'
+                onClick={() => {
+                  setValue('plan', 'memory_maker', { shouldDirty: true })
+                  setValue('hasVoiceCloning', true, { shouldDirty: true })
+                  toast.success('Memory Maker Selected', {
+                    description: 'All premium add-ons including Real Voice Persona are UNLOCKED FREE!'
+                  })
+                }}
+                className='px-3.5 py-1.5 rounded-xl bg-primary text-primary-foreground font-heading font-bold text-xs shadow-md hover:bg-primary/90 active:scale-95 transition-all flex items-center gap-1.5'
+              >
+                <Crown className='h-3.5 w-3.5 fill-current' />
+                Unlock Free with Memory Maker ($29.99/mo)
+              </button>
+              <button
+                type='button'
+                onClick={() => {
+                  setValue('hasVoiceCloning', true, { shouldDirty: true })
+                  toast.success('Voice Persona Add-on Added', {
+                    description: 'Added Real Voice Persona slot to your order (+$5.00).'
+                  })
+                }}
+                className='px-3.5 py-1.5 rounded-xl bg-background border border-amber-500/40 text-foreground font-heading font-bold text-xs shadow-2xs hover:bg-card active:scale-95 transition-all flex items-center gap-1'
+              >
+                <span>Add Voice Persona (+$5.00)</span>
+              </button>
+            </PaywallOverlay>
           )}
 
           <div className='flex items-start justify-between'>
@@ -195,7 +194,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               <h3 className='font-bold font-heading text-sm text-foreground'>Real Voice Persona</h3>
             </div>
             <span className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading'>
-              {plan === 'memory_maker' ? 'Unlocked ✓' : useWatch({ name: 'hasVoiceCloning' }) ? 'Selected ✓' : '$5 / Slot'}
+              {plan === 'memory_maker' ? 'Unlocked ✓' : hasVoiceCloning ? 'Selected ✓' : '$5 / Slot'}
             </span>
           </div>
           <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
@@ -203,7 +202,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           </p>
 
           {/* Persona Card: Active State vs Paywall Upload State */}
-          {useWatch({ name: 'hasVoiceCloning' }) ? (
+          {hasVoiceCloning ? (
             /* Active Saved Voice Persona Card */
             <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-background border border-primary/30 shadow-sm'>
               <div className='flex items-center gap-3'>
@@ -234,7 +233,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                   type='button'
                   variant='ghost'
                   size='sm'
-                  onClick={() => setValue('hasVoiceCloning', false, { shouldValidate: true, shouldDirty: true })}
+                  onClick={() => setValue('hasVoiceCloning', false, { shouldDirty: true })}
                   className='h-8 rounded-lg text-xs text-destructive hover:bg-destructive/10'
                 >
                   Remove
@@ -248,7 +247,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                 <Button
                   type='button'
                   onClick={() => {
-                    setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
+                    setValue('hasVoiceCloning', true, { shouldDirty: true })
                     toast.success('Voice Sample Uploaded', {
                       description: 'Voice Persona created! Saved to your Profile Settings.'
                     })
@@ -277,49 +276,43 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
 
           <div className='flex items-center gap-2 text-xs font-semibold text-primary font-sans pt-1 border-t border-border/40'>
             <Sparkles className='h-3.5 w-3.5' />
-            {plan === 'memory_maker' ? '✓ Included Free with Memory Maker.' : useWatch({ name: 'hasVoiceCloning' }) ? '✓ Voice Persona added (+$5.00)' : 'Optional $5 Add-on or Free with Memory Maker'}
+            {plan === 'memory_maker' ? '✓ Included Free with Memory Maker.' : hasVoiceCloning ? '✓ Voice Persona added (+$5.00)' : 'Optional $5 Add-on or Free with Memory Maker'}
           </div>
         </div>
 
         {/* Custom Sample Audio / Melody Upload */}
-        <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all space-y-3'>
+        <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all space-y-3 shadow-sm'>
           {plan === 'single_gift' && (
-            <div className='absolute inset-0 bg-[#A89A8C]/25 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center p-4 text-center'>
-              <div className='h-10 w-10 rounded-full bg-background/90 shadow-md flex items-center justify-center text-[#9A6A1E] mb-2'>
-                <Lock className='h-5 w-5' />
-              </div>
-              <p className='font-bold font-heading text-sm text-[#9A6A1E] mb-1'>Paid Tier Feature</p>
-              <p className='text-xs text-foreground/80 font-sans max-w-xs mb-3'>
-                Unlock Custom Sample Melody Uploads & Quick Priority Processing
-              </p>
-              <div className='flex flex-col sm:flex-row items-center gap-2'>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
-                    toast.success('Family Bond Plan Selected', {
-                      description: 'Custom Melody Upload is unlocked on Family Bond ($9.99/mo) or Memory Maker ($29.99/mo).'
-                    })
-                  }}
-                  className='px-3.5 py-1.5 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-1.5'
-                >
-                  <Crown className='h-3.5 w-3.5 fill-current' />
-                  Unlock with Subscription ($9.99/mo)
-                </button>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
-                    toast.success('Sample Melody Add-on Selected', {
-                      description: 'Selected Family Bond ($9.99/mo) to unlock melody uploads & priority queue.'
-                    })
-                  }}
-                  className='px-3.5 py-1.5 rounded-xl bg-background border border-amber-500/40 text-primary font-heading font-bold text-xs shadow-xs hover:bg-card active:scale-95 transition-all flex items-center gap-1'
-                >
-                  <span>Use as Add-on (+$5.00)</span>
-                </button>
-              </div>
-            </div>
+            <PaywallOverlay
+              title='Paid Tier Feature'
+              description='Unlock Custom Sample Melody Uploads & Quick Priority Processing'
+            >
+              <button
+                type='button'
+                onClick={() => {
+                  setValue('plan', 'family_bond', { shouldDirty: true })
+                  toast.success('Family Bond Plan Selected', {
+                    description: 'Custom Melody Upload is unlocked on Family Bond ($9.99/mo) or Memory Maker ($29.99/mo).'
+                  })
+                }}
+                className='px-3.5 py-1.5 rounded-xl bg-primary text-primary-foreground font-heading font-bold text-xs shadow-md hover:bg-primary/90 active:scale-95 transition-all flex items-center gap-1.5'
+              >
+                <Crown className='h-3.5 w-3.5 fill-current' />
+                Unlock with Subscription ($9.99/mo)
+              </button>
+              <button
+                type='button'
+                onClick={() => {
+                  setValue('plan', 'family_bond', { shouldDirty: true })
+                  toast.success('Sample Melody Add-on Selected', {
+                    description: 'Selected Family Bond ($9.99/mo) to unlock melody uploads & priority queue.'
+                  })
+                }}
+                className='px-3.5 py-1.5 rounded-xl bg-background border border-amber-500/40 text-foreground font-heading font-bold text-xs shadow-2xs hover:bg-card active:scale-95 transition-all flex items-center gap-1'
+              >
+                <span>Use as Add-on (+$5.00)</span>
+              </button>
+            </PaywallOverlay>
           )}
 
           <div className='flex items-start justify-between'>
@@ -327,9 +320,20 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               <Crown className='h-4 w-4 text-[#9A6A1E]' />
               <h3 className='font-bold font-heading text-sm text-foreground'>Sample Melody / Audio Reference Upload</h3>
             </div>
-            <span className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading'>
-              {plan !== 'single_gift' ? 'Unlocked ✓' : 'Paid Tiers Only'}
-            </span>
+            {plan !== 'single_gift' ? (
+              <button
+                type='button'
+                onClick={() => setValue('plan', 'single_gift', { shouldDirty: true })}
+                className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading hover:bg-amber-500/30 transition-colors'
+                title='Click to revert to Free plan'
+              >
+                Unlocked ✓ (Revert)
+              </button>
+            ) : (
+              <span className='rounded-full bg-muted px-2.5 py-0.5 font-bold text-[10px] text-muted-foreground uppercase font-heading'>
+                Paid Tiers Only
+              </span>
+            )}
           </div>
           <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
             Hum a melody or upload an audio file (.mp3, .wav, .m4a). Our Song Chef will use your custom melody for the composition!
@@ -337,17 +341,17 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
 
           {/* File Input Upload Only (URL input disabled per user request) */}
           <div className='pt-1'>
-            {useWatch({ name: 'sampleMelodyUrl' }) ? (
+            {sampleMelodyUrl ? (
               <div className='flex items-center justify-between p-3 rounded-xl bg-background border border-primary/30 text-xs font-sans'>
                 <div className='flex items-center gap-2 font-medium text-foreground truncate'>
                   <Sparkles className='h-4 w-4 text-primary shrink-0' />
-                  <span className='truncate'>Uploaded: {useWatch({ name: 'sampleMelodyUrl' })?.replace('uploaded://', '')}</span>
+                  <span className='truncate'>Uploaded: {sampleMelodyUrl.replace('uploaded://', '')}</span>
                 </div>
                 <Button
                   type='button'
                   variant='ghost'
                   size='sm'
-                  onClick={() => setValue('sampleMelodyUrl', '', { shouldValidate: true, shouldDirty: true })}
+                  onClick={() => setValue('sampleMelodyUrl', '', { shouldDirty: true })}
                   className='h-7 text-xs text-destructive hover:bg-destructive/10 px-2'
                 >
                   Remove File
@@ -365,9 +369,9 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                     const file = e.target.files?.[0]
                     if (file) {
                       const fakeUrl = `uploaded://${file.name}`
-                      setValue('sampleMelodyUrl', fakeUrl, { shouldValidate: true, shouldDirty: true })
+                      setValue('sampleMelodyUrl', fakeUrl, { shouldDirty: true })
                       if (plan === 'single_gift') {
-                        setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
+                        setValue('plan', 'family_bond', { shouldDirty: true })
                       }
                       toast.success('Audio File Selected', {
                         description: `Uploaded: ${file.name}`
