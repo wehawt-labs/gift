@@ -126,16 +126,16 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           <FormErrorMessage message={errors.vocalPreference?.message} trigger={validationTrigger} />
         </div>
 
-        {/* Voice Persona Studio Selector (Revised Spec) */}
+        {/* Real Voice Persona Studio (Single Persona & Upload Paywall) */}
         <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-2'>
               <Crown className='h-4 w-4 text-[#9A6A1E]' />
-              <Label className='font-semibold font-heading text-sm text-foreground'>Real Voice Persona Studio</Label>
+              <Label className='font-semibold font-heading text-sm text-foreground'>Real Voice Persona</Label>
             </div>
             {plan === 'memory_maker' ? (
               <span className='rounded-full bg-emerald-500/20 px-2.5 py-0.5 font-bold text-[10px] text-emerald-700 uppercase font-heading'>
-                Unlimited Free ✓
+                Included Free ✓
               </span>
             ) : (
               <span className='rounded-full bg-amber-500/20 px-2.5 py-0.5 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading'>
@@ -143,42 +143,83 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               </span>
             )}
           </div>
-          <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
-            Combine a spoken intro message and custom singing voice persona into your song. Select an existing saved voice or record a new one.
-          </p>
 
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1'>
-            <Select
-              value={useWatch({ name: 'selectedVoicePersona' }) || 'none'}
-              onValueChange={(val) => setValue('selectedVoicePersona', val, { shouldValidate: true, shouldDirty: true })}
-            >
-              <SelectTrigger className='h-10 rounded-xl bg-background text-xs font-sans border-border'>
-                <SelectValue placeholder='Select Saved Voice Persona' />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='none'>Default AI Vocalist</SelectItem>
-                <SelectItem value='persona_1'>🎙️ Alex (Spoken Intro + Singing)</SelectItem>
-                <SelectItem value='persona_2'>🎙️ Emily (Soft Acoustic Voice)</SelectItem>
-              </SelectContent>
-            </Select>
+          {/* Persona Card: Active State vs Paywall Upload State */}
+          {useWatch({ name: 'hasVoiceCloning' }) ? (
+            /* Active Saved Voice Persona Card */
+            <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-background border border-primary/30 shadow-sm'>
+              <div className='flex items-center gap-3'>
+                <div className='h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg'>
+                  🎙️
+                </div>
+                <div>
+                  <h4 className='font-bold font-heading text-xs text-foreground'>Active Voice Persona: "My Custom Voice"</h4>
+                  <p className='text-[11px] text-muted-foreground font-sans'>Spoken intro & singing voice clone active</p>
+                </div>
+              </div>
 
-            <Button
-              type='button'
-              variant='outline'
-              onClick={() => {
-                if (plan !== 'memory_maker') {
-                  setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
-                }
-                toast.success('Voice Persona Studio Opened', {
-                  description: 'Record or upload a 15-second voice sample to clone your voice.'
-                })
-              }}
-              className='h-10 rounded-xl border-dashed border-primary/50 text-primary font-heading font-semibold text-xs gap-1.5 hover:bg-primary/10'
-            >
-              <Sparkles className='h-3.5 w-3.5' />
-              + Create New Voice Persona ({plan === 'memory_maker' ? 'FREE with Pro' : '$5'})
-            </Button>
-          </div>
+              <div className='flex items-center gap-2'>
+                <Button
+                  type='button'
+                  variant='outline'
+                  size='sm'
+                  onClick={() => {
+                    toast.info('Opening Voice Settings', {
+                      description: 'Navigating to Profile Settings -> Voice Persona Studio...'
+                    })
+                  }}
+                  className='h-8 rounded-lg text-xs font-heading font-semibold text-muted-foreground hover:text-foreground'
+                >
+                  Manage in Settings ⚙️
+                </Button>
+                <Button
+                  type='button'
+                  variant='ghost'
+                  size='sm'
+                  onClick={() => setValue('hasVoiceCloning', false, { shouldValidate: true, shouldDirty: true })}
+                  className='h-8 rounded-lg text-xs text-destructive hover:bg-destructive/10'
+                >
+                  Remove
+                </Button>
+              </div>
+            </div>
+          ) : (
+            /* Paywall & Upload Card for New Voice Sample */
+            <div className='p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 space-y-3'>
+              <p className='text-xs text-muted-foreground font-sans leading-relaxed'>
+                Clone your voice or record a spoken intro message for your recipient. You have not uploaded a Voice Persona yet.
+              </p>
+
+              <div className='flex flex-col sm:flex-row items-center gap-2 pt-1'>
+                <Button
+                  type='button'
+                  onClick={() => {
+                    setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
+                    toast.success('Voice Sample Uploaded', {
+                      description: 'Voice Persona created! It will be saved to your Profile Settings.'
+                    })
+                  }}
+                  className='w-full sm:w-auto h-9 rounded-xl bg-primary text-primary-foreground font-heading font-bold text-xs px-4 gap-1.5 shadow-[0_2px_0_0_#842504]'
+                >
+                  <Sparkles className='h-3.5 w-3.5' />
+                  Upload Voice Sample File (.mp3, .wav)
+                </Button>
+
+                <Button
+                  type='button'
+                  variant='outline'
+                  onClick={() => {
+                    toast.info('Redirecting to Settings', {
+                      description: 'Opening Profile Settings -> Voice Persona Studio...'
+                    })
+                  }}
+                  className='w-full sm:w-auto h-9 rounded-xl text-xs font-heading font-semibold border-border bg-background'
+                >
+                  Open Voice Settings ⚙️
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Custom Sample Audio / Melody Upload */}
