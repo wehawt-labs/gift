@@ -68,6 +68,14 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               </button>
             ))}
           </div>
+
+          {/* Custom Genre Input */}
+          <Input
+            placeholder='Or type custom genre (e.g. Indie Folk, 90s Hip-Hop, Lo-Fi Chill...)'
+            value={genre && !['Acoustic Pop', 'Rock Ballad', 'EDM', 'R&B', 'Country'].includes(genre) ? genre : ''}
+            onChange={(e) => setValue('genre', e.target.value, { shouldValidate: true, shouldDirty: true })}
+            className='h-10 rounded-xl border-border bg-card px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground'
+          />
           <FormErrorMessage message={errors.genre?.message} trigger={validationTrigger} />
         </div>
 
@@ -95,6 +103,14 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               )
             })}
           </div>
+
+          {/* Custom Mood Input */}
+          <Input
+            placeholder='Or type custom mood/style (e.g. Nostalgic & Bittersweet, Energetic...)'
+            value={tempo && !['Warm & Cozy', 'Joyful & Upbeat', 'Tear-Jerker', 'Playful', 'Romantic', 'Calming'].includes(tempo) ? tempo : ''}
+            onChange={(e) => setValue('tempo', e.target.value, { shouldValidate: true, shouldDirty: true })}
+            className='h-10 rounded-xl border-border bg-card px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground'
+          />
           <FormErrorMessage message={errors.tempo?.message} trigger={validationTrigger} />
         </div>
 

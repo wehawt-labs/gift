@@ -7,6 +7,7 @@ import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
+import { cn } from '@/lib/utils'
 import type { OrderFormData } from '../schema'
 
 export function StepStory({ validationTrigger }: { validationTrigger: number }) {
@@ -77,6 +78,75 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
             {...register('coreMessage')}
           />
           <FormErrorMessage message={errors.coreMessage?.message as string} trigger={validationTrigger} />
+        </div>
+
+        {/* Custom Lyrics & AI Enhancement Block */}
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
+          <div className='flex items-center justify-between'>
+            <div>
+              <Label htmlFor='customLyrics' className='font-semibold font-heading text-base text-foreground block'>
+                Sample Lyrics / Custom Lyrics (Optional)
+              </Label>
+              <p className='text-xs text-muted-foreground font-sans mt-0.5'>
+                Provide your own verse/chorus or let AI generate a draft from your memories above.
+              </p>
+            </div>
+            <Button
+              type='button'
+              variant='outline'
+              size='sm'
+              onClick={() => {
+                const mem = useWatch({ name: 'memory' }) || 'our unforgettable memories'
+                const msg = useWatch({ name: 'coreMessage' }) || 'I love you forever'
+                const sampleLyrics = `[Verse 1]\nRemembering back to ${mem}\nEvery moment with you shines so bright\n\n[Chorus]\n${msg}\nYou are the melody in my life`
+                setValue('customLyrics', sampleLyrics, { shouldValidate: true, shouldDirty: true })
+              }}
+              className='rounded-xl border-primary/40 text-primary font-heading font-semibold text-xs gap-1.5 hover:bg-primary/10 shrink-0'
+            >
+              <Sparkles className='h-3.5 w-3.5' />
+              Enhance with AI ✨
+            </Button>
+          </div>
+
+          <Textarea
+            id='customLyrics'
+            placeholder='[Verse 1]...\n[Chorus]...\n(Or click Enhance with AI above to generate lyrics draft)'
+            value={useWatch({ name: 'customLyrics' }) || ''}
+            onChange={(e) => setValue('customLyrics', e.target.value, { shouldValidate: true, shouldDirty: true })}
+            className='min-h-[120px] rounded-xl border-border bg-background p-3 font-mono text-xs text-foreground focus-visible:border-primary focus-visible:ring-primary/20 placeholder:text-muted-foreground resize-none leading-relaxed'
+          />
+
+          {/* Toggle Switch: Full Lyrics vs Draft Needs Completion */}
+          <div className='pt-2 border-t border-border/40 flex items-center justify-between'>
+            <div className='space-y-0.5'>
+              <Label htmlFor='isFullLyrics' className='font-semibold font-heading text-xs text-foreground block cursor-pointer'>
+                {useWatch({ name: 'isFullLyrics' }) ? '✨ Full Lyrics Provided (Ready to Compose)' : '✏️ Draft / Needs Admin Lyrics Completion'}
+              </Label>
+              <p className='text-[11px] text-muted-foreground font-sans'>
+                {useWatch({ name: 'isFullLyrics' })
+                  ? 'Our Song Chef will use your exact lyrics for composition.'
+                  : 'Our Song Chef will refine, expand, and polish the lyrics for you.'}
+              </p>
+            </div>
+
+            <button
+              type='button'
+              role='switch'
+              aria-checked={Boolean(useWatch({ name: 'isFullLyrics' }))}
+              onClick={() => setValue('isFullLyrics', !useWatch({ name: 'isFullLyrics' }), { shouldValidate: true, shouldDirty: true })}
+              className={cn(
+                'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
+                useWatch({ name: 'isFullLyrics' }) ? 'bg-primary' : 'bg-muted-foreground/30'
+              )}
+            >
+              <span
+                className={cn(
+                  'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                  useWatch({ name: 'isFullLyrics' }) ? 'translate-x-5' : 'translate-x-0'
+                )}
+              />
+            </button>
+          </div>
         </div>
 
         {/* Digital Keepsake Gift Wrapping & Dedicated URL Paywall Card (Stitch Screen 2cfcaa7c7974454fa1fbd852131c9663) */}

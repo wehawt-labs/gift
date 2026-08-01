@@ -8,29 +8,25 @@ export const orderSchema = z.object({
   }),
 
   // Step 1: Basics
-  recipient: z.enum(RECIPIENTS, {
-    error: 'Please select who this song is for'
-  }),
+  recipient: z.string().min(1, 'Please select or type who this song is for'),
   recipientName: z.string().min(1, "Recipient's name is required"),
-  occasion: z.string().min(1, 'Please select an occasion'),
+  occasion: z.string().min(1, 'Please select or type an occasion'),
 
   // Step 2: Vibe & Voice Persona
-  genre: z.enum(GENRES, {
-    error: 'Please select a genre'
-  }),
-  tempo: z.enum(TEMPOS, {
-    error: 'Please select a tempo/mood'
-  }),
+  genre: z.string().min(1, 'Please select or type a genre'),
+  tempo: z.string().min(1, 'Please select or type a tempo/mood'),
   vocalPreference: z.enum(VOCAL_PREFERENCES, {
     error: 'Please select a vocal preference'
   }),
   sampleMelodyUrl: z.string().optional(),
   selectedVoicePersona: z.string().optional(),
 
-  // Step 3: Story
+  // Step 3: Story & Lyrics
   memory: z.string().optional(),
   jokes: z.string().optional(),
   coreMessage: z.string().optional(),
+  customLyrics: z.string().optional(),
+  isFullLyrics: z.boolean().optional(),
 
   // Step 4: Final Info & Addons
   buyerName: z.string().min(1, 'Your name is required'),

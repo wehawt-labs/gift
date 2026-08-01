@@ -38,6 +38,8 @@ export function OrderWizard() {
       memory: '',
       jokes: '',
       coreMessage: '',
+      customLyrics: '',
+      isFullLyrics: false,
       buyerName: '',
       buyerEmail: '',
       plan: 'single_gift',
