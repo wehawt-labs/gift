@@ -1,7 +1,7 @@
 'use client'
 
+import { Check, Clock, Copy, Crown, ExternalLink, Search, Send, Sparkles } from 'lucide-react'
 import { useState } from 'react'
-import { Check, Clock, Copy, Crown, ExternalLink, Music, Search, Send, Sparkles } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -110,17 +110,13 @@ Core Message: ${order.coreMessage}`
   }
 
   const handleStatusChange = (orderId: string, newStatus: OrderItem['status']) => {
-    setOrders((prev) =>
-      prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
-    )
+    setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o)))
   }
 
   const handleSaveAudioUrl = (orderId: string) => {
     const url = audioInput[orderId]
     if (!url) return
-    setOrders((prev) =>
-      prev.map((o) => (o.id === orderId ? { ...o, audioUrl: url, status: 'completed' } : o))
-    )
+    setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, audioUrl: url, status: 'completed' } : o)))
   }
 
   const filteredOrders = orders.filter(
@@ -137,15 +133,20 @@ Core Message: ${order.coreMessage}`
   return (
     <div className='space-y-8 pb-12 font-sans'>
       {/* Header */}
-      <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/60 pb-6'>
+      <div className='flex flex-col justify-between gap-4 border-border/60 border-b pb-6 sm:flex-row sm:items-center'>
         <div>
-          <h1 className='font-bold font-heading text-2xl sm:text-3xl text-foreground'>Suno Fulfillment Dashboard</h1>
-          <p className='text-sm text-muted-foreground mt-1'>
+          <h1 className='font-bold font-heading text-2xl text-foreground sm:text-3xl'>Suno Fulfillment Dashboard</h1>
+          <p className='mt-1 text-muted-foreground text-sm'>
             Manage incoming song requests and generate Suno prompts for manual fulfillment.
           </p>
         </div>
         <div className='flex items-center gap-2'>
-          <Button variant='outline' size='sm' className='rounded-xl gap-2 font-heading font-semibold text-xs' onClick={() => window.open('https://suno.com', '_blank')}>
+          <Button
+            variant='outline'
+            size='sm'
+            className='gap-2 rounded-xl font-heading font-semibold text-xs'
+            onClick={() => window.open('https://suno.com', '_blank')}
+          >
             <ExternalLink className='h-3.5 w-3.5' />
             Open Suno.com
           </Button>
@@ -153,32 +154,38 @@ Core Message: ${order.coreMessage}`
       </div>
 
       {/* Metrics Cards */}
-      <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
+      <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
         <Card className='rounded-2xl border-border/60 bg-card p-4 shadow-sm'>
-          <p className='text-xs font-semibold text-muted-foreground uppercase font-heading tracking-wider'>Pending Suno</p>
+          <p className='font-heading font-semibold text-muted-foreground text-xs uppercase tracking-wider'>
+            Pending Suno
+          </p>
           <div className='mt-2 flex items-baseline justify-between'>
-            <p className='text-2xl font-bold font-heading text-amber-600'>{pendingCount}</p>
+            <p className='font-bold font-heading text-2xl text-amber-600'>{pendingCount}</p>
             <Clock className='h-4 w-4 text-amber-500' />
           </div>
         </Card>
         <Card className='rounded-2xl border-border/60 bg-card p-4 shadow-sm'>
-          <p className='text-xs font-semibold text-muted-foreground uppercase font-heading tracking-wider'>In Production</p>
+          <p className='font-heading font-semibold text-muted-foreground text-xs uppercase tracking-wider'>
+            In Production
+          </p>
           <div className='mt-2 flex items-baseline justify-between'>
-            <p className='text-2xl font-bold font-heading text-blue-600'>{inProdCount}</p>
+            <p className='font-bold font-heading text-2xl text-blue-600'>{inProdCount}</p>
             <Sparkles className='h-4 w-4 text-blue-500' />
           </div>
         </Card>
         <Card className='rounded-2xl border-border/60 bg-card p-4 shadow-sm'>
-          <p className='text-xs font-semibold text-muted-foreground uppercase font-heading tracking-wider'>Completed</p>
+          <p className='font-heading font-semibold text-muted-foreground text-xs uppercase tracking-wider'>Completed</p>
           <div className='mt-2 flex items-baseline justify-between'>
-            <p className='text-2xl font-bold font-heading text-emerald-600'>{completedCount}</p>
+            <p className='font-bold font-heading text-2xl text-emerald-600'>{completedCount}</p>
             <Check className='h-4 w-4 text-emerald-500' />
           </div>
         </Card>
         <Card className='rounded-2xl border-border/60 bg-card p-4 shadow-sm'>
-          <p className='text-xs font-semibold text-muted-foreground uppercase font-heading tracking-wider'>Total Revenue</p>
+          <p className='font-heading font-semibold text-muted-foreground text-xs uppercase tracking-wider'>
+            Total Revenue
+          </p>
           <div className='mt-2 flex items-baseline justify-between'>
-            <p className='text-2xl font-bold font-heading text-primary'>$79.97</p>
+            <p className='font-bold font-heading text-2xl text-primary'>$79.97</p>
             <Crown className='h-4 w-4 text-primary' />
           </div>
         </Card>
@@ -186,12 +193,12 @@ Core Message: ${order.coreMessage}`
 
       {/* Search Bar */}
       <div className='relative max-w-md'>
-        <Search className='absolute left-3.5 top-3 h-4 w-4 text-muted-foreground' />
+        <Search className='absolute top-3 left-3.5 h-4 w-4 text-muted-foreground' />
         <Input
           placeholder='Search by Order ID, Buyer, or Recipient...'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className='pl-10 h-10 rounded-xl bg-card border-border/80 text-sm'
+          className='h-10 rounded-xl border-border/80 bg-card pl-10 text-sm'
         />
       </div>
 
@@ -199,25 +206,27 @@ Core Message: ${order.coreMessage}`
       <div className='space-y-4'>
         {filteredOrders.map((order) => (
           <Card key={order.id} className='overflow-hidden rounded-2xl border-border/80 bg-card shadow-sm'>
-            <div className='flex flex-wrap items-center justify-between border-b border-border/60 bg-card/50 px-5 py-3 gap-2'>
+            <div className='flex flex-wrap items-center justify-between gap-2 border-border/60 border-b bg-card/50 px-5 py-3'>
               <div className='flex items-center gap-3'>
-                <span className='font-bold font-heading text-sm text-foreground'>{order.id}</span>
-                <span className='text-xs text-muted-foreground font-sans'>{order.createdAt}</span>
+                <span className='font-bold font-heading text-foreground text-sm'>{order.id}</span>
+                <span className='font-sans text-muted-foreground text-xs'>{order.createdAt}</span>
                 {order.plan === 'premium' ? (
-                  <Badge className='bg-amber-500/15 text-[#9A6A1E] border-amber-500/30 gap-1 font-heading font-semibold text-[10px]'>
+                  <Badge className='gap-1 border-amber-500/30 bg-amber-500/15 font-heading font-semibold text-[#9A6A1E] text-[10px]'>
                     <Crown className='h-3 w-3 fill-current' /> Premium 24H Queue
                   </Badge>
                 ) : (
-                  <Badge variant='outline' className='text-xs font-heading'>Standard</Badge>
+                  <Badge variant='outline' className='font-heading text-xs'>
+                    Standard
+                  </Badge>
                 )}
               </div>
 
               <div className='flex items-center gap-3'>
                 <Select
                   value={order.status}
-                  onValueChange={(val: any) => handleStatusChange(order.id, val)}
+                  onValueChange={(val) => handleStatusChange(order.id, val as OrderItem['status'])}
                 >
-                  <SelectTrigger className='h-8 text-xs font-semibold rounded-lg w-36 bg-background'>
+                  <SelectTrigger className='h-8 w-36 rounded-lg bg-background font-semibold text-xs'>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -229,34 +238,46 @@ Core Message: ${order.coreMessage}`
               </div>
             </div>
 
-            <CardContent className='p-5 space-y-4'>
+            <CardContent className='space-y-4 p-5'>
               {/* Recipient & Buyer Meta */}
-              <div className='grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs font-sans border-b border-border/40 pb-4'>
+              <div className='grid grid-cols-1 gap-4 border-border/40 border-b pb-4 font-sans text-xs sm:grid-cols-4'>
                 <div>
-                  <span className='text-muted-foreground uppercase font-heading text-[10px] font-bold block mb-0.5'>Buyer</span>
+                  <span className='mb-0.5 block font-bold font-heading text-[10px] text-muted-foreground uppercase'>
+                    Buyer
+                  </span>
                   <p className='font-semibold text-foreground text-sm'>{order.buyerName}</p>
                   <p className='text-muted-foreground'>{order.buyerEmail}</p>
                 </div>
                 <div>
-                  <span className='text-muted-foreground uppercase font-heading text-[10px] font-bold block mb-0.5'>Recipient</span>
-                  <p className='font-semibold text-foreground text-sm'>{order.recipientName} ({order.recipient})</p>
+                  <span className='mb-0.5 block font-bold font-heading text-[10px] text-muted-foreground uppercase'>
+                    Recipient
+                  </span>
+                  <p className='font-semibold text-foreground text-sm'>
+                    {order.recipientName} ({order.recipient})
+                  </p>
                   <p className='text-muted-foreground'>Occasion: {order.occasion}</p>
                 </div>
                 <div>
-                  <span className='text-muted-foreground uppercase font-heading text-[10px] font-bold block mb-0.5'>Music Style</span>
-                  <p className='font-semibold text-primary text-sm'>{order.genre} • {order.tempo}</p>
+                  <span className='mb-0.5 block font-bold font-heading text-[10px] text-muted-foreground uppercase'>
+                    Music Style
+                  </span>
+                  <p className='font-semibold text-primary text-sm'>
+                    {order.genre} • {order.tempo}
+                  </p>
                   <p className='text-muted-foreground'>Vocal: {order.vocalPreference}</p>
                 </div>
                 <div>
-                  <span className='text-muted-foreground uppercase font-heading text-[10px] font-bold block mb-0.5'>Web Page Add-on</span>
-                  <p className='font-semibold text-emerald-700 text-xs mt-0.5'>
+                  <span className='mb-0.5 block font-bold font-heading text-[10px] text-muted-foreground uppercase'>
+                    Web Page Add-on
+                  </span>
+                  <p className='mt-0.5 font-semibold text-emerald-700 text-xs'>
                     {order.plan === 'premium' ? 'Free (Premium) ✓' : 'Added (+$5)'}
                   </p>
                 </div>
               </div>
 
               {/* Memory & Core Message */}
-              <div className='space-y-2 bg-background/60 p-4 rounded-xl border border-border/50 text-xs font-sans'>
+              <div className='space-y-2 rounded-xl border border-border/50 bg-background/60 p-4 font-sans text-xs'>
                 <div>
                   <span className='font-bold font-heading text-foreground'>Memory: </span>
                   <span className='text-muted-foreground'>{order.memory}</span>
@@ -274,11 +295,11 @@ Core Message: ${order.coreMessage}`
               </div>
 
               {/* Actions & Suno Fulfillment Box */}
-              <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2'>
+              <div className='flex flex-col items-stretch justify-between gap-3 pt-2 sm:flex-row sm:items-center'>
                 <Button
                   type='button'
                   onClick={() => handleCopyPrompt(order)}
-                  className='rounded-xl bg-primary text-primary-foreground font-heading font-bold text-xs h-9 px-4 gap-2 shadow-[0_2px_0_0_#842504]'
+                  className='h-9 gap-2 rounded-xl bg-primary px-4 font-bold font-heading text-primary-foreground text-xs shadow-[0_2px_0_0_#842504]'
                 >
                   {copiedId === order.id ? (
                     <>
@@ -294,18 +315,18 @@ Core Message: ${order.coreMessage}`
                 </Button>
 
                 {/* Suno Audio URL Input */}
-                <div className='flex items-center gap-2 flex-1 max-w-md'>
+                <div className='flex max-w-md flex-1 items-center gap-2'>
                   <Input
                     placeholder='Paste Suno MP3 / Song URL...'
                     value={audioInput[order.id] || order.audioUrl || ''}
                     onChange={(e) => setAudioInput({ ...audioInput, [order.id]: e.target.value })}
-                    className='h-9 rounded-xl text-xs bg-background'
+                    className='h-9 rounded-xl bg-background text-xs'
                   />
                   <Button
                     type='button'
                     size='sm'
                     onClick={() => handleSaveAudioUrl(order.id)}
-                    className='h-9 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-heading font-semibold text-xs px-3 gap-1'
+                    className='h-9 gap-1 rounded-xl bg-emerald-700 px-3 font-heading font-semibold text-white text-xs hover:bg-emerald-800'
                   >
                     <Send className='h-3 w-3' />
                     Save & Notify

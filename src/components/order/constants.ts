@@ -1,5 +1,4 @@
 import { Heart, Smile, User, Users } from 'lucide-react'
-import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 
 export const RECIPIENTS = ['Partner', 'Parent', 'Friend', 'Myself'] as const
 export const GENRES = ['Acoustic Pop', 'Rock Ballad', 'EDM', 'R&B', 'Country'] as const

@@ -234,7 +234,7 @@ export function OrderConfirmation() {
                 href={`/song/${orderId || 'ord_98231'}`}
                 className={cn(
                   buttonVariants({ size: 'default' }),
-                  'rounded-full bg-primary px-8 font-heading font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 gap-2'
+                  'gap-2 rounded-full bg-primary px-8 font-bold font-heading text-white shadow-lg shadow-primary/20 hover:bg-primary/90'
                 )}
               >
                 <Music className='h-4 w-4' />

@@ -32,7 +32,7 @@ function OrderThankYouEmail({
   return (
     <Html>
       <Head />
-      <Preview>{'Your song for ' + recipientName + ' is confirmed!'}</Preview>
+      <Preview>{`Your song for ${recipientName} is confirmed!`}</Preview>
       <Body style={bodyStyle}>
         <Container style={containerStyle}>
           <Section style={headerStyle}>
@@ -41,7 +41,7 @@ function OrderThankYouEmail({
 
           <Section style={contentStyle}>
             <Heading as='h1' style={headingStyle}>
-              {'Thank You, ' + buyerName + '! \uD83C\uDF89'}
+              {`Thank You, ${buyerName}! \uD83C\uDF89`}
             </Heading>
 
             <Text style={textStyle}>
@@ -70,7 +70,7 @@ function OrderThankYouEmail({
               <Text style={detailRowStyle}>
                 <strong>Amount:</strong> {amountPaid}
               </Text>
-              <Text style={orderIdStyle}>{'Order ID: ' + orderId}</Text>
+              <Text style={orderIdStyle}>{`Order ID: ${orderId}`}</Text>
             </Section>
 
             <Section style={whatsNextStyle}>
@@ -86,7 +86,7 @@ function OrderThankYouEmail({
               <Text style={noteTitleStyle}>{'\uD83D\uDCA1 Want to adjust your song details?'}</Text>
               <Text style={noteTextStyle}>
                 {'You can always refine your preferences \u2014 just reply to this email or contact us at '}
-                <a href={'mailto:' + SUPPORT_EMAIL} style={linkStyle}>
+                <a href={`mailto:${SUPPORT_EMAIL}`} style={linkStyle}>
                   {SUPPORT_EMAIL}
                 </a>
                 {" with your Order ID. We're happy to tweak things before production starts!"}
@@ -98,12 +98,12 @@ function OrderThankYouEmail({
           <Section style={footerStyle}>
             <Text style={footerTextStyle}>
               {"Questions? We're here to help: "}
-              <a href={'mailto:' + SUPPORT_EMAIL} style={linkStyle}>
+              <a href={`mailto:${SUPPORT_EMAIL}`} style={linkStyle}>
                 {SUPPORT_EMAIL}
               </a>
             </Text>
             <Text style={footerTextStyle}>
-              {'\u00A9 ' + new Date().getFullYear() + ' GiftOfSong. Made with \u2764\uFE0F'}
+              {`\u00A9 ${new Date().getFullYear()} GiftOfSong. Made with \u2764\uFE0F`}
             </Text>
           </Section>
         </Container>

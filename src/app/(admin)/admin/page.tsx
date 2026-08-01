@@ -2,7 +2,7 @@ import { AdminFulfillmentDashboard } from '@/components/admin/admin-fulfillment-
 
 export default function AdminPage() {
   return (
-    <div className='container mx-auto px-4 py-8 max-w-6xl'>
+    <div className='container mx-auto max-w-6xl px-4 py-8'>
       <AdminFulfillmentDashboard />
     </div>
   )

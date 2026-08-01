@@ -2,17 +2,15 @@
 /// <reference path="../../types/lemonsqueezy.d.ts" />
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
-import { Check, ChevronLeft, ChevronRight, Loader2, Zap } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { createCheckoutSession } from '@/actions/checkout'
 import { Button } from '@/components/ui/button'
-import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
-import { cn } from '@/lib/utils'
+import type { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { PLANS, STAGES } from './constants'
-import { OrderSummary } from './order-summary'
 import { type OrderFormData, orderSchema } from './schema'
 // Component imports
 import { StepBasics } from './steps/step-basics'
@@ -127,7 +125,7 @@ export function OrderWizard() {
     setCurrentStep((prev) => Math.max(prev - 1, 1))
   }
 
-  const goToStep = async (stepId: number) => {
+  const _goToStep = async (stepId: number) => {
     if (stepId === currentStep) return
 
     // If jumping forward, validate current step fields
@@ -204,7 +202,7 @@ export function OrderWizard() {
   }
 
   return (
-    <div className='min-h-screen bg-background text-foreground pb-32 pt-6 font-sans'>
+    <div className='min-h-screen bg-background pt-6 pb-32 font-sans text-foreground'>
       <div className='mx-auto max-w-3xl px-4 sm:px-6'>
         {/* Step Indicator Header */}
         <div className='mb-8 space-y-2'>
@@ -212,13 +210,11 @@ export function OrderWizard() {
             <span className='font-bold font-heading text-primary uppercase tracking-wider'>
               Step {currentStep} of {STAGES.length}
             </span>
-            <span className='font-medium text-muted-foreground'>
-              {STAGES[currentStep - 1]?.name}
-            </span>
+            <span className='font-medium text-muted-foreground'>{STAGES[currentStep - 1]?.name}</span>
           </div>
-          <div className='h-1.5 w-full bg-border/60 rounded-full overflow-hidden'>
+          <div className='h-1.5 w-full overflow-hidden rounded-full bg-border/60'>
             <motion.div
-              className='h-full bg-primary rounded-full'
+              className='h-full rounded-full bg-primary'
               initial={{ width: '0%' }}
               animate={{ width: `${(currentStep / STAGES.length) * 100}%` }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -257,20 +253,20 @@ export function OrderWizard() {
             </AnimatePresence>
 
             {/* Option 2: Desktop Inline Form Footer (Natural Scroll) */}
-            <div className='hidden md:flex items-center justify-between border-t border-border/40 pt-6 mt-8'>
+            <div className='mt-8 hidden items-center justify-between border-border/40 border-t pt-6 md:flex'>
               <Button
                 type='button'
                 variant='ghost'
                 size='default'
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className='rounded-xl font-heading font-semibold text-foreground hover:bg-card px-5'
+                className='rounded-xl px-5 font-heading font-semibold text-foreground hover:bg-card'
               >
                 <ChevronLeft className='mr-1.5 h-4 w-4' />
                 Back
               </Button>
 
-              <div className='text-xs font-semibold font-heading text-muted-foreground'>
+              <div className='font-heading font-semibold text-muted-foreground text-xs'>
                 Step {currentStep} of {STAGES.length}
               </div>
 
@@ -279,7 +275,7 @@ export function OrderWizard() {
                   type='button'
                   size='default'
                   onClick={nextStep}
-                  className='h-11 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-8 shadow-[0_2px_0_0_#842504] hover:bg-primary/90 active:translate-y-[1px] transition-all flex items-center gap-2'
+                  className='flex h-11 items-center gap-2 rounded-xl bg-primary px-8 font-bold font-heading text-primary-foreground shadow-[0_2px_0_0_#842504] transition-all hover:bg-primary/90 active:translate-y-px'
                 >
                   Next Step
                   <ChevronRight className='h-4 w-4' />
@@ -289,7 +285,7 @@ export function OrderWizard() {
                   type='submit'
                   size='default'
                   disabled={isSubmitting}
-                  className='h-11 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-8 shadow-[0_2px_0_0_#842504] hover:bg-primary/90 active:translate-y-[1px] transition-all'
+                  className='h-11 rounded-xl bg-primary px-8 font-bold font-heading text-primary-foreground shadow-[0_2px_0_0_#842504] transition-all hover:bg-primary/90 active:translate-y-px'
                 >
                   {isSubmitting ? (
                     <>
@@ -307,20 +303,20 @@ export function OrderWizard() {
             </div>
 
             {/* Option 1: Mobile Floating Card Dock (Thumb-friendly floating pill) */}
-            <div className='md:hidden fixed bottom-4 left-4 right-4 z-40 max-w-xl mx-auto bg-card/95 backdrop-blur-md rounded-2xl shadow-xl border border-border/80 p-2.5 flex items-center justify-between'>
+            <div className='fixed right-4 bottom-4 left-4 z-40 mx-auto flex max-w-xl items-center justify-between rounded-2xl border border-border/80 bg-card/95 p-2.5 shadow-xl backdrop-blur-md md:hidden'>
               <Button
                 type='button'
                 variant='ghost'
                 size='sm'
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className='rounded-xl font-heading font-semibold text-foreground px-3'
+                className='rounded-xl px-3 font-heading font-semibold text-foreground'
               >
-                <ChevronLeft className='h-4 w-4 mr-1' />
+                <ChevronLeft className='mr-1 h-4 w-4' />
                 Back
               </Button>
 
-              <span className='font-heading text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full'>
+              <span className='rounded-full bg-primary/10 px-3 py-1 font-bold font-heading text-primary text-xs'>
                 {currentStep}/{STAGES.length}
               </span>
 
@@ -329,7 +325,7 @@ export function OrderWizard() {
                   type='button'
                   size='sm'
                   onClick={nextStep}
-                  className='h-9 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-5 shadow-[0_2px_0_0_#842504] active:translate-y-[1px] transition-all flex items-center gap-1'
+                  className='flex h-9 items-center gap-1 rounded-xl bg-primary px-5 font-bold font-heading text-primary-foreground shadow-[0_2px_0_0_#842504] transition-all active:translate-y-px'
                 >
                   Next
                   <ChevronRight className='h-3.5 w-3.5' />
@@ -339,7 +335,7 @@ export function OrderWizard() {
                   type='submit'
                   size='sm'
                   disabled={isSubmitting}
-                  className='h-9 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-5 shadow-[0_2px_0_0_#842504] active:translate-y-[1px] transition-all'
+                  className='h-9 rounded-xl bg-primary px-5 font-bold font-heading text-primary-foreground shadow-[0_2px_0_0_#842504] transition-all active:translate-y-px'
                 >
                   {isSubmitting ? (
                     <Loader2 className='h-4 w-4 animate-spin' />

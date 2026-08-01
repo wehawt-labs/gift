@@ -32,7 +32,7 @@ function OrderCreatedEmail({
   return (
     <Html>
       <Head />
-      <Preview>{'Your song for ' + recipientName + ' is being crafted!'}</Preview>
+      <Preview>{`Your song for ${recipientName} is being crafted!`}</Preview>
       <Body style={bodyStyle}>
         <Container style={containerStyle}>
           <Section style={headerStyle}>
@@ -44,7 +44,7 @@ function OrderCreatedEmail({
               {'Your Song is Being Crafted! \uD83C\uDFB6'}
             </Heading>
 
-            <Text style={textStyle}>{'Hi ' + buyerName + ','}</Text>
+            <Text style={textStyle}>{`Hi ${buyerName},`}</Text>
 
             <Text style={textStyle}>
               {"We're so excited to create something special for " +
@@ -69,7 +69,7 @@ function OrderCreatedEmail({
               <Text style={detailRowStyle}>
                 <strong>Plan:</strong> {plan}
               </Text>
-              <Text style={orderIdStyle}>{'Order ID: ' + orderId}</Text>
+              <Text style={orderIdStyle}>{`Order ID: ${orderId}`}</Text>
             </Section>
 
             <Section style={ctaContainerStyle}>
@@ -87,12 +87,12 @@ function OrderCreatedEmail({
           <Section style={footerStyle}>
             <Text style={footerTextStyle}>
               {'Questions? Reach out to us at '}
-              <a href={'mailto:' + SUPPORT_EMAIL} style={linkStyle}>
+              <a href={`mailto:${SUPPORT_EMAIL}`} style={linkStyle}>
                 {SUPPORT_EMAIL}
               </a>
             </Text>
             <Text style={footerTextStyle}>
-              {'\u00A9 ' + new Date().getFullYear() + ' GiftOfSong. Made with \u2764\uFE0F'}
+              {`\u00A9 ${new Date().getFullYear()} GiftOfSong. Made with \u2764\uFE0F`}
             </Text>
           </Section>
         </Container>

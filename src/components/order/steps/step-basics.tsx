@@ -4,7 +4,6 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { SectionDivider } from '@/components/ui/section-divider'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { OCCASIONS, RECIPIENT_OPTIONS } from '../constants'
@@ -92,7 +91,7 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
               className='h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground'
             />
           </div>
-          <div className='min-h-[20px]'>
+          <div className='min-h-5'>
             <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
           </div>
         </div>
@@ -126,7 +125,7 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
             />
 
             {/* Reserved Error Slot (Prevents Layout Jump for Input 2) */}
-            <div className='min-h-[20px] pt-0.5'>
+            <div className='min-h-5 pt-0.5'>
               <FormErrorMessage message={errors.recipientName?.message} trigger={validationTrigger} />
             </div>
           </div>
@@ -139,7 +138,7 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
             </Label>
             <Select
               onValueChange={(v) => setValue('occasion', v, { shouldValidate: true, shouldDirty: true })}
-              value={OCCASIONS.includes(occasion as any) ? occasion : 'Other'}
+              value={(OCCASIONS as readonly string[]).includes(occasion ?? '') ? occasion : 'Other'}
             >
               <SelectTrigger className='h-11 w-full rounded-xl border-border/80 bg-card px-4 font-sans text-foreground text-sm focus-visible:border-primary focus-visible:ring-primary/20'>
                 <SelectValue placeholder='Select an occasion' />
@@ -163,7 +162,7 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
             />
 
             {/* Reserved Error Slot (Prevents Layout Jump) */}
-            <div className='min-h-[20px] pt-0.5'>
+            <div className='min-h-5 pt-0.5'>
               <FormErrorMessage message={errors.occasion?.message} trigger={validationTrigger} />
             </div>
           </div>
