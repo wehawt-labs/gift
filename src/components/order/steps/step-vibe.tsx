@@ -148,6 +148,47 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
 
         {/* Real Voice Persona Studio (Unified Styling with Sample Melody Upload Card) */}
         <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all space-y-3 shadow-sm'>
+          {/* Paywall Overlay for Voice Persona when on Free Plan and not added */}
+          {plan === 'single_gift' && !useWatch({ name: 'hasVoiceCloning' }) && (
+            <div className='absolute inset-0 bg-[#A89A8C]/25 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center p-4 text-center'>
+              <div className='h-10 w-10 rounded-full bg-background/90 shadow-md flex items-center justify-center text-[#9A6A1E] mb-2'>
+                <Lock className='h-5 w-5' />
+              </div>
+              <p className='font-bold font-heading text-sm text-[#9A6A1E] mb-1'>Curious How Your Voice Sounds in a Song?</p>
+              <p className='text-xs text-foreground/80 font-sans max-w-xs mb-3'>
+                Record a spoken intro or clone your singing voice for your recipient's special keepsake song.
+              </p>
+              <div className='flex flex-col sm:flex-row items-center gap-2'>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setValue('plan', 'memory_maker', { shouldValidate: true, shouldDirty: true })
+                    setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
+                    toast.success('Memory Maker Selected', {
+                      description: 'All premium add-ons including Real Voice Persona are UNLOCKED FREE!'
+                    })
+                  }}
+                  className='px-3.5 py-1.5 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-1.5'
+                >
+                  <Crown className='h-3.5 w-3.5 fill-current' />
+                  Unlock All Free with Memory Maker ($29.99/mo)
+                </button>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setValue('hasVoiceCloning', true, { shouldValidate: true, shouldDirty: true })
+                    toast.success('Voice Persona Add-on Added', {
+                      description: 'Added Real Voice Persona slot to your order (+$5.00).'
+                    })
+                  }}
+                  className='px-3.5 py-1.5 rounded-xl bg-background border border-amber-500/40 text-primary font-heading font-bold text-xs shadow-xs hover:bg-card active:scale-95 transition-all flex items-center gap-1'
+                >
+                  <span>Add Voice Persona (+$5.00)</span>
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className='flex items-start justify-between'>
             <div className='flex items-center gap-2'>
               <Crown className='h-4 w-4 text-[#9A6A1E]' />
@@ -251,19 +292,33 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               <p className='text-xs text-foreground/80 font-sans max-w-xs mb-3'>
                 Unlock Custom Sample Melody Uploads & Quick Priority Processing
               </p>
-              <button
-                type='button'
-                onClick={() => {
-                  setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
-                  toast.success('Family Bond Plan Selected', {
-                    description: 'Custom Melody Upload is unlocked on Family Bond ($9.99/mo) or Memory Maker ($29.99/mo).'
-                  })
-                }}
-                className='px-4 py-2 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-1.5'
-              >
-                <Crown className='h-3.5 w-3.5 fill-current' />
-                Unlock with Family Bond ($9.99/mo)
-              </button>
+              <div className='flex flex-col sm:flex-row items-center gap-2'>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
+                    toast.success('Family Bond Plan Selected', {
+                      description: 'Custom Melody Upload is unlocked on Family Bond ($9.99/mo) or Memory Maker ($29.99/mo).'
+                    })
+                  }}
+                  className='px-3.5 py-1.5 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-1.5'
+                >
+                  <Crown className='h-3.5 w-3.5 fill-current' />
+                  Unlock with Subscription ($9.99/mo)
+                </button>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
+                    toast.success('Sample Melody Add-on Selected', {
+                      description: 'Selected Family Bond ($9.99/mo) to unlock melody uploads & priority queue.'
+                    })
+                  }}
+                  className='px-3.5 py-1.5 rounded-xl bg-background border border-amber-500/40 text-primary font-heading font-bold text-xs shadow-xs hover:bg-card active:scale-95 transition-all flex items-center gap-1'
+                >
+                  <span>Use as Add-on (+$5.00)</span>
+                </button>
+              </div>
             </div>
           )}
 
