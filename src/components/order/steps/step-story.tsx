@@ -5,6 +5,7 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Label } from '@/components/ui/label'
+import { SectionDivider } from '@/components/ui/section-divider'
 import { Textarea } from '@/components/ui/textarea'
 import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { cn } from '@/lib/utils'
@@ -90,6 +91,9 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
           />
           <FormErrorMessage message={errors.coreMessage?.message as string} trigger={validationTrigger} />
         </div>
+
+        {/* Section Divider */}
+        <SectionDivider label='Optional Custom Lyrics & Gift Wrapping' />
 
         {/* Custom Lyrics & AI Enhancement Block */}
         <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>

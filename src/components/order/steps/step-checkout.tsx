@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { SectionDivider } from '@/components/ui/section-divider'
 import { cn } from '@/lib/utils'
 import { ADDONS, PLANS } from '../constants'
 import type { OrderFormData } from '../schema'
@@ -143,12 +144,7 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
         </div>
 
         {/* Section Divider for Optional Add-ons */}
-        <div className='relative my-4 flex items-center justify-center'>
-          <div className='absolute inset-0 flex items-center'><div className='w-full border-t border-border/60' /></div>
-          <span className='relative bg-background px-4 font-heading text-[11px] font-bold text-muted-foreground uppercase tracking-widest'>
-            Optional Add-ons & Upgrades
-          </span>
-        </div>
+        <SectionDivider label='Optional Add-ons & Upgrades' />
 
         {/* 2. A-La-Carte Add-ons List (Unified Styling matching Sample Melody Upload Card) */}
         <div className='space-y-4'>
@@ -268,6 +264,9 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
             </div>
           </div>
         </div>
+
+        {/* Section Divider */}
+        <SectionDivider label='Order Summary & Checkout Details' />
 
         {/* 3. Dynamic Order Summary Card */}
         <Card className='overflow-hidden rounded-2xl border border-foreground/5 bg-card shadow-sm'>

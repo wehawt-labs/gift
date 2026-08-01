@@ -4,6 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { SectionDivider } from '@/components/ui/section-divider'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { OCCASIONS, RECIPIENT_OPTIONS } from '../constants'
@@ -93,6 +94,9 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
             <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
           </div>
         </div>
+
+        {/* Section Divider */}
+        <SectionDivider label='Recipient Name & Occasion' />
 
         {/* Symmetrical 2-Column Inputs Grid (Zero-Jump Error Containers) */}
         <div className='grid gap-4 sm:grid-cols-2 pt-1'>

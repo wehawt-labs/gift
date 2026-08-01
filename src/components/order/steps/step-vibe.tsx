@@ -8,6 +8,7 @@ import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { SectionDivider } from '@/components/ui/section-divider'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { cn } from '@/lib/utils'
@@ -141,6 +142,9 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           </RadioGroup>
           <FormErrorMessage message={errors.vocalPreference?.message} trigger={validationTrigger} />
         </div>
+
+        {/* Section Divider */}
+        <SectionDivider label='Optional Voice Studio & Sample Melody' />
 
         {/* Real Voice Persona Studio (Unified Styling with Sample Melody Upload Card) */}
         <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 transition-all space-y-3 shadow-sm'>
