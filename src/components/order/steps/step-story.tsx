@@ -16,58 +16,59 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-serif text-2xl text-foreground'>Tell their story</h2>
-        <p className='mt-1 text-base text-foreground/60'>Give us the details, our AI will handle the rhymes.</p>
+        <h2 className='font-bold font-heading text-2xl text-foreground'>Tell your story</h2>
+        <p className='mt-1 text-sm text-muted-foreground font-sans'>Share special memories, inside jokes, or your message to personalize the lyrics.</p>
       </div>
 
-      <div className='space-y-4'>
-        <div className='space-y-2'>
-          <Label htmlFor='memory' className='font-semibold'>
-            What's your favorite memory together?
-          </Label>
+      <div className='space-y-6'>
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm relative'>
+          <div className='flex justify-between items-center'>
+            <Label htmlFor='memory' className='font-semibold font-heading text-base text-foreground'>
+              What's your favorite memory together?
+            </Label>
+            <Button
+              type='button'
+              variant='ghost'
+              size='sm'
+              className='rounded-full text-xs font-semibold text-primary hover:bg-primary/10 transition-colors flex items-center gap-1.5'
+            >
+              <Sparkles className='h-3.5 w-3.5 text-primary' />
+              Refine with AI
+            </Button>
+          </div>
           <Textarea
             id='memory'
-            placeholder='Tell us about a specific trip, a quiet moment, or a big celebration...'
-            className='min-h-[80px] rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
+            placeholder='Share a special trip, a quiet moment, or a big celebration...'
+            className='min-h-[100px] rounded-xl border-border bg-background p-3 font-sans text-sm text-foreground focus-visible:border-primary focus-visible:ring-primary/20 placeholder:text-muted-foreground resize-none'
             {...register('memory')}
           />
           <FormErrorMessage message={errors.memory?.message as string} trigger={validationTrigger} />
         </div>
 
-        <div className='space-y-2'>
-          <Label htmlFor='jokes' className='font-semibold'>
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
+          <Label htmlFor='jokes' className='font-semibold font-heading text-base text-foreground'>
             Any inside jokes, quirks, or specific details?
           </Label>
           <Textarea
             id='jokes'
             placeholder='Those little things that only they would understand...'
-            className='min-h-[80px] rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
+            className='min-h-[90px] rounded-xl border-border bg-background p-3 font-sans text-sm text-foreground focus-visible:border-primary focus-visible:ring-primary/20 placeholder:text-muted-foreground resize-none'
             {...register('jokes')}
           />
         </div>
 
-        <div className='space-y-2'>
-          <Label htmlFor='coreMessage' className='font-semibold'>
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
+          <Label htmlFor='coreMessage' className='font-semibold font-heading text-base text-foreground'>
             What is the core message you want to say?
           </Label>
           <Textarea
             id='coreMessage'
             placeholder='I love you because... / Thank you for... / Happy birthday because...'
-            className='min-h-[80px] rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
+            className='min-h-[90px] rounded-xl border-border bg-background p-3 font-sans text-sm text-foreground focus-visible:border-primary focus-visible:ring-primary/20 placeholder:text-muted-foreground resize-none'
             {...register('coreMessage')}
           />
           <FormErrorMessage message={errors.coreMessage?.message as string} trigger={validationTrigger} />
         </div>
-
-        <Button
-          type='button'
-          variant='outline'
-          size='sm'
-          className='rounded-full border-primary/30 px-5 text-primary hover:bg-primary/5'
-        >
-          <Sparkles className='mr-2 h-3.5 w-3.5' />
-          Help me write this with AI
-        </Button>
       </div>
     </div>
   )

@@ -22,12 +22,13 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-serif text-2xl text-foreground'>Set the mood</h2>
+        <h2 className='font-bold font-heading text-2xl text-foreground'>Set the mood & musical style</h2>
+        <p className='mt-1 text-sm text-muted-foreground font-sans'>Pick the genre, tempo, and vocal tone for the song.</p>
       </div>
 
       <div className='space-y-6'>
-        <div className='space-y-3'>
-          <Label className='font-semibold'>Genre</Label>
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
+          <Label className='font-semibold font-heading text-base text-foreground'>Music Genre</Label>
           <div className='grid grid-cols-2 gap-3 sm:grid-cols-3'>
             {GENRE_OPTIONS.map((g) => (
               <button
@@ -40,15 +41,15 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                   })
                 }
                 className={cn(
-                  'group relative flex items-center justify-between rounded-xl border-2 bg-white p-3 transition-all',
+                  'group relative flex items-center justify-between rounded-xl border-2 p-3.5 transition-all active:scale-[0.98]',
                   genre === g.value
-                    ? 'border-primary ring-4 ring-primary/10'
-                    : 'border-foreground/5 hover:border-foreground/20'
+                    ? 'border-primary bg-background shadow-md ring-2 ring-primary/20'
+                    : 'border-transparent bg-background/60 hover:bg-background hover:border-border'
                 )}
               >
-                <span className='font-medium text-sm'>{g.label}</span>
-                <div className='flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 transition-colors group-hover:bg-primary/20'>
-                  <Play className='h-3 w-3 fill-current text-primary' />
+                <span className={cn('font-semibold text-sm font-sans', genre === g.value ? 'text-primary' : 'text-foreground')}>{g.label}</span>
+                <div className={cn('flex h-7 w-7 items-center justify-center rounded-full transition-colors', genre === g.value ? 'bg-primary text-white' : 'bg-primary/10 text-primary group-hover:bg-primary/20')}>
+                  <Play className='h-3 w-3 fill-current' />
                 </div>
               </button>
             ))}
@@ -56,21 +57,21 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           <FormErrorMessage message={errors.genre?.message} trigger={validationTrigger} />
         </div>
 
-        <div className='grid gap-8 sm:grid-cols-2'>
-          <div className='space-y-3'>
-            <Label className='font-semibold'>Tempo/Mood</Label>
+        <div className='grid gap-6 sm:grid-cols-2'>
+          <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-3 shadow-sm'>
+            <Label className='font-semibold font-heading text-base text-foreground'>Tempo / Mood</Label>
             <RadioGroup
               value={tempo}
               onValueChange={(v) => setValue('tempo', v as any, { shouldValidate: true })}
-              className='flex flex-col gap-1.5'
+              className='flex flex-col gap-2'
             >
               {TEMPOS.map((mood) => (
                 <div
                   key={mood}
-                  className='flex items-center space-x-3 rounded-xl border border-foreground/5 bg-white p-2.5 shadow-sm'
+                  className={cn('flex items-center space-x-3 rounded-xl border p-3 transition-all cursor-pointer', tempo === mood ? 'border-primary bg-background ring-1 ring-primary/20' : 'border-border bg-background/60 hover:bg-background')}
                 >
                   <RadioGroupItem value={mood} id={`mood-${mood}`} />
-                  <Label htmlFor={`mood-${mood}`} className='flex-1 cursor-pointer font-medium text-sm'>
+                  <Label htmlFor={`mood-${mood}`} className='flex-1 cursor-pointer font-medium text-sm font-sans text-foreground'>
                     {mood}
                   </Label>
                 </div>
@@ -79,20 +80,20 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             <FormErrorMessage message={errors.tempo?.message} trigger={validationTrigger} />
           </div>
 
-          <div className='space-y-4'>
-            <Label className='font-semibold'>Vocal preference</Label>
+          <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-3 shadow-sm'>
+            <Label className='font-semibold font-heading text-base text-foreground'>Vocal Preference</Label>
             <RadioGroup
               value={vocalPreference}
               onValueChange={(v) => setValue('vocalPreference', v as any, { shouldValidate: true })}
-              className='flex flex-col gap-1.5'
+              className='flex flex-col gap-2'
             >
               {VOCAL_PREFERENCES.map((vocal) => (
                 <div
                   key={vocal}
-                  className='flex items-center space-x-3 rounded-xl border border-foreground/5 bg-white p-2.5 shadow-sm'
+                  className={cn('flex items-center space-x-3 rounded-xl border p-3 transition-all cursor-pointer', vocalPreference === vocal ? 'border-primary bg-background ring-1 ring-primary/20' : 'border-border bg-background/60 hover:bg-background')}
                 >
                   <RadioGroupItem value={vocal} id={`vocal-${vocal}`} />
-                  <Label htmlFor={`vocal-${vocal}`} className='flex-1 cursor-pointer font-medium text-sm'>
+                  <Label htmlFor={`vocal-${vocal}`} className='flex-1 cursor-pointer font-medium text-sm font-sans text-foreground'>
                     {vocal}
                   </Label>
                 </div>

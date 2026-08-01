@@ -22,13 +22,13 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-serif text-2xl text-foreground leading-tight'>Let's start with the basics</h2>
-        <p className='mt-1 text-base text-foreground/60'>Who is this masterpiece for?</p>
+        <h2 className='font-bold font-heading text-2xl text-foreground leading-tight'>Who is this gift for?</h2>
+        <p className='mt-1 text-sm text-muted-foreground font-sans'>Select the recipient and details for your custom song.</p>
       </div>
 
-      <div className='space-y-4'>
-        <div className='space-y-2'>
-          <Label className='font-semibold'>Who is this song for?</Label>
+      <div className='space-y-6'>
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
+          <Label className='font-semibold font-heading text-base text-foreground'>Who is this song for?</Label>
           <div className='grid grid-cols-2 gap-3 sm:grid-cols-4'>
             {RECIPIENT_OPTIONS.map((opt) => (
               <button
@@ -41,22 +41,22 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
                   })
                 }
                 className={cn(
-                  'group flex flex-col items-center justify-center rounded-xl border-2 p-4 transition-all',
+                  'group flex flex-col items-center justify-center rounded-xl border-2 p-4 transition-all active:scale-[0.98]',
                   recipient === opt.value
-                    ? 'border-primary bg-white ring-4 ring-primary/10'
-                    : 'border-foreground/5 bg-white/50 hover:border-foreground/20'
+                    ? 'border-primary bg-background shadow-md ring-2 ring-primary/20'
+                    : 'border-transparent bg-background/60 hover:bg-background hover:border-border'
                 )}
               >
                 <opt.icon
                   className={cn(
-                    'mb-2 h-6 w-6 transition-colors',
-                    recipient === opt.value ? 'text-primary' : 'text-foreground/40 group-hover:text-foreground/60'
+                    'mb-2 h-7 w-7 transition-colors',
+                    recipient === opt.value ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'
                   )}
                 />
                 <span
                   className={cn(
-                    'font-medium text-xs',
-                    recipient === opt.value ? 'text-foreground' : 'text-foreground/60'
+                    'font-semibold text-xs font-sans',
+                    recipient === opt.value ? 'text-primary' : 'text-foreground'
                   )}
                 >
                   {opt.label}
@@ -67,24 +67,24 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
           <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
         </div>
 
-        <div className='grid gap-4 sm:grid-cols-2'>
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 grid gap-5 sm:grid-cols-2 shadow-sm'>
           <div className='space-y-2'>
-            <Label htmlFor='recipientName' className='font-semibold'>
+            <Label htmlFor='recipientName' className='font-semibold font-heading text-foreground'>
               What is their name?
             </Label>
             <Input
               id='recipientName'
               placeholder='e.g. Sarah'
-              className='h-10 rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
+              className='h-11 rounded-xl border-border bg-background px-4 font-sans text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('recipientName')}
             />
             <FormErrorMessage message={errors.recipientName?.message} trigger={validationTrigger} />
           </div>
 
           <div className='space-y-2'>
-            <Label className='font-semibold'>What's the occasion?</Label>
+            <Label className='font-semibold font-heading text-foreground'>What's the occasion?</Label>
             <Select onValueChange={(v) => setValue('occasion', v, { shouldValidate: true })} value={occasion}>
-              <SelectTrigger className='h-10 w-full rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'>
+              <SelectTrigger className='h-11 w-full rounded-xl border-border bg-background px-4 font-sans text-foreground focus-visible:border-primary focus-visible:ring-primary/20'>
                 <SelectValue placeholder='Select an occasion' />
               </SelectTrigger>
               <SelectContent>

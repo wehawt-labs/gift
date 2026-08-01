@@ -50,50 +50,51 @@
 :root {
   isolation: isolate;
 
-  /* GiftOfSong Brand Colors - Nostalgic Warmth */
-  --color-terracotta: 15 68% 63%; /* #E07A5F */
-  --color-cream: 43 50% 94%; /* #F7F3E8 */
-  --color-sage: 153 28% 61%; /* #81B29A */
-  --color-deep-blue-grey: 235 21% 30%; /* #3D405B */
+  /* GiftOfSong Brand Colors - Serenade & Keepsake (Stitch Design System) */
+  --color-terracotta: 14 62% 47%; /* #C1502E */
+  --color-cream: 34 100% 97%; /* #FFF8F0 - Warm Ivory */
+  --color-surface-card: 37 42% 92%; /* #F4EDE2 - Cream Card */
+  --color-sage: 153 28% 35%; /* #3F6E56 - Status Success */
+  --color-espresso: 38 18% 10%; /* #1E1B15 - Deep Espresso */
 
   /* Base Radius */
-  --radius: 1rem;
+  --radius: 0.5rem;
 
   /* Semantic Color Mapping */
   --background: hsl(var(--color-cream));
-  --foreground: hsl(var(--color-deep-blue-grey));
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(var(--color-deep-blue-grey));
+  --foreground: hsl(var(--color-espresso));
+  --card: hsl(var(--color-surface-card));
+  --card-foreground: hsl(var(--color-espresso));
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(var(--color-deep-blue-grey));
+  --popover-foreground: hsl(var(--color-espresso));
   --primary: hsl(var(--color-terracotta));
   --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(43 30% 90%);
-  --secondary-foreground: hsl(var(--color-deep-blue-grey));
-  --muted: hsl(43 20% 92%);
-  --muted-foreground: hsl(235 15% 50%);
+  --secondary: hsl(37 30% 88%);
+  --secondary-foreground: hsl(var(--color-espresso));
+  --muted: hsl(37 20% 90%);
+  --muted-foreground: hsl(24 13% 37%);
   --accent: hsl(var(--color-sage));
   --accent-foreground: hsl(0 0% 100%);
-  --destructive: hsl(0 84% 60%);
-  --border: hsl(43 20% 85%);
-  --input: hsl(43 20% 85%);
+  --destructive: hsl(0 60% 50%);
+  --border: hsl(24 15% 82%);
+  --input: hsl(24 15% 82%);
   --ring: hsl(var(--color-terracotta));
 
   /* Chart Colors */
   --chart-1: hsl(var(--color-terracotta));
   --chart-2: hsl(var(--color-sage));
-  --chart-3: hsl(var(--color-deep-blue-grey));
+  --chart-3: hsl(var(--color-espresso));
   --chart-4: hsl(43 60% 70%);
   --chart-5: hsl(15 50% 50%);
 
   /* Sidebar */
   --sidebar: hsl(0 0% 100%);
-  --sidebar-foreground: hsl(var(--color-deep-blue-grey));
+  --sidebar-foreground: hsl(var(--color-espresso));
   --sidebar-primary: hsl(var(--color-terracotta));
   --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(43 30% 95%);
-  --sidebar-accent-foreground: hsl(var(--color-deep-blue-grey));
-  --sidebar-border: hsl(43 20% 85%);
+  --sidebar-accent: hsl(37 30% 95%);
+  --sidebar-accent-foreground: hsl(var(--color-espresso));
+  --sidebar-border: hsl(24 15% 82%);
   --sidebar-ring: hsl(var(--color-terracotta));
 }
 

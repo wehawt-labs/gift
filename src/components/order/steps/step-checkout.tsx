@@ -22,15 +22,15 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-serif text-2xl text-foreground'>Review & Checkout</h2>
-        <p className='mt-1 text-base text-foreground/60'>One last look before we start creating.</p>
+        <h2 className='font-bold font-heading text-2xl text-foreground'>Review & Checkout</h2>
+        <p className='mt-1 text-sm text-muted-foreground font-sans'>Choose your package and provide your details to complete the order.</p>
       </div>
 
       <div className='space-y-6'>
         {/* Plan Selection */}
-        <div className='space-y-3'>
-          <Label className='font-bold'>Choose your package</Label>
-          <div className='grid gap-3 sm:grid-cols-2'>
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
+          <Label className='font-semibold font-heading text-base text-foreground'>Choose your package</Label>
+          <div className='grid gap-4 sm:grid-cols-2'>
             {PLANS.map((plan) => (
               <button
                 key={plan.id}
@@ -42,78 +42,82 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
                   })
                 }
                 className={cn(
-                  'group relative flex flex-col overflow-hidden rounded-xl border-2 p-4 text-left transition-all',
+                  'group relative flex flex-col overflow-hidden rounded-xl border-2 p-5 text-left transition-all active:scale-[0.98]',
                   data.plan === plan.id
-                    ? 'border-primary bg-white ring-4 ring-primary/10'
-                    : 'border-foreground/5 bg-white/50 hover:border-foreground/20'
+                    ? 'border-primary bg-background shadow-md ring-2 ring-primary/20'
+                    : 'border-transparent bg-background/60 hover:bg-background hover:border-border'
                 )}
               >
                 {plan.id === 'premium' && (
-                  <div className='absolute top-0 right-0 rounded-bl-lg bg-primary px-2.5 py-0.5 font-bold text-[9px] text-white uppercase tracking-wider'>
-                    Popular
+                  <div className='absolute top-0 right-0 rounded-bl-lg bg-primary px-3 py-1 font-bold text-[10px] text-white uppercase tracking-wider font-heading'>
+                    Most Popular
                   </div>
                 )}
-                <div className='mb-1 flex items-center justify-between'>
-                  <span className='font-bold text-base text-foreground'>{plan.name}</span>
-                  <span className='font-bold text-primary text-sm'>${plan.price}</span>
+                <div className='mb-2 flex items-center justify-between'>
+                  <span className='font-bold font-heading text-lg text-foreground'>{plan.name}</span>
+                  <span className='font-bold font-heading text-primary text-base'>${plan.price}</span>
                 </div>
-                <p className='mb-3 text-foreground/60 text-xs'>{plan.description}</p>
-                <div className='flex items-center gap-2 font-semibold text-[10px] text-foreground/80'>
-                  <Check className='h-2.5 w-2.5 text-accent' />
-                  {plan.revisions} Revision Rounds
-                </div>
-                {plan.id === 'premium' && (
-                  <div className='mt-0.5 flex items-center gap-2 font-semibold text-[10px] text-foreground/80'>
-                    <Check className='h-2.5 w-2.5 text-accent' />
-                    Priority Delivery
+                <p className='mb-4 text-muted-foreground text-xs font-sans leading-relaxed'>{plan.description}</p>
+                <div className='space-y-1.5 mt-auto'>
+                  <div className='flex items-center gap-2 font-semibold text-xs text-foreground font-sans'>
+                    <Check className='h-3.5 w-3.5 text-accent stroke-[3]' />
+                    {plan.revisions} Revision Rounds
                   </div>
-                )}
+                  {plan.id === 'premium' && (
+                    <div className='flex items-center gap-2 font-semibold text-xs text-foreground font-sans'>
+                      <Check className='h-3.5 w-3.5 text-accent stroke-[3]' />
+                      Priority Delivery (24 Hours)
+                    </div>
+                  )}
+                </div>
               </button>
             ))}
           </div>
         </div>
 
-        <Card className='overflow-hidden rounded-xl border-none bg-white shadow-sm'>
-          <div className='bg-foreground px-4 py-2'>
-            <h3 className='font-medium text-sm text-white'>Order Details</h3>
+        {/* Order Details Summary Card */}
+        <Card className='overflow-hidden rounded-2xl border border-foreground/5 bg-card shadow-sm'>
+          <div className='bg-primary/10 px-5 py-3 border-b border-primary/10'>
+            <h3 className='font-bold font-heading text-sm text-primary'>Order Summary</h3>
           </div>
-          <CardContent className='grid gap-4 p-4 sm:grid-cols-2'>
+          <CardContent className='grid gap-4 p-5 sm:grid-cols-2'>
             <div>
-              <p className='font-bold text-[10px] text-foreground/40 uppercase tracking-wider'>For</p>
-              <p className='font-medium text-base'>
-                {data.recipientName} ({data.recipient})
+              <p className='font-bold text-[10px] text-muted-foreground uppercase tracking-wider font-heading'>Recipient</p>
+              <p className='font-semibold font-sans text-base text-foreground mt-0.5'>
+                {data.recipientName || 'Not specified'} ({data.recipient})
               </p>
             </div>
             <div>
-              <p className='font-bold text-[10px] text-foreground/40 uppercase tracking-wider'>Occasion</p>
-              <p className='font-medium text-base'>{data.occasion}</p>
+              <p className='font-bold text-[10px] text-muted-foreground uppercase tracking-wider font-heading'>Occasion</p>
+              <p className='font-semibold font-sans text-base text-foreground mt-0.5'>{data.occasion}</p>
             </div>
           </CardContent>
         </Card>
 
-        <div className='grid gap-4 sm:grid-cols-2'>
+        {/* User Info Fields */}
+        <div className='bg-card rounded-2xl p-5 border border-foreground/5 grid gap-5 sm:grid-cols-2 shadow-sm'>
           <div className='space-y-2'>
-            <Label htmlFor='buyerName' className='font-semibold'>
+            <Label htmlFor='buyerName' className='font-semibold font-heading text-foreground'>
               Your Name
             </Label>
             <Input
               id='buyerName'
               placeholder='Full name'
-              className='h-10 rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
+              className='h-11 rounded-xl border-border bg-background px-4 font-sans text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('buyerName')}
             />
             <FormErrorMessage message={errors.buyerName?.message as string} trigger={validationTrigger} />
           </div>
 
           <div className='space-y-2'>
-            <Label htmlFor='buyerEmail' className='font-semibold'>
+            <Label htmlFor='buyerEmail' className='font-semibold font-heading text-foreground'>
               Your Email
             </Label>
             <Input
               id='buyerEmail'
               type='email'
               placeholder='email@example.com'
-              className='h-10 rounded-xl border-foreground/10 bg-white focus-visible:border-primary focus-visible:ring-primary/20'
+              className='h-11 rounded-xl border-border bg-background px-4 font-sans text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('buyerEmail')}
             />
             <FormErrorMessage message={errors.buyerEmail?.message as string} trigger={validationTrigger} />

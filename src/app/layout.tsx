@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
-import { Fraunces, Inter } from 'next/font/google'
+import { Inter, Quicksand } from 'next/font/google'
 import Script from 'next/script'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const heading = Fraunces({
+const heading = Quicksand({
   variable: '--font-heading',
-  subsets: ['latin']
+  subsets: ['latin'],
+  weight: ['500', '600', '700']
 })
 
 const body = Inter({
