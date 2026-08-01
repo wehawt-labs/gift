@@ -36,6 +36,26 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
       </div>
 
       <div className='space-y-6'>
+        {/* Custom Melody Warning Alert for Free Plan */}
+        {data.sampleMelodyUrl && data.plan === 'single_gift' && (
+          <div className='p-4 rounded-2xl bg-amber-500/15 border-2 border-amber-500/40 text-amber-900 font-sans text-xs space-y-2 shadow-sm'>
+            <div className='flex items-center gap-2 font-bold font-heading text-sm text-amber-950'>
+              <Crown className='h-4 w-4 text-[#9A6A1E]' />
+              <span>Sample Melody Will Not Be Processed on Free Tier</span>
+            </div>
+            <p className='leading-relaxed text-amber-900/90'>
+              You provided a reference melody link (<span className='font-mono font-semibold text-foreground'>{data.sampleMelodyUrl}</span>), but selected the Single Gift (Free) tier. Free tier songs use standard AI melodies.
+            </p>
+            <button
+              type='button'
+              onClick={() => setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })}
+              className='px-3.5 py-1.5 rounded-lg bg-[#9A6A1E] text-white font-heading font-bold text-xs hover:bg-[#835818] transition-colors flex items-center gap-1.5'
+            >
+              Switch to Family Bond ($9.99/mo) to Include Melody
+            </button>
+          </div>
+        )}
+
         {/* 1. Subscription Tiers Selection (3 Tiers from Spec) */}
         <div className='space-y-3'>
           <Label className='font-semibold font-heading text-sm text-foreground'>Select Subscription Tier</Label>

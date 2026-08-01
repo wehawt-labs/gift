@@ -235,11 +235,16 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               </p>
               <button
                 type='button'
-                onClick={handleSelectPremium}
+                onClick={() => {
+                  setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
+                  toast.success('Family Bond Plan Selected', {
+                    description: 'Custom Melody Upload is unlocked on Family Bond ($9.99/mo) or Memory Maker ($29.99/mo).'
+                  })
+                }}
                 className='px-4 py-2 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-1.5'
               >
                 <Crown className='h-3.5 w-3.5 fill-current' />
-                Upgrade to Memory Maker ($29.99/mo)
+                Unlock with Family Bond ($9.99/mo)
               </button>
             </div>
           )}
@@ -260,6 +265,17 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           <div className='pt-1'>
             <Input
               placeholder='Paste reference song link or audio URL (e.g. YouTube, SoundCloud, MP3)...'
+              value={useWatch({ name: 'sampleMelodyUrl' }) || ''}
+              onChange={(e) => {
+                const val = e.target.value
+                setValue('sampleMelodyUrl', val, { shouldValidate: true, shouldDirty: true })
+                if (val && plan === 'single_gift') {
+                  setValue('plan', 'family_bond', { shouldValidate: true, shouldDirty: true })
+                  toast.info('Auto-selected Paid Plan', {
+                    description: 'Family Bond ($9.99/mo) selected to support custom melody uploads.'
+                  })
+                }
+              }}
               className='h-10 rounded-xl border-border bg-background px-3 font-sans text-xs text-foreground placeholder:text-muted-foreground'
             />
           </div>
