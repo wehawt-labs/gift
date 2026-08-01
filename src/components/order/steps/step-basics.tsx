@@ -22,69 +22,68 @@ export function StepBasics({ validationTrigger }: { validationTrigger: number })
   return (
     <div className='space-y-6'>
       <div>
-        <h2 className='font-bold font-heading text-2xl text-foreground leading-tight'>Who is this gift for?</h2>
-        <p className='mt-1 text-sm text-muted-foreground font-sans'>Select the recipient and details for your custom song.</p>
+        <h1 className='font-bold font-heading text-2xl sm:text-3xl text-foreground leading-snug'>Who is this for?</h1>
+        <p className='mt-1 text-sm text-muted-foreground font-sans'>Select the recipient for your personalized song gift.</p>
       </div>
 
       <div className='space-y-6'>
-        <div className='bg-card rounded-2xl p-5 border border-foreground/5 space-y-4 shadow-sm'>
-          <Label className='font-semibold font-heading text-base text-foreground'>Who is this song for?</Label>
-          <div className='grid grid-cols-2 gap-3 sm:grid-cols-4'>
-            {RECIPIENT_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                type='button'
-                onClick={() =>
-                  setValue('recipient', opt.value, {
-                    shouldValidate: true,
-                    shouldDirty: true
-                  })
-                }
+        {/* Relationship Bento Grid (3-column style from Stitch) */}
+        <div className='grid grid-cols-3 gap-3'>
+          {RECIPIENT_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              type='button'
+              onClick={() =>
+                setValue('recipient', opt.value, {
+                  shouldValidate: true,
+                  shouldDirty: true
+                })
+              }
+              className={cn(
+                'group flex flex-col items-center justify-center p-4 rounded-xl border transition-all active:scale-95',
+                recipient === opt.value
+                  ? 'border-primary bg-card shadow-[0_2px_0_0_#c1502e] text-primary'
+                  : 'border-border/60 bg-card/60 hover:bg-card hover:border-border text-muted-foreground'
+              )}
+            >
+              <opt.icon
                 className={cn(
-                  'group flex flex-col items-center justify-center rounded-xl border-2 p-4 transition-all active:scale-[0.98]',
-                  recipient === opt.value
-                    ? 'border-primary bg-background shadow-md ring-2 ring-primary/20'
-                    : 'border-transparent bg-background/60 hover:bg-background hover:border-border'
+                  'mb-2 h-7 w-7 transition-colors',
+                  recipient === opt.value ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'
+                )}
+              />
+              <span
+                className={cn(
+                  'font-semibold text-xs font-sans',
+                  recipient === opt.value ? 'text-primary' : 'text-foreground'
                 )}
               >
-                <opt.icon
-                  className={cn(
-                    'mb-2 h-7 w-7 transition-colors',
-                    recipient === opt.value ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'
-                  )}
-                />
-                <span
-                  className={cn(
-                    'font-semibold text-xs font-sans',
-                    recipient === opt.value ? 'text-primary' : 'text-foreground'
-                  )}
-                >
-                  {opt.label}
-                </span>
-              </button>
-            ))}
-          </div>
-          <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
+                {opt.label}
+              </span>
+            </button>
+          ))}
         </div>
+        <FormErrorMessage message={errors.recipient?.message} trigger={validationTrigger} />
 
-        <div className='bg-card rounded-2xl p-5 border border-foreground/5 grid gap-5 sm:grid-cols-2 shadow-sm'>
+        {/* Inputs */}
+        <div className='grid gap-4 sm:grid-cols-2 pt-2'>
           <div className='space-y-2'>
-            <Label htmlFor='recipientName' className='font-semibold font-heading text-foreground'>
+            <Label htmlFor='recipientName' className='font-semibold font-heading text-sm text-foreground'>
               What is their name?
             </Label>
             <Input
               id='recipientName'
               placeholder='e.g. Sarah'
-              className='h-11 rounded-xl border-border bg-background px-4 font-sans text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20'
+              className='h-11 rounded-xl border-border/80 bg-card px-4 font-sans text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-primary/20'
               {...register('recipientName')}
             />
             <FormErrorMessage message={errors.recipientName?.message} trigger={validationTrigger} />
           </div>
 
           <div className='space-y-2'>
-            <Label className='font-semibold font-heading text-foreground'>What's the occasion?</Label>
+            <Label className='font-semibold font-heading text-sm text-foreground'>What's the occasion?</Label>
             <Select onValueChange={(v) => setValue('occasion', v, { shouldValidate: true })} value={occasion}>
-              <SelectTrigger className='h-11 w-full rounded-xl border-border bg-background px-4 font-sans text-foreground focus-visible:border-primary focus-visible:ring-primary/20'>
+              <SelectTrigger className='h-11 w-full rounded-xl border-border/80 bg-card px-4 font-sans text-sm text-foreground focus-visible:border-primary focus-visible:ring-primary/20'>
                 <SelectValue placeholder='Select an occasion' />
               </SelectTrigger>
               <SelectContent>

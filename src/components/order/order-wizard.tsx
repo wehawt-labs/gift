@@ -196,163 +196,107 @@ export function OrderWizard() {
   }
 
   return (
-    <div className='min-h-screen px-6 py-8'>
-      <div className='mx-auto max-w-7xl'>
-        {/* Sale Alert */}
-        <div className='mx-auto mb-6 max-w-3xl'>
-          <div className='flex animate-pulse items-center gap-3 rounded-xl border border-primary/20 bg-primary/10 p-3'>
-            <div className='rounded-full bg-primary p-1.5'>
-              <Zap className='h-4 w-4 fill-current text-white' />
-            </div>
-            <div>
-              <p className='font-bold text-primary text-xs leading-none sm:text-sm'>
-                💝 14/2 Valentine's Sale ends soon!
-              </p>
-              <p className='mt-1 font-medium text-[11px] text-foreground/70 sm:text-xs'>
-                Order now for **Priority Queue** and results in **24 hours**.
-              </p>
-            </div>
+    <div className='min-h-screen bg-background text-foreground pb-32 pt-6 font-sans'>
+      <div className='mx-auto max-w-xl px-4 sm:px-6'>
+        {/* Step Indicator Header */}
+        <div className='mb-8 space-y-2'>
+          <div className='flex items-center justify-between font-sans text-xs'>
+            <span className='font-bold font-heading text-primary uppercase tracking-wider'>
+              Step {currentStep} of {STAGES.length}
+            </span>
+            <span className='font-medium text-muted-foreground'>
+              {STAGES[currentStep - 1]?.name}
+            </span>
+          </div>
+          <div className='h-1.5 w-full bg-border/60 rounded-full overflow-hidden'>
+            <motion.div
+              className='h-full bg-primary rounded-full'
+              initial={{ width: '0%' }}
+              animate={{ width: `${(currentStep / STAGES.length) * 100}%` }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+            />
           </div>
         </div>
 
-        {/* Progress Bar */}
-        <div className='mx-auto mb-20 max-w-2xl'>
-          <div className='flex items-center justify-between'>
-            {STAGES.map((stage, idx) => (
-              <React.Fragment key={stage.id}>
-                <button
+        {/* Main Form Content */}
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
+            <AnimatePresence mode='wait' initial={false} custom={direction}>
+              <motion.div
+                key={currentStep}
+                custom={direction}
+                variants={{
+                  enter: (direction: number) => ({
+                    x: direction > 0 ? 15 : -15,
+                    opacity: 0
+                  }),
+                  center: { x: 0, opacity: 1 },
+                  exit: (direction: number) => ({
+                    x: direction < 0 ? 15 : -15,
+                    opacity: 0
+                  })
+                }}
+                initial='enter'
+                animate='center'
+                exit='exit'
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
+                {currentStep === 1 && <StepBasics validationTrigger={validationTrigger} />}
+                {currentStep === 2 && <StepVibe validationTrigger={validationTrigger} />}
+                {currentStep === 3 && <StepStory validationTrigger={validationTrigger} />}
+                {currentStep === 4 && <StepCheckout validationTrigger={validationTrigger} />}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Bottom Fixed Action Bar */}
+            <div className='fixed bottom-0 left-0 right-0 z-40 bg-background/90 backdrop-blur-md border-t border-border/40 py-4 px-4 sm:px-6'>
+              <div className='mx-auto max-w-xl flex items-center justify-between'>
+                <Button
                   type='button'
-                  onClick={() => goToStep(stage.id)}
-                  className='group relative flex flex-col items-center outline-none'
+                  variant='ghost'
+                  size='default'
+                  onClick={prevStep}
+                  disabled={currentStep === 1}
+                  className='rounded-xl font-heading font-semibold text-foreground hover:bg-card px-4'
                 >
-                  <div
-                    className={cn(
-                      'z-10 flex h-9 w-9 items-center justify-center rounded-full border-2 shadow-sm transition-all duration-300',
-                      currentStep === stage.id
-                        ? 'scale-110 border-primary bg-primary text-white'
-                        : currentStep > stage.id
-                          ? 'border-primary bg-primary text-white'
-                          : 'border-foreground/10 bg-white text-muted-foreground group-hover:border-primary/50'
-                    )}
-                  >
-                    {currentStep > stage.id ? (
-                      <Check className='h-4 w-4 stroke-[3px]' />
-                    ) : (
-                      <span className='font-semibold text-sm'>{stage.id}</span>
-                    )}
-                  </div>
-                  <span
-                    className={cn(
-                      'absolute -bottom-6 whitespace-nowrap font-semibold text-xs transition-colors',
-                      currentStep >= stage.id ? 'text-foreground' : 'text-muted-foreground group-hover:text-primary'
-                    )}
-                  >
-                    {stage.name}
-                  </span>
-                </button>
-                {idx < STAGES.length - 1 && (
-                  <div className='mx-2 h-[2px] flex-1 bg-foreground/10'>
-                    <motion.div
-                      className='h-full bg-primary'
-                      initial={{ width: '0%' }}
-                      animate={{
-                        width: currentStep > stage.id ? '100%' : '0%'
-                      }}
-                      transition={{ duration: 0.5 }}
-                    />
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
+                  <ChevronLeft className='mr-1 h-4 w-4' />
+                  Back
+                </Button>
 
-        {/* Main Grid */}
-        <div className='grid grid-cols-1 items-start gap-8 lg:grid-cols-3'>
-          {/* Form Side */}
-          <div className='lg:col-span-2'>
-            <FormProvider {...methods}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <AnimatePresence mode='wait' initial={false} custom={direction}>
-                  <motion.div
-                    key={currentStep}
-                    custom={direction}
-                    variants={{
-                      enter: (direction: number) => ({
-                        x: direction > 0 ? 20 : -20,
-                        opacity: 0
-                      }),
-                      center: { x: 0, opacity: 1 },
-                      exit: (direction: number) => ({
-                        x: direction < 0 ? 20 : -20,
-                        opacity: 0
-                      })
-                    }}
-                    initial='enter'
-                    animate='center'
-                    exit='exit'
-                    transition={{ duration: 0.4, ease: 'easeOut' }}
-                  >
-                    {currentStep === 1 && <StepBasics validationTrigger={validationTrigger} />}
-                    {currentStep === 2 && <StepVibe validationTrigger={validationTrigger} />}
-                    {currentStep === 3 && <StepStory validationTrigger={validationTrigger} />}
-                    {currentStep === 4 && <StepCheckout validationTrigger={validationTrigger} />}
-                  </motion.div>
-                </AnimatePresence>
-
-                <div className='mt-8 flex items-center justify-between border-foreground/5 border-t pt-6'>
+                {currentStep < 4 ? (
                   <Button
                     type='button'
-                    variant='ghost'
-                    size='sm'
-                    onClick={prevStep}
-                    disabled={currentStep === 1}
-                    className='rounded-full px-6 font-medium text-foreground'
+                    size='default'
+                    onClick={nextStep}
+                    className='h-11 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-7 shadow-[0_2px_0_0_#842504] hover:bg-primary/90 active:translate-y-[1px] transition-all flex items-center gap-1.5'
                   >
-                    <ChevronLeft className='mr-1.5 h-4 w-4' />
-                    Back
+                    Next Step
+                    <ChevronRight className='h-4 w-4' />
                   </Button>
-
-                  {currentStep < 4 ? (
-                    <Button
-                      type='button'
-                      size='default'
-                      onClick={nextStep}
-                      className='h-10 rounded-full bg-primary px-8 font-semibold text-white shadow-lg shadow-primary/20 hover:bg-primary/90'
-                    >
-                      Next Step
-                      <ChevronRight className='ml-1.5 h-4 w-4' />
-                    </Button>
-                  ) : (
-                    <Button
-                      type='submit'
-                      size='lg'
-                      disabled={isSubmitting}
-                      className='h-11 rounded-full bg-primary px-10 font-bold text-base text-white shadow-lg shadow-primary/20 hover:bg-primary/90'
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                          Creating Checkout...
-                        </>
-                      ) : (
-                        <>
-                          Proceed to Payment ($
-                          {(PLANS.find((p) => p.id === formData.plan) || PLANS[0]).price.toFixed(2)})
-                        </>
-                      )}
-                    </Button>
-                  )}
-                </div>
-              </form>
-            </FormProvider>
-          </div>
-
-          {/* Sticky Summary Side */}
-          <div className='sticky top-24'>
-            <OrderSummary formData={formData} />
-          </div>
-        </div>
+                ) : (
+                  <Button
+                    type='submit'
+                    size='default'
+                    disabled={isSubmitting}
+                    className='h-11 rounded-xl bg-primary text-primary-foreground font-heading font-bold px-8 shadow-[0_2px_0_0_#842504] hover:bg-primary/90 active:translate-y-[1px] transition-all'
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        Complete & Pay ($
+                        {(PLANS.find((p) => p.id === formData.plan) || PLANS[0]).price.toFixed(2)})
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </form>
+        </FormProvider>
       </div>
     </div>
   )
