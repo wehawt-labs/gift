@@ -6,6 +6,7 @@ import {
   SamplesSection,
   TrustSection
 } from '@/components/landing'
+import { Footer } from '@/components/layout'
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <SamplesSection />
       <FeaturesSection />
       <CtaSection />
+      <Footer />
     </>
   )
 }

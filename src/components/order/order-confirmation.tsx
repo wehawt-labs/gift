@@ -231,10 +231,20 @@ export function OrderConfirmation() {
 
             <div className='flex flex-col gap-3 sm:flex-row sm:justify-center'>
               <Link
-                href='/'
+                href={`/song/${orderId || 'ord_98231'}`}
                 className={cn(
                   buttonVariants({ size: 'default' }),
-                  'rounded-full bg-primary px-8 font-semibold text-white shadow-lg shadow-primary/20 hover:bg-primary/90'
+                  'rounded-full bg-primary px-8 font-heading font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 gap-2'
+                )}
+              >
+                <Music className='h-4 w-4' />
+                Listen to Sample Song Page 🎶
+              </Link>
+              <Link
+                href='/'
+                className={cn(
+                  buttonVariants({ variant: 'outline', size: 'default' }),
+                  'rounded-full px-6 font-semibold'
                 )}
               >
                 <Home className='mr-2 h-4 w-4' />
