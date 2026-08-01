@@ -1,5 +1,5 @@
-/// <reference path="../../types/lemonsqueezy.d.ts" />
 'use client'
+/// <reference path="../../types/lemonsqueezy.d.ts" />
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
 import { Check, ChevronLeft, ChevronRight, Loader2, Zap } from 'lucide-react'
