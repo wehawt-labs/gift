@@ -18,27 +18,27 @@ export interface SongPlayerProps {
 
 export function SongPlayerView({
   orderId = 'ord_98231',
-  recipientName = 'Thùy Chi',
+  recipientName = 'Emily',
   occasion = 'Anniversary',
   genre = 'Acoustic Pop',
   tempo = 'Warm & Cozy',
-  buyerName = 'Minh Tuấn',
+  buyerName = 'Alex',
   audioUrl = 'https://cdn.suno.com/sample_track.mp3',
   lyrics = `[Verse 1]
-Mưa Đà Lạt rơi nhẹ trên phím đàn
-Cùng em trú chân nơi quán quen đầu làng
-Chiếc chìa khóa nhà em lại lỡ quên
-Nhắc anh mở cửa cùng nụ cười rất quen.
+Rain falls softly on the Maine coastline
+Standing under the porch with your hand in mine
+Forgetting your apartment keys once again
+A sweet quiet moment I never want to end.
 
 [Chorus]
-Ba năm trôi qua nhanh như một giấc mơ
-Tình yêu đôi ta vẫn đẹp như ý thơ
-Cảm ơn em vì đã đến bên đời anh
-Cho những ngày mưa cũng trở nên an lành.
+Three years flew by like a beautiful dream
+Every melody brighter than it has ever been
+Thank you for bringing your sunshine into my life
+Making rainy days feel warm, cozy and bright.
 
 [Outro]
-Chúc mừng kỷ niệm ngày ta chung đôi
-Yêu em nhiều hơn qua mỗi ngày trôi...`
+Happy Anniversary my darling, my heart
+Here is to forever, never to part...`
 }: Partial<SongPlayerProps>) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
