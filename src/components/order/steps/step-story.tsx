@@ -10,7 +10,7 @@ import { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { cn } from '@/lib/utils'
 import type { OrderFormData } from '../schema'
 
-function AiEnhanceButton({ label = 'AI Assist ✨', onClick }: { label?: string; onClick: () => void }) {
+function AiEnhanceButton({ label = 'Enhance my input ✨', onClick }: { label?: string; onClick: () => void }) {
   return (
     <button
       type='button'
@@ -111,59 +111,74 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
 
           <Textarea
             id='customLyrics'
-            placeholder='[Verse 1]...\n[Chorus]...\n(Or click Enhance with AI above to generate lyrics draft)'
+            placeholder='[Verse 1]...\n[Chorus]...\n(Or click Enhance my input ✨ above to generate lyrics draft)'
             value={useWatch({ name: 'customLyrics' }) || ''}
             onChange={(e) => setValue('customLyrics', e.target.value, { shouldValidate: true, shouldDirty: true })}
-            className='min-h-[120px] rounded-xl border-border bg-background p-3 font-mono text-xs text-foreground focus-visible:border-primary focus-visible:ring-primary/20 placeholder:text-muted-foreground resize-none leading-relaxed'
+            className='min-h-[110px] rounded-xl border-border bg-background p-3 font-mono text-xs text-foreground focus-visible:border-primary focus-visible:ring-primary/20 placeholder:text-muted-foreground resize-none leading-relaxed'
           />
 
-          {/* Simplified Toggle Switch (Clean & Direct Without Sub-Description) */}
-          {(() => {
-            const isFull = Boolean(useWatch({ name: 'isFullLyrics' }))
-            return (
-              <div
-                onClick={() => setValue('isFullLyrics', !isFull, { shouldDirty: true })}
-                className='pt-2 border-t border-border/40 flex items-center justify-between cursor-pointer select-none group'
+          {/* 2 Clear Lyrics Option Cards (Replaces confusing toggle switch) */}
+          <div className='pt-2 border-t border-border/40 space-y-2'>
+            <Label className='font-semibold font-heading text-xs text-foreground block'>How should we handle your lyrics?</Label>
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-2.5'>
+              {/* Option 1: Need help / Draft */}
+              <button
+                type='button'
+                onClick={() => setValue('isFullLyrics', false, { shouldDirty: true })}
+                className={cn(
+                  'flex flex-col p-3 rounded-xl border text-left transition-all active:scale-[0.98]',
+                  !useWatch({ name: 'isFullLyrics' })
+                    ? 'border-primary bg-background shadow-xs ring-1 ring-primary/20'
+                    : 'border-border/60 bg-background/60 hover:bg-background'
+                )}
               >
-                <Label className='font-semibold font-heading text-xs text-foreground block cursor-pointer group-hover:text-primary transition-colors'>
-                  {isFull
-                    ? "✨ I've written the full lyrics — use my exact words!"
-                    : "✏️ Just an idea — let our Song Chef write the full lyrics for me!"}
-                </Label>
-
-                <div
-                  className={cn(
-                    'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
-                    isFull ? 'bg-primary' : 'bg-muted-foreground/30'
-                  )}
-                >
-                  <span
-                    className={cn(
-                      'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                      isFull ? 'translate-x-5' : 'translate-x-0'
-                    )}
-                  />
+                <div className='flex items-center justify-between font-bold font-heading text-xs text-foreground mb-1'>
+                  <span>✏️ I need help writing lyrics</span>
+                  {!useWatch({ name: 'isFullLyrics' }) && <span className='text-primary font-heading text-[10px]'>Selected ✓</span>}
                 </div>
-              </div>
-            )
-          })()}
+                <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
+                  Our Song Chef will expand your ideas into full lyrics.
+                </p>
+              </button>
+
+              {/* Option 2: Full lyrics provided */}
+              <button
+                type='button'
+                onClick={() => setValue('isFullLyrics', true, { shouldDirty: true })}
+                className={cn(
+                  'flex flex-col p-3 rounded-xl border text-left transition-all active:scale-[0.98]',
+                  useWatch({ name: 'isFullLyrics' })
+                    ? 'border-primary bg-background shadow-xs ring-1 ring-primary/20'
+                    : 'border-border/60 bg-background/60 hover:bg-background'
+                )}
+              >
+                <div className='flex items-center justify-between font-bold font-heading text-xs text-foreground mb-1'>
+                  <span>✨ Use my exact lyrics</span>
+                  {useWatch({ name: 'isFullLyrics' }) && <span className='text-primary font-heading text-[10px]'>Selected ✓</span>}
+                </div>
+                <p className='text-[11px] text-muted-foreground font-sans leading-relaxed'>
+                  Compose music around your exact written words.
+                </p>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Digital Keepsake Gift Wrapping & Dedicated URL Paywall Card (Stitch Screen 2cfcaa7c7974454fa1fbd852131c9663) */}
         <div className='relative overflow-hidden rounded-2xl border border-amber-500/30 bg-card p-5 shadow-sm transition-all'>
           {plan !== 'memory_maker' && (
-            <div className='absolute inset-0 bg-[#A89A8C]/30 backdrop-blur-[3px] z-10 flex flex-col items-center justify-center p-5 text-center'>
-              <div className='h-11 w-11 rounded-full bg-background/95 shadow-md flex items-center justify-center text-[#9A6A1E] mb-2'>
+            <div className='absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#A89A8C]/30 p-5 text-center backdrop-blur-[3px]'>
+              <div className='mb-2 flex h-11 w-11 items-center justify-center rounded-full bg-background/95 text-[#9A6A1E] shadow-md'>
                 <Lock className='h-5 w-5' />
               </div>
-              <h3 className='font-bold font-heading text-base text-[#9A6A1E] mb-1'>Premium Keepsake Gift Box</h3>
-              <p className='text-xs text-foreground/80 font-sans max-w-xs mb-4 leading-relaxed'>
+              <h3 className='mb-1 font-bold font-heading text-[#9A6A1E] text-base'>Premium Keepsake Gift Box</h3>
+              <p className='mb-4 max-w-xs font-sans text-foreground/80 text-xs leading-relaxed'>
                 Unlock a dedicated private web URL, personal voice intro, and photo album for your recipient!
               </p>
               <button
                 type='button'
                 onClick={handleSelectPremium}
-                className='px-5 py-2.5 rounded-xl bg-[#9A6A1E] text-white font-heading font-bold text-xs shadow-md hover:bg-[#835818] active:scale-95 transition-all flex items-center gap-2 uppercase tracking-wider'
+                className='flex items-center gap-2 rounded-xl bg-[#9A6A1E] px-5 py-2.5 font-bold font-heading text-white text-xs uppercase tracking-wider shadow-md transition-all hover:bg-[#835818] active:scale-95'
               >
                 <Crown className='h-4 w-4 fill-current' />
                 Upgrade to Memory Maker ($29.99/mo)
@@ -171,30 +186,34 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
             </div>
           )}
 
-          <div className='flex items-center justify-between border-b border-border/40 pb-3 mb-4'>
+          <div className='mb-4 flex items-center justify-between border-border/40 border-b pb-3'>
             <div className='flex items-center gap-2'>
               <Gift className='h-5 w-5 text-primary' />
               <h3 className='font-bold font-heading text-base text-foreground'>Digital Keepsake Gift Wrapping</h3>
             </div>
-            <span className='rounded-full bg-amber-500/20 px-3 py-1 font-bold text-[10px] text-[#9A6A1E] uppercase font-heading tracking-wider'>
+            <span className='rounded-full bg-amber-500/20 px-3 py-1 font-bold font-heading text-[#9A6A1E] text-[10px] uppercase tracking-wider'>
               {plan === 'memory_maker' ? 'Unlocked ✓' : 'Memory Maker Free'}
             </span>
           </div>
 
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-sans'>
-            <div className='p-3.5 rounded-xl bg-background border border-border/60 flex items-start gap-3'>
-              <Mic className='h-4 w-4 text-primary shrink-0 mt-0.5' />
+          <div className='grid grid-cols-1 gap-3 font-sans text-xs sm:grid-cols-2'>
+            <div className='flex items-start gap-3 rounded-xl border border-border/60 bg-background p-3.5'>
+              <Mic className='mt-0.5 h-4 w-4 shrink-0 text-primary' />
               <div>
                 <p className='font-bold font-heading text-foreground text-xs'>Personal Voice Intro</p>
-                <p className='text-muted-foreground text-[11px] mt-0.5'>Record a 15-second audio message intro before the song plays.</p>
+                <p className='mt-0.5 text-[11px] text-muted-foreground'>
+                  Record a 15-second audio message intro before the song plays.
+                </p>
               </div>
             </div>
 
-            <div className='p-3.5 rounded-xl bg-background border border-border/60 flex items-start gap-3'>
-              <Image className='h-4 w-4 text-primary shrink-0 mt-0.5' />
+            <div className='flex items-start gap-3 rounded-xl border border-border/60 bg-background p-3.5'>
+              <Image className='mt-0.5 h-4 w-4 shrink-0 text-primary' />
               <div>
                 <p className='font-bold font-heading text-foreground text-xs'>Photo Slideshow Album</p>
-                <p className='text-muted-foreground text-[11px] mt-0.5'>Upload up to 5 photos displayed while your song plays.</p>
+                <p className='mt-0.5 text-[11px] text-muted-foreground'>
+                  Upload up to 5 photos displayed while your song plays.
+                </p>
               </div>
             </div>
           </div>
