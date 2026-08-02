@@ -1,8 +1,8 @@
 import { Heart, Smile, User, Users } from 'lucide-react'
 
 export const RECIPIENTS = ['Partner', 'Parent', 'Friend', 'Myself'] as const
-export const GENRES = ['Acoustic Pop', 'Rock Ballad', 'EDM', 'R&B', 'Country'] as const
-export const TEMPOS = ['Warm & Cozy', 'Joyful & Upbeat', 'Tear-Jerker', 'Playful', 'Romantic', 'Calming'] as const
+export const GENRES = ['Acoustic Pop', 'Rock Ballad', 'EDM', 'R&B', 'Country', 'Lo-Fi Chill', 'Hip-Hop / Rap', 'Jazz & Blues', 'Cinematic', 'Other'] as const
+export const TEMPOS = ['Warm & Cozy', 'Joyful & Upbeat', 'Tear-Jerker', 'Playful', 'Romantic', 'Calming', 'Nostalgic', 'Cinematic / Epic', 'Other'] as const
 
 export const MOOD_OPTIONS = [
   { value: 'Warm & Cozy', emoji: '☕', label: 'Warm & Cozy' },
@@ -10,7 +10,10 @@ export const MOOD_OPTIONS = [
   { value: 'Tear-Jerker', emoji: '😭', label: 'Tear-Jerker' },
   { value: 'Playful', emoji: '🤪', label: 'Playful' },
   { value: 'Romantic', emoji: '❤️', label: 'Romantic' },
-  { value: 'Calming', emoji: '😌', label: 'Calming' }
+  { value: 'Calming', emoji: '😌', label: 'Calming' },
+  { value: 'Nostalgic', emoji: '🍂', label: 'Nostalgic' },
+  { value: 'Cinematic / Epic', emoji: '🎬', label: 'Cinematic / Epic' },
+  { value: 'Other', emoji: '✏️', label: 'Other' }
 ] as const
 
 export const VOCAL_PREFERENCES = ['Male', 'Female', 'Surprise Me', 'Custom Voice (Premium)'] as const
@@ -35,7 +38,11 @@ export const GENRE_OPTIONS = [
   { value: 'Rock Ballad' as const, label: 'Rock Ballad' },
   { value: 'EDM' as const, label: 'EDM' },
   { value: 'R&B' as const, label: 'R&B' },
-  { value: 'Country' as const, label: 'Country' }
+  { value: 'Country' as const, label: 'Country' },
+  { value: 'Lo-Fi Chill' as const, label: 'Lo-Fi Chill' },
+  { value: 'Hip-Hop / Rap' as const, label: 'Hip-Hop / Rap' },
+  { value: 'Jazz & Blues' as const, label: 'Jazz & Blues' },
+  { value: 'Other' as const, label: 'Other ✏️' }
 ] as const
 
 export const PLANS = [

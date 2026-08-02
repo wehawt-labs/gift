@@ -88,10 +88,20 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
 
           {/* Custom Genre Input */}
           <Input
-            placeholder='Or type custom genre (e.g. Indie Folk, 90s Hip-Hop, Lo-Fi Chill...)'
-            value={genre && !['Acoustic Pop', 'Rock Ballad', 'EDM', 'R&B', 'Country'].includes(genre) ? genre : ''}
+            placeholder='Or type custom genre (e.g. Indie Folk, 90s Hip-Hop, Synthwave...)'
+            value={
+              genre && !GENRE_OPTIONS.filter((g) => g.value !== 'Other').some((g) => g.value === genre)
+                ? genre === 'Other'
+                  ? ''
+                  : genre
+                : ''
+            }
             onChange={(e) => setValue('genre', e.target.value, { shouldValidate: true, shouldDirty: true })}
-            className='h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground'
+            className={cn(
+              'h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground',
+              (genre === 'Other' || (genre && !GENRE_OPTIONS.some((g) => g.value === genre))) &&
+                'border-primary ring-1 ring-primary/20'
+            )}
           />
           <FormErrorMessage message={errors.genre?.message} trigger={validationTrigger} />
         </div>
@@ -101,7 +111,9 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           <Label className='font-heading font-semibold text-foreground text-sm'>Mood & Style</Label>
           <div className='flex flex-wrap gap-2.5'>
             {MOOD_OPTIONS.map((mood) => {
-              const isSelected = tempo === mood.value
+              const isSelected =
+                tempo === mood.value ||
+                (mood.value === 'Other' && tempo && !MOOD_OPTIONS.some((m) => m.value === tempo))
               return (
                 <button
                   key={mood.value}
@@ -124,9 +136,19 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
           {/* Custom Tempo/Mood Input */}
           <Input
             placeholder='Or type custom mood/style (e.g. Energetic, Nostalgic, Cinematic...)'
-            value={tempo && !MOOD_OPTIONS.some((m) => m.value === tempo) ? tempo : ''}
+            value={
+              tempo && !MOOD_OPTIONS.filter((m) => m.value !== 'Other').some((m) => m.value === tempo)
+                ? tempo === 'Other'
+                  ? ''
+                  : tempo
+                : ''
+            }
             onChange={(e) => setValue('tempo', e.target.value, { shouldValidate: true, shouldDirty: true })}
-            className='mt-2 h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground'
+            className={cn(
+              'mt-2 h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground',
+              (tempo === 'Other' || (tempo && !MOOD_OPTIONS.some((m) => m.value === tempo))) &&
+                'border-primary ring-1 ring-primary/20'
+            )}
           />
           <FormErrorMessage message={errors.tempo?.message} trigger={validationTrigger} />
         </div>
