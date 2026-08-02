@@ -1,7 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
 import { Crown, Play, Sparkles } from 'lucide-react'
+import { useRef } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
 import { AuthBannerPrompt } from '@/components/ui/auth-banner-prompt'
@@ -68,7 +68,10 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                 }}
                 className={cn(
                   'group relative flex items-center justify-between rounded-xl border p-3.5 transition-all active:scale-95',
-                  genre === g.value || (g.value === 'Other' && genre && !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
+                  genre === g.value ||
+                    (g.value === 'Other' &&
+                      genre &&
+                      !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
                     ? 'border-primary bg-card text-primary shadow-[0_2px_0_0_#c1502e]'
                     : 'border-border/60 bg-card/60 text-muted-foreground hover:border-border hover:bg-card'
                 )}
@@ -76,7 +79,10 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                 <span
                   className={cn(
                     'font-sans font-semibold text-xs',
-                    genre === g.value || (g.value === 'Other' && genre && !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
+                    genre === g.value ||
+                      (g.value === 'Other' &&
+                        genre &&
+                        !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
                       ? 'text-primary'
                       : 'text-foreground'
                   )}
@@ -86,7 +92,10 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                 <div
                   className={cn(
                     'flex h-6 w-6 items-center justify-center rounded-full transition-colors',
-                    genre === g.value || (g.value === 'Other' && genre && !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
+                    genre === g.value ||
+                      (g.value === 'Other' &&
+                        genre &&
+                        !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
                       ? 'bg-primary text-white'
                       : 'bg-primary/10 text-primary group-hover:bg-primary/20'
                   )}
@@ -110,7 +119,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             }
             onChange={(e) => setValue('genre', e.target.value, { shouldValidate: true, shouldDirty: true })}
             className={cn(
-              'h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground transition-all',
+              'h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs transition-all placeholder:text-muted-foreground',
               (genre === 'Other' || (genre && !GENRE_OPTIONS.some((g) => g.value === genre))) &&
                 'border-primary ring-1 ring-primary/20'
             )}
@@ -163,7 +172,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             }
             onChange={(e) => setValue('tempo', e.target.value, { shouldValidate: true, shouldDirty: true })}
             className={cn(
-              'mt-2 h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground transition-all',
+              'mt-2 h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs transition-all placeholder:text-muted-foreground',
               (tempo === 'Other' || (tempo && !MOOD_OPTIONS.some((m) => m.value === tempo))) &&
                 'border-primary ring-1 ring-primary/20'
             )}

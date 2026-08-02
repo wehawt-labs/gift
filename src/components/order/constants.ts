@@ -1,8 +1,29 @@
 import { Heart, Smile, User, Users } from 'lucide-react'
 
 export const RECIPIENTS = ['Partner', 'Parent', 'Friend', 'Myself'] as const
-export const GENRES = ['Acoustic Pop', 'Rock Ballad', 'EDM', 'R&B', 'Country', 'Lo-Fi Chill', 'Hip-Hop / Rap', 'Jazz & Blues', 'Cinematic', 'Other'] as const
-export const TEMPOS = ['Warm & Cozy', 'Joyful & Upbeat', 'Tear-Jerker', 'Playful', 'Romantic', 'Calming', 'Nostalgic', 'Cinematic / Epic', 'Other'] as const
+export const GENRES = [
+  'Acoustic Pop',
+  'Rock Ballad',
+  'EDM',
+  'R&B',
+  'Country',
+  'Lo-Fi Chill',
+  'Hip-Hop / Rap',
+  'Jazz & Blues',
+  'Cinematic',
+  'Other'
+] as const
+export const TEMPOS = [
+  'Warm & Cozy',
+  'Joyful & Upbeat',
+  'Tear-Jerker',
+  'Playful',
+  'Romantic',
+  'Calming',
+  'Nostalgic',
+  'Cinematic / Epic',
+  'Other'
+] as const
 
 export const MOOD_OPTIONS = [
   { value: 'Warm & Cozy', emoji: '☕', label: 'Warm & Cozy' },

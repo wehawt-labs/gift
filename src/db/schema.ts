@@ -145,4 +145,3 @@ export const promotions = pgTable('promotion', {
   createdAt: timestamp('createdAt').defaultNow().notNull(),
   updatedAt: timestamp('updatedAt').defaultNow().notNull()
 })
-

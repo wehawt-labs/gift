@@ -1,6 +1,6 @@
+import { and, desc, eq, gte, lte } from 'drizzle-orm'
 import { db } from '@/db'
 import { promotions } from '@/db/schema'
-import { and, gte, lte, eq, desc } from 'drizzle-orm'
 
 export interface PromotionContent {
   badgeText: string
@@ -28,7 +28,7 @@ const STATIC_CAMPAIGNS = [
     badgeText: '💝 VALENTINE SALE: STARTING AT $19 • 24H DELIVERY',
     ctaNote: "💝 Valentine's Special: Priority Queue + 24h Delivery Included",
     ctaSubtext: "Order now to get your personalized song in time for Valentine's Day.",
-    summaryLabel: "Valentine Sale Price"
+    summaryLabel: 'Valentine Sale Price'
   },
   {
     startMonth: 5,
@@ -65,13 +65,7 @@ export async function getActivePromotion(): Promise<PromotionContent> {
       const activePromos = await db
         .select()
         .from(promotions)
-        .where(
-          and(
-            eq(promotions.isActive, true),
-            lte(promotions.startDate, now),
-            gte(promotions.endDate, now)
-          )
-        )
+        .where(and(eq(promotions.isActive, true), lte(promotions.startDate, now), gte(promotions.endDate, now)))
         .orderBy(desc(promotions.priority))
         .limit(1)
 

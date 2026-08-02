@@ -33,9 +33,7 @@ export function CtaSection() {
 
           {/* Note */}
           <div className='mt-6 space-y-2'>
-            <p className='font-bold text-background text-sm'>
-              ⚡ Priority Queue + 24h Express Delivery Included
-            </p>
+            <p className='font-bold text-background text-sm'>⚡ Priority Queue + 24h Express Delivery Included</p>
             <p className='text-background/60 text-xs'>
               Order now to receive your custom song within 24 hours. 100% money-back guarantee.
             </p>
