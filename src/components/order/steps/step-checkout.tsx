@@ -2,6 +2,7 @@
 
 import { Check, Crown, Globe, Video } from 'lucide-react'
 import { useFormContext, useWatch } from 'react-hook-form'
+import { AuthBannerPrompt } from '@/components/ui/auth-banner-prompt'
 import { Card, CardContent } from '@/components/ui/card'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
@@ -31,6 +32,8 @@ export function StepCheckout({ validationTrigger }: { validationTrigger: number 
 
   return (
     <div className='space-y-6 font-sans'>
+      <AuthBannerPrompt />
+
       <div>
         <h1 className='font-bold font-heading text-2xl text-foreground leading-snug sm:text-3xl'>
           Choose Plan & Add-ons

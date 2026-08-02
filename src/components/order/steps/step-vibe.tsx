@@ -3,6 +3,7 @@
 import { Crown, Play, Sparkles } from 'lucide-react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
+import { AuthBannerPrompt } from '@/components/ui/auth-banner-prompt'
 import { Button } from '@/components/ui/button'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Input } from '@/components/ui/input'
@@ -34,6 +35,8 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
 
   return (
     <div className='space-y-6'>
+      <AuthBannerPrompt />
+
       <div>
         <h1 className='font-bold font-heading text-2xl text-foreground leading-snug sm:text-3xl'>Set the Mood</h1>
         <p className='mt-1 font-sans text-muted-foreground text-sm'>

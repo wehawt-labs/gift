@@ -1,4 +1,5 @@
 'use client'
+
 /// <reference path="../../types/lemonsqueezy.d.ts" />
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
@@ -9,6 +10,8 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { createCheckoutSession } from '@/actions/checkout'
 import { Button } from '@/components/ui/button'
+import { UnsavedProgressToast } from '@/components/ui/unsaved-progress-toast'
+import { useSession } from '@/lib/auth-client'
 import type { LemonSqueezyPlan } from '@/lib/lemonsqueezy/constants'
 import { PLANS, STAGES } from './constants'
 import { type OrderFormData, orderSchema } from './schema'
@@ -23,6 +26,7 @@ export function OrderWizard() {
   const [direction, setDirection] = useState(0)
   const [validationTrigger, setValidationTrigger] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { data: session } = useSession()
 
   const methods = useForm<OrderFormData>({
     resolver: standardSchemaResolver(orderSchema),
@@ -74,22 +78,16 @@ export function OrderWizard() {
         // Prevent immediate navigation
         window.history.pushState(null, '', window.location.href)
 
-        toast('Unsaved Changes', {
-          description: 'Your song progress will be lost if you leave now.',
-          action: {
-            label: 'Leave Anyway',
-            onClick: () => {
-              // Reset dirty state so we can actually leave
+        toast.custom((t) => (
+          <UnsavedProgressToast
+            toastId={t}
+            isLoggedIn={Boolean(session?.user)}
+            onLeaveAnyway={() => {
               methods.reset(formData)
               window.history.back()
-            }
-          },
-          cancel: {
-            label: 'Stay',
-            onClick: () => {}
-          },
-          duration: 10000 // Long duration for confirmation
-        })
+            }}
+          />
+        ))
       }
     }
 
@@ -102,7 +100,7 @@ export function OrderWizard() {
       window.removeEventListener('beforeunload', handleBeforeUnload)
       window.removeEventListener('popstate', handlePopState)
     }
-  }, [isDirty, formData, methods])
+  }, [isDirty, formData, methods, session?.user])
 
   const nextStep = async () => {
     let fieldsToValidate: (keyof OrderFormData)[] = []
@@ -203,7 +201,7 @@ export function OrderWizard() {
 
   return (
     <div className='min-h-screen bg-background pt-6 pb-32 font-sans text-foreground'>
-      <div className='mx-auto max-w-3xl px-4 sm:px-6'>
+      <div className='mx-auto max-w-5xl px-4 sm:px-6 lg:px-8'>
         {/* Step Indicator Header */}
         <div className='mb-8 space-y-2'>
           <div className='flex items-center justify-between font-sans text-xs'>

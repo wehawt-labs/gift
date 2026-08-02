@@ -2,6 +2,7 @@
 
 import { Crown, Gift, Image, Mic } from 'lucide-react'
 import { useFormContext, useWatch } from 'react-hook-form'
+import { AuthBannerPrompt } from '@/components/ui/auth-banner-prompt'
 import { FormErrorMessage } from '@/components/ui/form-error-message'
 import { Label } from '@/components/ui/label'
 import { PaywallOverlay } from '@/components/ui/paywall-overlay'
@@ -41,6 +42,8 @@ export function StepStory({ validationTrigger }: { validationTrigger: number }) 
 
   return (
     <div className='space-y-6'>
+      <AuthBannerPrompt />
+
       <div>
         <h1 className='font-bold font-heading text-2xl text-foreground leading-snug sm:text-3xl'>Tell Your Story</h1>
         <p className='mt-1 font-sans text-muted-foreground text-sm'>
