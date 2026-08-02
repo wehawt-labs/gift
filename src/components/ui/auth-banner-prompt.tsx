@@ -2,6 +2,7 @@
 
 import { CheckCircle2 } from 'lucide-react'
 import { GoogleSignInButton } from '@/components/ui/google-sign-in-button'
+import { useSession } from '@/lib/auth-client'
 
 export function AuthBannerPrompt() {
   const { data: session } = useSession()
