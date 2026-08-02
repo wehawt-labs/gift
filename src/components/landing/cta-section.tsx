@@ -34,10 +34,10 @@ export function CtaSection() {
           {/* Note */}
           <div className='mt-6 space-y-2'>
             <p className='font-bold text-background text-sm'>
-              💝 14/2 Valentine's Sale: Priority Queue + 24h Delivery Included
+              ⚡ Priority Queue + 24h Express Delivery Included
             </p>
             <p className='text-background/60 text-xs'>
-              Last minute gift? Order now to get it in time for Valentine's Day. 100% money-back guarantee.
+              Order now to receive your custom song within 24 hours. 100% money-back guarantee.
             </p>
           </div>
         </div>

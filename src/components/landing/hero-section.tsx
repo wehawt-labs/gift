@@ -42,8 +42,8 @@ export function HeroSection() {
           {/* Left content */}
           <div className='flex flex-col items-center text-center lg:items-start lg:text-left'>
             {/* Badge */}
-            <div className='mb-6 inline-flex animate-bounce items-center rounded-full bg-primary/10 px-4 py-1.5 font-bold text-primary text-sm'>
-              💝 14/2 SALE: STARTING AT $19 • 24H DELIVERY
+            <div className='mb-6 inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 font-bold text-primary text-sm'>
+              ✨ PERSONALIZED SONGS • 24H EXPRESS DELIVERY
             </div>
 
             {/* Title */}

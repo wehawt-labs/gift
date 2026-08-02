@@ -19,6 +19,7 @@
     "@neondatabase/serverless": "^1.0.2",
     "@react-email/components": "^1.0.8",
     "@react-email/render": "^2.0.4",
+    "@supabase/supabase-js": "^2.111.0",
     "@wavesurfer/react": "^1.0.12",
     "better-auth": "^1.4.18",
     "class-variance-authority": "^0.7.1",

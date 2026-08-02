@@ -19,7 +19,7 @@ export function OrderSummary({ formData }: { formData: OrderFormData }) {
 
       <CardContent className='space-y-4 p-6'>
         <div className='flex items-center justify-between text-sm'>
-          <span className='text-muted-foreground'>14/2 Sale Price</span>
+          <span className='text-muted-foreground'>Package Price</span>
           <span className='font-medium text-foreground'>${selectedPlan.price.toFixed(2)}</span>
         </div>
 

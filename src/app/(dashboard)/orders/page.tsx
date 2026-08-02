@@ -99,14 +99,15 @@ export default function UserOrdersPage() {
 
         <Button
           type='button'
-          asChild
+          nativeButton={false}
+          render={
+            <Link href='/order/new'>
+              <PlusCircle className='h-4 w-4' />
+              Create Another Song
+            </Link>
+          }
           className='h-10 shrink-0 gap-2 rounded-xl bg-primary px-4 font-bold font-heading text-primary-foreground text-xs shadow-[0_2px_0_0_#842504]'
-        >
-          <Link href='/order/new'>
-            <PlusCircle className='h-4 w-4' />
-            Create Another Song
-          </Link>
-        </Button>
+        />
       </div>
 
       {/* Orders List */}
@@ -146,14 +147,15 @@ export default function UserOrdersPage() {
                 {order.status === 'completed' && (
                   <Button
                     type='button'
-                    asChild
+                    nativeButton={false}
+                    render={
+                      <Link href={`/song/${order.id}`}>
+                        <Play className='h-3.5 w-3.5 fill-current' />
+                        Listen & Share
+                      </Link>
+                    }
                     className='h-9 gap-1.5 rounded-xl bg-primary px-3.5 font-bold font-heading text-primary-foreground text-xs shadow-sm'
-                  >
-                    <Link href={`/song/${order.id}`}>
-                      <Play className='h-3.5 w-3.5 fill-current' />
-                      Listen & Share
-                    </Link>
-                  </Button>
+                  />
                 )}
 
                 {order.status === 'pending_payment' && (
@@ -170,31 +172,33 @@ export default function UserOrdersPage() {
                 <Button
                   type='button'
                   variant='outline'
-                  asChild
+                  nativeButton={false}
+                  render={
+                    <Link href={`/orders/${order.id}`}>
+                      <MessageSquare className='h-3.5 w-3.5 text-primary' />
+                      <span>Chat / Refine</span>
+                      {order.messagesCount > 0 && (
+                        <span className='ml-1 rounded-full bg-primary/10 px-1.5 py-0.2 font-bold text-[10px] text-primary'>
+                          {order.messagesCount}
+                        </span>
+                      )}
+                    </Link>
+                  }
                   className='h-9 gap-1.5 rounded-xl border-border bg-background font-heading font-semibold text-xs hover:bg-card'
-                >
-                  <Link href={`/orders/${order.id}`}>
-                    <MessageSquare className='h-3.5 w-3.5 text-primary' />
-                    <span>Chat / Refine</span>
-                    {order.messagesCount > 0 && (
-                      <span className='ml-1 rounded-full bg-primary/10 px-1.5 py-0.2 font-bold text-[10px] text-primary'>
-                        {order.messagesCount}
-                      </span>
-                    )}
-                  </Link>
-                </Button>
+                />
 
                 <Button
                   type='button'
                   variant='ghost'
                   size='sm'
-                  asChild
+                  nativeButton={false}
+                  render={
+                    <Link href={`/orders/${order.id}`}>
+                      <ChevronRight className='h-4 w-4' />
+                    </Link>
+                  }
                   className='h-9 rounded-xl px-2 text-muted-foreground hover:text-foreground'
-                >
-                  <Link href={`/orders/${order.id}`}>
-                    <ChevronRight className='h-4 w-4' />
-                  </Link>
-                </Button>
+                />
               </div>
             </div>
           </Card>

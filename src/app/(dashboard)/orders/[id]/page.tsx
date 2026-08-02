@@ -62,14 +62,15 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
         <Button
           variant='ghost'
           size='sm'
-          asChild
+          nativeButton={false}
+          render={
+            <Link href='/orders'>
+              <ArrowLeft className='h-3.5 w-3.5' />
+              Back to My Songs
+            </Link>
+          }
           className='h-8 gap-1.5 px-2 text-muted-foreground text-xs hover:text-foreground'
-        >
-          <Link href='/orders'>
-            <ArrowLeft className='h-3.5 w-3.5' />
-            Back to My Songs
-          </Link>
-        </Button>
+        />
       </div>
 
       {/* Order Header Summary Card */}
@@ -95,14 +96,15 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
 
           <Button
             type='button'
-            asChild
+            nativeButton={false}
+            render={
+              <Link href={`/song/${orderId}`}>
+                <Play className='h-4 w-4 fill-current' />
+                Open Player & Lyrics
+              </Link>
+            }
             className='h-10 gap-2 rounded-xl bg-primary px-4 font-bold font-heading text-primary-foreground text-xs shadow-sm'
-          >
-            <Link href={`/song/${orderId}`}>
-              <Play className='h-4 w-4 fill-current' />
-              Open Player & Lyrics
-            </Link>
-          </Button>
+          />
         </div>
 
         {/* Order Details Grid */}

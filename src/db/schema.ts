@@ -127,3 +127,22 @@ export const purchases = pgTable('purchase', {
   createdAt: timestamp('createdAt').defaultNow().notNull(),
   updatedAt: timestamp('updatedAt').defaultNow().notNull()
 })
+
+// ─── Promotions / Ads (Dynamic Campaign Ads) ────────────────
+
+export const promotions = pgTable('promotion', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 100 }).notNull().unique(),
+  name: varchar('name', { length: 255 }).notNull(),
+  badgeText: text('badgeText').notNull(),
+  ctaNote: text('ctaNote').notNull(),
+  ctaSubtext: text('ctaSubtext'),
+  summaryLabel: varchar('summaryLabel', { length: 255 }).notNull().default('Special Price'),
+  startDate: timestamp('startDate'),
+  endDate: timestamp('endDate'),
+  isActive: boolean('isActive').notNull().default(true),
+  priority: integer('priority').notNull().default(0),
+  createdAt: timestamp('createdAt').defaultNow().notNull(),
+  updatedAt: timestamp('updatedAt').defaultNow().notNull()
+})
+

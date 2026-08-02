@@ -64,11 +64,10 @@ export function Header() {
               {session?.user ? (
                 <Button
                   type='button'
-                  asChild
+                  nativeButton={false}
+                  render={<Link href='/orders'>My Songs</Link>}
                   className='h-9 rounded-xl bg-primary px-4 font-bold font-heading text-primary-foreground text-xs shadow-sm'
-                >
-                  <Link href='/orders'>My Songs</Link>
-                </Button>
+                />
               ) : (
                 <Button
                   type='button'
@@ -101,14 +100,15 @@ export function Header() {
 
               <Button
                 type='button'
-                asChild
+                nativeButton={false}
+                render={
+                  <Link href='/order/new'>
+                    <span>Create Song</span>
+                    <ArrowRight className='h-3.5 w-3.5' />
+                  </Link>
+                }
                 className='h-9 gap-1.5 rounded-xl bg-primary px-4 font-bold font-heading text-primary-foreground text-xs shadow-[0_2px_0_0_#842504]'
-              >
-                <Link href='/order/new'>
-                  <span>Create Song</span>
-                  <ArrowRight className='h-3.5 w-3.5' />
-                </Link>
-              </Button>
+              />
             </div>
           </div>
         )}
