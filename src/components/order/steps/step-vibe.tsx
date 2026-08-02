@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef } from 'react'
 import { Crown, Play, Sparkles } from 'lucide-react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -28,6 +29,9 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
   const hasVoiceCloning = Boolean(useWatch({ name: 'hasVoiceCloning' }))
   const sampleMelodyUrl = useWatch({ name: 'sampleMelodyUrl' })
 
+  const genreInputRef = useRef<HTMLInputElement>(null)
+  const tempoInputRef = useRef<HTMLInputElement>(null)
+
   const _handleSelectPremium = () => {
     setValue('plan', 'memory_maker', { shouldValidate: true, shouldDirty: true })
     setValue('vocalPreference', 'Custom Voice (Premium)', { shouldValidate: true, shouldDirty: true })
@@ -53,15 +57,18 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
               <button
                 key={g.value}
                 type='button'
-                onClick={() =>
+                onClick={() => {
                   setValue('genre', g.value, {
                     shouldValidate: true,
                     shouldDirty: true
                   })
-                }
+                  if (g.value === 'Other') {
+                    setTimeout(() => genreInputRef.current?.focus(), 50)
+                  }
+                }}
                 className={cn(
                   'group relative flex items-center justify-between rounded-xl border p-3.5 transition-all active:scale-95',
-                  genre === g.value
+                  genre === g.value || (g.value === 'Other' && genre && !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
                     ? 'border-primary bg-card text-primary shadow-[0_2px_0_0_#c1502e]'
                     : 'border-border/60 bg-card/60 text-muted-foreground hover:border-border hover:bg-card'
                 )}
@@ -69,7 +76,9 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                 <span
                   className={cn(
                     'font-sans font-semibold text-xs',
-                    genre === g.value ? 'text-primary' : 'text-foreground'
+                    genre === g.value || (g.value === 'Other' && genre && !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
+                      ? 'text-primary'
+                      : 'text-foreground'
                   )}
                 >
                   {g.label}
@@ -77,7 +86,9 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                 <div
                   className={cn(
                     'flex h-6 w-6 items-center justify-center rounded-full transition-colors',
-                    genre === g.value ? 'bg-primary text-white' : 'bg-primary/10 text-primary group-hover:bg-primary/20'
+                    genre === g.value || (g.value === 'Other' && genre && !GENRE_OPTIONS.filter((item) => item.value !== 'Other').some((item) => item.value === genre))
+                      ? 'bg-primary text-white'
+                      : 'bg-primary/10 text-primary group-hover:bg-primary/20'
                   )}
                 >
                   <Play className='h-2.5 w-2.5 fill-current' />
@@ -88,6 +99,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
 
           {/* Custom Genre Input */}
           <Input
+            ref={genreInputRef}
             placeholder='Or type custom genre (e.g. Indie Folk, 90s Hip-Hop, Synthwave...)'
             value={
               genre && !GENRE_OPTIONS.filter((g) => g.value !== 'Other').some((g) => g.value === genre)
@@ -98,7 +110,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             }
             onChange={(e) => setValue('genre', e.target.value, { shouldValidate: true, shouldDirty: true })}
             className={cn(
-              'h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground',
+              'h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground transition-all',
               (genre === 'Other' || (genre && !GENRE_OPTIONS.some((g) => g.value === genre))) &&
                 'border-primary ring-1 ring-primary/20'
             )}
@@ -118,7 +130,12 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
                 <button
                   key={mood.value}
                   type='button'
-                  onClick={() => setValue('tempo', mood.value, { shouldValidate: true, shouldDirty: true })}
+                  onClick={() => {
+                    setValue('tempo', mood.value, { shouldValidate: true, shouldDirty: true })
+                    if (mood.value === 'Other') {
+                      setTimeout(() => tempoInputRef.current?.focus(), 50)
+                    }
+                  }}
                   className={cn(
                     'flex items-center gap-2 rounded-full border px-4 py-2 font-sans font-semibold text-xs transition-all active:scale-95',
                     isSelected
@@ -135,6 +152,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
 
           {/* Custom Tempo/Mood Input */}
           <Input
+            ref={tempoInputRef}
             placeholder='Or type custom mood/style (e.g. Energetic, Nostalgic, Cinematic...)'
             value={
               tempo && !MOOD_OPTIONS.filter((m) => m.value !== 'Other').some((m) => m.value === tempo)
@@ -145,7 +163,7 @@ export function StepVibe({ validationTrigger }: { validationTrigger: number }) {
             }
             onChange={(e) => setValue('tempo', e.target.value, { shouldValidate: true, shouldDirty: true })}
             className={cn(
-              'mt-2 h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground',
+              'mt-2 h-10 rounded-xl border-border bg-card px-3 font-sans text-foreground text-xs placeholder:text-muted-foreground transition-all',
               (tempo === 'Other' || (tempo && !MOOD_OPTIONS.some((m) => m.value === tempo))) &&
                 'border-primary ring-1 ring-primary/20'
             )}
